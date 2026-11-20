@@ -1,6 +1,6 @@
 import { Heading } from "@hyper-elements/react";
 import type { ReactNode } from "react";
-import { ART } from "@/shared/art";
+import { ART, BurjKhalifa } from "@/shared/art";
 import { STOPS } from "@/shared/data/stops";
 import { inkAt, SCALE_NOTES, ZONES } from "@/shared/data/zones";
 import { depthToY } from "@/shared/lib/sea";
@@ -29,6 +29,8 @@ export const COLUMNS = {
   scaleNote: 960,
   /** The first zone title sits top-right, clear of the surface stops. */
   surfaceZone: 560,
+  /** The Burj Khalifa hangs from the surface at the right edge. */
+  burj: 1128,
 } as const;
 
 /** Every item on the way down, built from the data files, sorted by depth. */
@@ -105,6 +107,8 @@ export function placeItems(): PlacedItem[] {
       node: <Fact {...stop} color={inkAt(stop.depth)} />,
     });
   }
+
+  items.push({ key: "burj-khalifa-art", depth: 0, y: 0, left: COLUMNS.burj, desktopOnly: true, node: <BurjKhalifa /> });
 
   return items.sort((a, b) => a.depth - b.depth || a.y - b.y);
 }

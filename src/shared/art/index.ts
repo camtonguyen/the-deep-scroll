@@ -1,7 +1,11 @@
 import type { ComponentType } from "react";
 import { Anglerfish } from "./anglerfish";
+import { Boat } from "./boat";
+import { BurjKhalifa } from "./burj-khalifa";
+import { CloudLarge, CloudSmall } from "./clouds";
 import { Diver } from "./diver";
 import { Snailfish } from "./snailfish";
+import { WaveLine } from "./wave-line";
 
 /**
  * Every drawing, by id. Drawings are built only from Svg shapes
@@ -26,3 +30,6 @@ export const ART = {
 } satisfies Record<string, ArtPlacement>;
 
 export type ArtId = keyof typeof ART;
+
+/** Scenery with its own placement (the surface and the Burj Khalifa). */
+export { Boat, BurjKhalifa, CloudLarge, CloudSmall, WaveLine };

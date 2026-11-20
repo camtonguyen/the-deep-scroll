@@ -24,7 +24,15 @@ function isSectionId(id: string | undefined): id is SectionId {
 export default function LandingPage({ only }: { only?: string }) {
   const ids = isSectionId(only) ? [only] : (Object.keys(SECTIONS) as SectionId[]);
   return (
-    <Page theme={theme} width={PAGE_WIDTH} title={SITE.title} description={SITE.description} lang="en" fonts={[...webFonts]}>
+    <Page
+      theme={theme}
+      width={PAGE_WIDTH}
+      title={SITE.title}
+      description={SITE.description}
+      lang="en"
+      breakpoints={{ mobile: SITE.phoneWidth }}
+      fonts={[...webFonts]}
+    >
       {ids.map((id) => {
         const Section = SECTIONS[id];
         return <Section key={id} />;
