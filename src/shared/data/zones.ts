@@ -21,6 +21,9 @@ export const BANDS: readonly Band[] = [
   { from: 6000, to: 10935, color: colors.abyss },
 ];
 
+/** The zone a depth falls in. */
+export const zoneAt = (depth: number): Zone => ZONES.filter((zone) => zone.depth <= depth).at(-1) ?? ZONES[0];
+
 /** Text flips from navy to pale aqua once the water gets dark. */
 export const INK_FLIP_DEPTH = 200;
 export const inkAt = (depth: number) => (depth < INK_FLIP_DEPTH ? colors.ink : colors.aqua);
