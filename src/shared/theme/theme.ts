@@ -21,13 +21,3 @@ export const theme = defineTheme({
     mono: { fontFamily: fonts.mono, fontSize: 13, letterSpacing: 0.5 },
   },
 });
-
-/** Web fonts for Page and Email roots (Fontsource CDN). */
-const cdn = (family: string, file: string) => `https://cdn.jsdelivr.net/fontsource/fonts/${family}@latest/${file}.woff2`;
-
-export const webFonts = [
-  { family: "Bricolage Grotesque", src: cdn("bricolage-grotesque", "latin-400-normal"), weight: 400 },
-  { family: "Bricolage Grotesque", src: cdn("bricolage-grotesque", "latin-800-normal"), weight: 800 },
-  { family: "IBM Plex Mono", src: cdn("ibm-plex-mono", "latin-400-normal"), weight: 400 },
-  { family: "IBM Plex Mono", src: cdn("ibm-plex-mono", "latin-600-normal"), weight: 600 },
-] as const;

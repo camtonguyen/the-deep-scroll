@@ -1,6 +1,5 @@
 import { Column, Layer, Section } from "@hyper-elements/react";
-import { BANDS } from "@/shared/data/zones";
-import { depthToY, SEA_HEIGHT } from "@/shared/lib/depth-scale";
+import { bandRects, SEA_HEIGHT } from "@/shared/lib/sea";
 import { colors, CONTENT_WIDTH } from "@/shared/theme/tokens";
 import { Positioned } from "@/shared/ui/positioned";
 import { DepthRuler } from "./depth-ruler";
@@ -10,11 +9,8 @@ import type { PlacedItem } from "./place-items";
 function Bands() {
   return (
     <Column>
-      {BANDS.map((band) => (
-        <Column
-          key={band.from}
-          style={{ height: Math.round(depthToY(band.to)) - Math.round(depthToY(band.from)), backgroundColor: band.color }}
-        />
+      {bandRects().map(({ band, height }) => (
+        <Column key={band.from} style={{ height, backgroundColor: band.color }} />
       ))}
     </Column>
   );

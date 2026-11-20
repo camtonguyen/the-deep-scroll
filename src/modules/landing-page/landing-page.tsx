@@ -1,6 +1,7 @@
 import { Page } from "@hyper-elements/react";
 import { SITE } from "@/shared/data/site";
-import { theme, webFonts } from "@/shared/theme/theme";
+import { webFonts } from "@/shared/theme/fonts";
+import { theme } from "@/shared/theme/theme";
 import { PAGE_WIDTH } from "@/shared/theme/tokens";
 import { Descent } from "./sections/descent";
 import { Surface } from "./sections/surface";

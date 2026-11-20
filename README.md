@@ -73,20 +73,22 @@ These boundaries are enforced by ESLint (`eslint-plugin-boundaries`).
 | -------------------------------- | -------------------------------------------------------------------------- |
 | Add or move a creature           | `src/shared/data/stops.ts` (depth, side, copy, `art`)                      |
 | Draw a new creature              | `src/shared/art/<name>.tsx`, then register it in `src/shared/art/index.ts` |
-| Change colours or fonts          | `src/shared/theme/tokens.ts`                                               |
-| Change where the scale speeds up | `src/shared/lib/depth-scale.ts`                                            |
+| Change colours                   | `src/shared/theme/tokens.ts`                                               |
+| Change fonts                     | `src/shared/theme/fonts.ts` (+ the TTF in `assets/fonts/`)                 |
+| Change where the scale speeds up | `src/shared/lib/sea.ts`                                                    |
 | Add a new output                 | a folder in `src/modules/` + one line in `src/outputs.tsx`                 |
 
 ## Scripts
 
-| Script           | Does                                     |
-| ---------------- | ---------------------------------------- |
-| `pnpm dev`       | Landing page dev server, reloads on edit |
-| `pnpm render`    | All outputs to `out/`                    |
-| `pnpm typecheck` | `tsc --noEmit`                           |
-| `pnpm lint`      | ESLint, including the architecture rules |
-| `pnpm format`    | Prettier                                 |
-| `pnpm check`     | typecheck + lint + format check + render |
+| Script           | Does                                       |
+| ---------------- | ------------------------------------------ |
+| `pnpm dev`       | Landing page dev server, reloads on edit   |
+| `pnpm render`    | All outputs to `out/`                      |
+| `pnpm typecheck` | `tsc --noEmit`                             |
+| `pnpm lint`      | ESLint, including the architecture rules   |
+| `pnpm format`    | Prettier                                   |
+| `pnpm test`      | Unit tests (Node test runner via tsx)      |
+| `pnpm check`     | typecheck + lint + tests + format + render |
 
 ## Credits
 
