@@ -22,8 +22,16 @@ export interface Stop {
   body?: string;
   /** Small mono aside. */
   joke?: string;
-  /** Drawing shown next to the stop (shared/art). */
-  art?: ArtId;
+  /** Drawings shown next to the stop (shared/art). */
+  art?: ArtId | readonly ArtId[];
+  /** Colour chips: the true colour above, how it looks at this depth below. */
+  swatches?: readonly Swatch[];
+}
+
+export interface Swatch {
+  label: string;
+  truth: string;
+  seen: string;
 }
 
 export const STOPS: readonly Stop[] = [
@@ -34,6 +42,12 @@ export const STOPS: readonly Stop[] = [
     label: "5 m",
     title: "Red light is already fading.",
     joke: "Your red swimsuit now looks brown.",
+    swatches: [
+      { label: "RED ~10 m", truth: "#E0442E", seen: "#5E4A4C" },
+      { label: "ORNG ~25 m", truth: "#F08A24", seen: "#6F6A5A" },
+      { label: "YLW ~45 m", truth: "#EBCB3A", seen: "#7E9A86" },
+      { label: "GRN ~100 m", truth: "#3FA34D", seen: "#3E8C8A" },
+    ],
   },
   {
     id: "scuba",
@@ -54,16 +68,27 @@ export const STOPS: readonly Stop[] = [
     title: "Blue whale",
     body: "The largest animal known to have ever lived. Usually feeds above 200 m.",
     joke: "It doesn't fit. It keeps going →",
+    art: "blueWhale",
   },
-  { id: "leatherback", depth: 155, side: "right", label: "~150 m", title: "Leatherback turtle", body: "Record dive: about 1,280 m." },
+  {
+    id: "leatherback",
+    depth: 155,
+    side: "right",
+    label: "~150 m",
+    title: "Leatherback turtle",
+    body: "Record dive: about 1,280 m.",
+    art: "leatherback",
+  },
   {
     id: "giant-squid",
     depth: 300,
     side: "right",
+    x: 730, // the art starts at 0 (the design has it at -30, which a Positioned can't do), so its text moves 30 right
     label: "~300–1,000 m",
     title: "Giant squid",
     body: "Eyes up to ~27 cm across, the largest in the animal kingdom alongside the colossal squid. First filmed alive in the deep in 2012.",
     joke: "Its tentacles are on the ruler. Ignore them.",
+    art: "giantSquid",
   },
   {
     id: "emperor-penguin",
@@ -73,6 +98,7 @@ export const STOPS: readonly Stop[] = [
     title: "Emperor penguin",
     body: "Deepest recorded dive of any bird.",
     joke: "“how is it down here”",
+    art: "emperorPenguin",
   },
   {
     id: "vampire-squid",
@@ -81,6 +107,7 @@ export const STOPS: readonly Stop[] = [
     label: "~600–900 m",
     title: "Vampire squid",
     body: "Not a squid, doesn't drink blood. It eats marine snow: falling bits of dead stuff.",
+    art: "vampireSquid",
   },
   {
     id: "burj-khalifa",
@@ -109,6 +136,7 @@ export const STOPS: readonly Stop[] = [
     title: "Sperm whale",
     body: "Hunts squid in total darkness by echolocation. Its clicks are the loudest sounds made by any animal.",
     joke: "Holds its breath for over an hour. Show-off.",
+    art: ["spermWhale", "fleeingSquid"],
   },
   { id: "snow", depth: 2520, side: "right", label: "Nothing here but snow. ·  ·   ·" },
   {
@@ -119,6 +147,7 @@ export const STOPS: readonly Stop[] = [
     title: "Cuvier's beaked whale",
     body: "The deepest dive ever recorded for a mammal. One dive lasted 3 h 42 min.",
     joke: "Breath held: yes.",
+    art: "cuviersWhale",
   },
   { id: "doing-great", depth: 3400, side: "right", label: "You're doing great." },
   {
@@ -137,6 +166,7 @@ export const STOPS: readonly Stop[] = [
     label: "~3,800 m",
     title: "RMS Titanic",
     body: "The bow still sits upright on the seafloor, about 600 m from the stern.",
+    art: "titanic",
   },
   {
     id: "dumbo",
@@ -146,6 +176,7 @@ export const STOPS: readonly Stop[] = [
     title: "Dumbo octopus",
     body: "Swims by flapping two ear-like fins. The deepest octopus ever filmed was one.",
     joke: "Named after the elephant, sorry.",
+    art: "dumboOctopus",
   },
   {
     id: "abyssal-plain",

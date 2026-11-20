@@ -13,7 +13,7 @@ export function Surface() {
   return (
     <Section id="top" style={{ backgroundColor: colors.sky, color: colors.navy, padding: 0, alignItems: "center" }}>
       <Layer style={{ height: HEIGHT }}>
-        <Column style={{ alignItems: "center" }}>
+        <Column style={{ alignItems: "center", overflow: "hidden" }}>
           <Layer style={{ width: "100%", maxWidth: CONTENT_WIDTH, height: HEIGHT }}>
             <Column hidden={{ mobile: true }}>
               <Positioned top={150} left={115}>
