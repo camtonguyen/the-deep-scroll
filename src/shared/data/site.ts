@@ -15,6 +15,14 @@ export const SITE = {
   backToSurface: { text: "↑ Back to the surface (it's a long swim)", href: "#top" },
   /** Top-right readout on the surface. */
   readout: "28°C · 0 m",
+  /** The title screen: three lines, sized to stack (px, desktop / phone). */
+  titleLines: [
+    { text: "THE", size: 64, mobileSize: 30 },
+    { text: "DEEP", size: 200, mobileSize: 72 },
+    { text: "SCROLL", size: 128, mobileSize: 72 },
+  ],
+  /** Widest window, in px, that gets the phone layout (the Page and the title both use it). */
+  phoneWidth: 760,
   cta: { text: "Fund the next dive", href: "#tiers" },
   footer: "The Hadal Society is fictional. The depths are real.",
 } as const;
