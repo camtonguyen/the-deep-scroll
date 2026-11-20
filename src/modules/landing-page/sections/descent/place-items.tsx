@@ -4,7 +4,7 @@ import { ART, type ArtPlacement, BurjKhalifa } from "@/shared/art";
 import { NOTES, SCENERY } from "@/shared/data/scenery";
 import { STOPS } from "@/shared/data/stops";
 import { inkAt, SCALE_NOTES, ZONES } from "@/shared/data/zones";
-import { depthToY, yToDepth } from "@/shared/lib/sea";
+import { depthToY, metresPerPx, yToDepth } from "@/shared/lib/sea";
 import { formatDepth } from "@/shared/lib/format";
 import { colors, fonts } from "@/shared/theme/tokens";
 import { Fact } from "@/shared/ui/fact";
@@ -95,7 +95,7 @@ export function placeItems(): PlacedItem[] {
       node: (
         <Column style={{ width: note.width ?? COLUMNS.scaleNoteWidth }}>
           <MonoLabel color={colors.cyan} size={12}>
-            {note.text}
+            {note.text.replace("{now}", String(metresPerPx(note.depth))).replace("{before}", String(metresPerPx(note.depth - 1)))}
           </MonoLabel>
         </Column>
       ),
