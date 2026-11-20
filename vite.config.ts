@@ -33,8 +33,43 @@ function preview(): Plugin {
   };
 }
 
+/** `/api/*` in the dev server: the same handlers a serverless host would run (server/routes.ts). */
+function api(): Plugin {
+  return {
+    name: "api",
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        const url = new URL(req.url ?? "/", "http://localhost");
+        if (!url.pathname.startsWith("/api/")) return next();
+        try {
+          const { ROUTES } = await server.ssrLoadModule("/server/routes.ts");
+          const handler = ROUTES[url.pathname];
+          if (!handler) return next();
+          const chunks: Buffer[] = [];
+          for await (const chunk of req) chunks.push(chunk as Buffer);
+          const headers = new Headers();
+          for (const [key, value] of Object.entries(req.headers)) if (value !== undefined) headers.set(key, String(value));
+          if (!headers.has("x-forwarded-for")) headers.set("x-forwarded-for", req.socket.remoteAddress ?? "unknown");
+          const hasBody = req.method !== "GET" && req.method !== "HEAD";
+          const response: Response = await handler(
+            new Request(url, { method: req.method, headers, body: hasBody ? Buffer.concat(chunks) : undefined }),
+          );
+          res.statusCode = response.status;
+          response.headers.forEach((value, key) => res.setHeader(key, value));
+          res.end(Buffer.from(await response.arrayBuffer()));
+        } catch (error) {
+          if (error instanceof Error) server.ssrFixStacktrace(error);
+          res.statusCode = 500;
+          res.setHeader("Content-Type", "application/json");
+          res.end(JSON.stringify({ error: "Something went wrong on our side." }));
+        }
+      });
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [preview()],
+  plugins: [preview(), api()],
   resolve: {
     alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
   },

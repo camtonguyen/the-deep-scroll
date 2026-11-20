@@ -1,5 +1,5 @@
 import { Column, Layer, Row, Section, Text } from "@hyper-elements/react";
-import { Boat, CloudLarge, CloudSmall, WAVE_PERIOD, WaveLine } from "@/shared/art";
+import { Boat, CloudLarge, CloudSmall, Logo, WAVE_PERIOD, WaveLine } from "@/shared/art";
 import { SITE } from "@/shared/data/site";
 import { colors, CONTENT_WIDTH, fonts, PAGE_WIDTH } from "@/shared/theme/tokens";
 import { Positioned } from "@/shared/ui/positioned";
@@ -48,18 +48,21 @@ export function Surface() {
         </Column>
 
         <Row style={{ justifyContent: "space-between", alignItems: "center", padding: [22, 28, 0] }} stackOnMobile={false}>
-          <Text
-            style={{
-              fontFamily: fonts.mono,
-              fontSize: 24,
-              fontWeight: 700,
-              letterSpacing: 1,
-              textTransform: "uppercase",
-              mobile: { fontSize: 16 },
-            }}
-          >
-            {SITE.name}
-          </Text>
+          <Row style={{ alignItems: "center", gap: 10 }} stackOnMobile={false}>
+            <Logo size={34} />
+            <Text
+              style={{
+                fontFamily: fonts.mono,
+                fontSize: 24,
+                fontWeight: 700,
+                letterSpacing: 1,
+                textTransform: "uppercase",
+                mobile: { fontSize: 16 },
+              }}
+            >
+              {SITE.name}
+            </Text>
+          </Row>
           <Text style={{ fontFamily: fonts.mono, fontSize: 20, fontWeight: 700, textAlign: "right" }}>{SITE.readout}</Text>
         </Row>
       </Layer>

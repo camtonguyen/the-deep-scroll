@@ -10,7 +10,8 @@ import tseslint from "typescript-eslint";
  *   shared/   → may import only shared/
  *   modules/x → may import shared/ and its own module, never another module
  *   outputs   → may import shared/ and each module's public index.ts
- *   scripts/  → may import outputs and shared
+ *   server/   → may import shared and each module's public index.ts
+ *   scripts/  → may import outputs, server and shared
  */
 export default tseslint.config(
   { ignores: ["dist", "out", "node_modules"] },
@@ -28,6 +29,7 @@ export default tseslint.config(
         { type: "shared", pattern: "src/shared/**/*", mode: "full" },
         { type: "module", pattern: "src/modules/(*)/**/*", mode: "full", capture: ["moduleName"] },
         { type: "outputs", pattern: "src/outputs.tsx", mode: "full" },
+        { type: "server", pattern: "server/**/*", mode: "full" },
         { type: "scripts", pattern: "scripts/**/*", mode: "full" },
       ],
     },
@@ -49,7 +51,11 @@ export default tseslint.config(
               from: { type: "outputs" },
               allow: { to: [{ type: "shared" }, { type: "module", elementPath: "**/index.ts" }] },
             },
-            { from: { type: "scripts" }, allow: { to: [{ type: "outputs" }, { type: "shared" }] } },
+            {
+              from: { type: "server" },
+              allow: { to: [{ type: "shared" }, { type: "server" }, { type: "module", elementPath: "**/index.ts" }] },
+            },
+            { from: { type: "scripts" }, allow: { to: [{ type: "outputs" }, { type: "server" }, { type: "shared" }] } },
           ],
         },
       ],

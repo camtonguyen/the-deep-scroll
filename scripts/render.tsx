@@ -4,20 +4,14 @@
  *   dive-certificate.html + .pdf, share-card.html + .png
  * Run: pnpm render
  */
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { ElementsError, formatDiagnostics, render } from "@hyper-elements/react";
 import { renderImage } from "@hyper-elements/react/image";
 import { renderPdf } from "@hyper-elements/react/pdf";
+import { loadFonts } from "../server/fonts";
 import { OUTPUTS } from "../src/outputs";
-import { FONTS } from "../src/shared/theme/fonts";
 
 const OUT = new URL("../out/", import.meta.url);
-const FONTS_DIR = new URL("../assets/fonts/", import.meta.url);
-
-/** PDF and PNG are drawn offline, so they get the font files as bytes (TTF). */
-function loadFonts() {
-  return Promise.all(FONTS.map(async ({ family, weight, ttf }) => ({ family, weight, src: await readFile(new URL(ttf, FONTS_DIR)) })));
-}
 
 async function main() {
   await mkdir(OUT, { recursive: true });

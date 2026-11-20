@@ -1,8 +1,10 @@
-import { Button, Column, Grid, Heading, Row, Section, Span, Text } from "@hyper-elements/react";
+import { Button, Column, Grid, Heading, Layer, Row, Section, Span, Text } from "@hyper-elements/react";
+import { Logo } from "@/shared/art";
 import { BOTTOM_FACTS, SITE, TIERS } from "@/shared/data/site";
-import { colors } from "@/shared/theme/tokens";
+import { colors, fonts } from "@/shared/theme/tokens";
 import { Container } from "@/shared/ui/container";
 import { MonoLabel } from "@/shared/ui/mono-label";
+import { CertificateDialog } from "./certificate-dialog";
 
 const card = { backgroundColor: colors.deepCard, borderRadius: 16, padding: 26, gap: 10 } as const;
 
@@ -34,12 +36,33 @@ export function TheBottom() {
           ))}
         </Row>
 
-        <Button
-          href="#tiers"
-          style={{ backgroundColor: colors.glow, color: colors.abyss, fontSize: 23, fontWeight: 700, borderRadius: 14, padding: [20, 36] }}
-        >
-          {SITE.cta.text}
-        </Button>
+        <Row style={{ alignItems: "center", gap: 28 }}>
+          {/* the yellow button's glow: two flat, rounded layers behind it (no real shadows) */}
+          <Layer style={{ flex: "none" }}>
+            <Column style={{ backgroundColor: colors.glowHalo, borderRadius: 30 }} />
+            <Column style={{ padding: 10 }}>
+              <Column style={{ backgroundColor: colors.glowHaloInner, borderRadius: 22 }} />
+            </Column>
+            <Column style={{ padding: 24 }}>
+              <Button
+                href="#tiers"
+                style={{
+                  backgroundColor: colors.glow,
+                  color: colors.abyss,
+                  fontSize: 23,
+                  fontWeight: 700,
+                  borderRadius: 14,
+                  padding: [18, 36],
+                }}
+              >
+                {SITE.cta.text}
+              </Button>
+            </Column>
+          </Layer>
+          <Column style={{ flex: "none" }}>
+            <CertificateDialog />
+          </Column>
+        </Row>
 
         <Row id="tiers" style={{ gap: 20, alignItems: "stretch" }}>
           {TIERS.map((tier) => (
@@ -75,21 +98,28 @@ export function TheBottom() {
 
         <Row style={{ gap: 32, justifyContent: "space-between", alignItems: "start" }}>
           <Column style={{ gap: 12 }}>
-            <Text style={{ fontSize: 20, fontWeight: 700 }}>{SITE.name}</Text>
+            <Row style={{ alignItems: "center", gap: 10 }} stackOnMobile={false}>
+              <Logo size={30} ring={colors.aqua} />
+              <Text style={{ fontFamily: fonts.mono, fontSize: 20, fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase" }}>
+                {SITE.name}
+              </Text>
+            </Row>
             <MonoLabel>{SITE.footer}</MonoLabel>
             <MonoLabel>Scale: 1 px = 1 m, mostly. The ruler shows where we cheated.</MonoLabel>
+            <MonoLabel>{SITE.copyright}</MonoLabel>
           </Column>
           <Grid columns={2} stackOnMobile={false} style={{ gap: 12 }}>
             {[...SITE.links, SITE.backToSurface].map((link) => (
               <Button
                 key={link.text}
                 href={link.href}
+                attrs={{ class: "flink" }} /* underline on hover: see certificate-dialog styles */
                 style={{
                   backgroundColor: "transparent",
                   color: colors.aqua,
                   fontSize: 16,
                   textAlign: "left",
-                  textDecoration: "underline",
+                  textDecoration: "none",
                   padding: [13, 0],
                 }}
               >
