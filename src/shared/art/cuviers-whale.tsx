@@ -11,6 +11,11 @@ export function CuviersWhale() {
         d="M8 38 C 30 30, 46 26, 70 24 C 140 18, 200 24, 236 34 L236 44 C 200 52, 120 56, 70 52 C 46 50, 28 46, 8 40 Z"
         style={{ fill: art.cuvierBody, stroke: colors.aqua, strokeWidth: 2.5 }}
       />
+      <Path
+        d="M12 40 C 30 45, 46 48, 70 50 C 120 54, 196 50, 232 43 L232 40 C 196 46, 120 47, 70 45 C 46 43, 30 41, 12 38 Z"
+        style={{ fill: art.cuvierBelly }}
+      />
+      <Path d="M58 50 L68 64 L84 52 Z" style={{ fill: art.cuvierBody, stroke: colors.aqua, strokeWidth: 2 }} />
       <Path d="M84 30 l34 5 M100 42 l40 -3 M150 30 l30 6 M128 46 l24 -2" style={{ stroke: colors.aqua, strokeWidth: 1.5 }} />
       <Circle cx={44} cy={35} r={2.5} style={{ fill: colors.aqua }} />
     </Svg>

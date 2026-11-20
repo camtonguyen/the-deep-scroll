@@ -43,11 +43,14 @@ export const art = {
   boatBlue: sea.twilight,
   amphipodShell: "#F0E6D8",
   anglerBody: "#12202B",
+  anglerSpot: "#26394A",
   whaleBody: "#3F6F96",
   cuvierBody: "#7A6656",
+  cuvierBelly: "#A08D7C",
   diverFin: "#7A5048",
   dumboBelly: "#D88E98",
   dumboFin: "#E8A6AE",
+  dumboWeb: "#C47683",
   penguinBeak: "#F2A33A",
   penguinBelly: "#F4F7F8",
   squidBody: "#A8483A",
@@ -65,6 +68,8 @@ export const art = {
   titanicRust: "#B57A54",
   triesteHull: "#2B4A63",
   triesteWindow: "#3A5A72",
+  triesteLight: "#46688A",
+  triesteShade: "#1E3548",
   vampireBody: "#6B1E2E",
 } as const;
 
