@@ -1,5 +1,5 @@
 import { Column, Layer, Row, Section, Text } from "@hyper-elements/react";
-import { Boat, CloudLarge, CloudSmall, WaveLine } from "@/shared/art";
+import { Boat, CloudLarge, CloudSmall, WAVE_PERIOD, WaveLine } from "@/shared/art";
 import { SITE } from "@/shared/data/site";
 import { colors, CONTENT_WIDTH, fonts, PAGE_WIDTH } from "@/shared/theme/tokens";
 import { Positioned } from "@/shared/ui/positioned";
@@ -43,7 +43,8 @@ export function Surface() {
         </Column>
 
         <Column style={{ padding: [HEIGHT - 40, 0, 0], overflow: "hidden" }}>
-          <WaveLine width={PAGE_WIDTH} />
+          {/* one swell short of the page, so rolling it by one swell (see dive-computer) leaves no gap */}
+          <WaveLine width={PAGE_WIDTH - WAVE_PERIOD} />
         </Column>
 
         <Row style={{ justifyContent: "space-between", alignItems: "center", padding: [22, 28, 0] }} stackOnMobile={false}>

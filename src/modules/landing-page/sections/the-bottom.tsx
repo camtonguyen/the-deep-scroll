@@ -9,7 +9,7 @@ const card = { backgroundColor: colors.deepCard, borderRadius: 16, padding: 26, 
 /** 10,935 m: arrival, why it matters, and how to support the next dive. */
 export function TheBottom() {
   return (
-    <Section style={{ backgroundColor: colors.abyss, color: colors.aqua, padding: [110, 24, 64], alignItems: "center" }}>
+    <Section id="the-bottom" style={{ backgroundColor: colors.abyss, color: colors.aqua, padding: [110, 24, 64], alignItems: "center" }}>
       <Container style={{ gap: 56 }}>
         <Column style={{ gap: 24 }}>
           <MonoLabel color={colors.cyan} size={14}>

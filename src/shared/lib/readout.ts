@@ -1,7 +1,7 @@
 import { pressureAtm } from "./format";
 
 /** [depth m, °C]: rough averages, read in between by straight lines. */
-const TEMPERATURES: readonly (readonly [number, number])[] = [
+export const TEMPERATURES: readonly (readonly [number, number])[] = [
   [0, 28],
   [200, 15],
   [1000, 4],
@@ -17,9 +17,15 @@ export function temperatureC(depth: number): number {
   return t0 + ((t1 - t0) * (depth - d0)) / (d1 - d0);
 }
 
-/** Sunlight to 200 m, a faint glow to 1,000 m, then only living light. */
+/** [from depth m, what the light is]: sunlight to 200 m, a faint glow to 1,000 m, then only living light. */
+export const LIGHT: readonly (readonly [number, string])[] = [
+  [0, "sunlight"],
+  [200, "dim"],
+  [1000, "dark"],
+];
+
 export function lightAt(depth: number): string {
-  return depth < 200 ? "sunlight" : depth < 1000 ? "dim" : "dark";
+  return LIGHT.filter(([from]) => depth >= from).at(-1)![1];
 }
 
 /** 4000 → "≈397 atm · 2 °C · dark" */

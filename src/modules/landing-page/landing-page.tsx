@@ -4,6 +4,7 @@ import { webFonts } from "@/shared/theme/fonts";
 import { theme } from "@/shared/theme/theme";
 import { PAGE_WIDTH } from "@/shared/theme/tokens";
 import { Descent } from "./sections/descent";
+import { DiveComputer } from "./sections/dive-computer";
 import { Surface } from "./sections/surface";
 import { TheBottom } from "./sections/the-bottom";
 
@@ -37,6 +38,7 @@ export default function LandingPage({ only }: { only?: string }) {
         const Section = SECTIONS[id];
         return <Section key={id} />;
       })}
+      <DiveComputer />
     </Page>
   );
 }
