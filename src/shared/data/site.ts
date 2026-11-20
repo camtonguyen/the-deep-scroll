@@ -53,8 +53,18 @@ export const BOTTOM_FACTS: readonly { value: string; text: string }[] = [
   { value: "4 h 47 min", text: "how long Trieste took to sink this far. You did it in one scroll." },
 ];
 
-/** Sample recipient for the certificate, email and share card. */
-export const SAMPLE_DIVER = {
+/** What the certificate, email and share card are made for: one visitor's dive. */
+export interface Visitor {
+  name: string;
+  /** Deepest depth reached, metres. */
+  depth: number;
+  /** Already formatted for reading, e.g. "29 November 2026". */
+  date: string;
+}
+
+/** Sample recipient: what `pnpm render` writes. */
+export const SAMPLE_DIVER: Visitor = {
   name: "Ada Marlowe",
+  depth: 10935,
   date: "29 November 2026",
-} as const;
+};
