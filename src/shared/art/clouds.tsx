@@ -1,7 +1,7 @@
 import { Path, Svg } from "@hyper-elements/react";
 import { colors } from "@/shared/theme/tokens";
 
-const cloud = { fill: "#FFFFFF", stroke: colors.navy, strokeWidth: 2.5 } as const;
+const cloud = { fill: colors.white, stroke: colors.navy, strokeWidth: 2.5 } as const;
 
 export function CloudLarge() {
   return (

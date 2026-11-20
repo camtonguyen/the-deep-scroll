@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { BANDS } from "@/shared/data/zones";
-import { bandRects, MAX_DEPTH, SEA_HEIGHT, ticks } from "./sea";
+import { bandRects, depthToY, MAX_DEPTH, SEA_HEIGHT, ticks, yToDepth } from "./sea";
 
 // Worked by hand from SCALE: 2 px/m to 200 m, 1 px/m to 1,000 m, 0.5 to 6,000 m,
 // 0.25 to 8,000 m, 0.5 to 10,935 m. So 200 m = 400 px, 1,000 m = 1,200 px,
@@ -56,4 +56,12 @@ test("ticks every 100 m run from the surface to the bottom", () => {
 
 test("the colour bands end at the bottom of the sea", () => {
   assert.equal(BANDS.at(-1)!.to, MAX_DEPTH);
+});
+
+test("yToDepth undoes depthToY across every scale change", () => {
+  for (const depth of [0, 150, 200, 640, 1000, 4800, 6000, 7000, 8000, 10935]) {
+    assert.ok(Math.abs(yToDepth(depthToY(depth)) - depth) < 1e-9, `${depth} m`);
+  }
+  assert.equal(yToDepth(400), 200);
+  assert.equal(yToDepth(SEA_HEIGHT + 100), MAX_DEPTH);
 });

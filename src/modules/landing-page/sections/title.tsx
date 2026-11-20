@@ -1,18 +1,18 @@
 import { Html } from "@hyper-elements/react";
 import { SITE } from "@/shared/data/site";
-import { colors } from "@/shared/theme/tokens";
+import { colors, sea } from "@/shared/theme/tokens";
 
 /** Hyper Elements has no text stroke, tilt or keyframes, so the title is one Html block of plain CSS (no script). */
 const STYLE = `
 .ttl{font-family:'Roboto Condensed',Roboto,sans-serif;font-weight:700;line-height:.9;letter-spacing:.01em;text-align:center;margin:0;white-space:nowrap}
 .ttl span.line{display:block}
 .ltr{position:relative;display:inline-block;animation:drop .7s cubic-bezier(.3,1.5,.5,1) both,bob 3.4s ease-in-out infinite}
-.ltr .bk{position:absolute;left:.045em;top:.06em;color:#5BB8E6;-webkit-text-stroke:3px ${colors.navy}}
-.ltr .fr{position:relative;color:#FFFFFF;-webkit-text-stroke:3px ${colors.navy};paint-order:stroke fill}
+.ltr .bk{position:absolute;left:.045em;top:.06em;color:${sea.light};-webkit-text-stroke:3px ${colors.navy}}
+.ltr .fr{position:relative;color:${colors.white};-webkit-text-stroke:3px ${colors.navy};paint-order:stroke fill}
 .go{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:18px;min-height:48px;font-family:'Roboto Condensed',Roboto,sans-serif;font-size:34px;color:${colors.navy};text-decoration:none}
 .go.ph{display:none}
 .nudge{display:inline-block;animation:nudge 1.4s ease-in-out infinite}
-.bub{position:absolute;border:2.5px solid ${colors.navy};border-radius:50%;background:#FFFFFF;animation:rise 6s linear infinite}
+.bub{position:absolute;border:2.5px solid ${colors.navy};border-radius:50%;background:${colors.white};animation:rise 6s linear infinite}
 @keyframes drop{from{opacity:0;translate:0 -60px}to{opacity:1;translate:0 0}}
 @keyframes bob{0%,100%{translate:0 0}50%{translate:0 -10px}}
 @keyframes rise{0%{translate:0 0;opacity:0}15%{opacity:1}100%{translate:0 -120px;opacity:0}}

@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Section } from "@hyper-elements/react";
 import { BANDS } from "@/shared/data/zones";
 import type { PlacedItem } from "./place-items";
@@ -21,7 +22,9 @@ export function DescentMobile({ items }: { items: PlacedItem[] }) {
             hidden={{ desktop: true }}
             style={{ backgroundColor: band.color, padding: [40, 20], gap: 32 }}
           >
-            {inBand.map((item) => item.node)}
+            {inBand.map((item) => (
+              <Fragment key={item.key}>{item.phoneNode ?? item.node}</Fragment>
+            ))}
           </Section>
         );
       })}

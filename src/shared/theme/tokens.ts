@@ -1,15 +1,79 @@
-/** Design tokens. */
+/**
+ * Design tokens: every colour in the project lives in this file (and nowhere
+ * else), in three groups. `sea` is the water, `colors` the brand and page,
+ * `art` and `lightLoss` the drawings and the red-light chips.
+ */
+
+/** The water, hard-edged bands from the surface (0 m) to the Challenger Deep. */
+export const sea = {
+  shallow: "#8FD3F4",
+  light: "#5BB8E6",
+  blue: "#2E8FC9",
+  twilight: "#1C6AA0",
+  twilightDeep: "#144C78",
+  dusk: "#0E3557",
+  midnight: "#0A243D",
+  abyssal0: "#07182A",
+  abyssal1: "#050F1C",
+  abyssal2: "#030912",
+  hadal: "#010407",
+} as const;
+
+/** Brand and page colours. */
 export const colors = {
   sky: "#E4F5FC",
-  surface: "#8FD3F4",
-  navy: "#0A243D",
+  surface: sea.shallow,
+  navy: sea.midnight,
+  /** Text on the lit bands: navy is under 4.5:1 on the 150 to 200 m blue, this is not. */
+  ink: "#04121F",
   aqua: "#CFEFFF",
-  abyss: "#010407",
-  deepCard: "#07182A",
+  white: "#FFFFFF",
+  abyss: sea.hadal,
+  deepCard: sea.abyssal0,
   hull: "#FBFAF4",
   cyan: "#4DF2E3",
   /** Anglerfish yellow: the one "glow" accent, used only in the dark. */
   glow: "#FFE45C",
+} as const;
+
+/** Colours of the drawings in shared/art, named for what they colour. */
+export const art = {
+  seabed: "#1B2430",
+  seabedGrain: "#2E3D50",
+  boatBlue: sea.twilight,
+  amphipodShell: "#F0E6D8",
+  anglerBody: "#12202B",
+  whaleBody: "#3F6F96",
+  cuvierBody: "#7A6656",
+  diverFin: "#7A5048",
+  dumboBelly: "#D88E98",
+  dumboFin: "#E8A6AE",
+  penguinBeak: "#F2A33A",
+  penguinBelly: "#F4F7F8",
+  squidBody: "#A8483A",
+  squidFin: "#8E3A2F",
+  turtleShell: "#24404F",
+  turtleHead: "#3A5868",
+  everestRock: "#2A3340",
+  seaPigBody: "#D9A3C4",
+  seaPigLegs: "#C98BB0",
+  snailfishBody: "#F2C6CF",
+  snailfishFin: "#E9B8C3",
+  spermBody: "#3D4A57",
+  spermMark: "#5E6E7E",
+  titanicHull: "#5A3A2C",
+  titanicRust: "#B57A54",
+  triesteHull: "#2B4A63",
+  triesteWindow: "#3A5A72",
+  vampireBody: "#6B1E2E",
+} as const;
+
+/** The red-light chips at 5 m: a colour's true shade, and how it looks once its light is lost. */
+export const lightLoss = {
+  red: { truth: "#E0442E", seen: "#5E4A4C" },
+  orange: { truth: "#F08A24", seen: "#6F6A5A" },
+  yellow: { truth: "#EBCB3A", seen: "#7E9A86" },
+  green: { truth: "#3FA34D", seen: "#3E8C8A" },
 } as const;
 
 export const fonts = {

@@ -1,5 +1,5 @@
 import { Circle, Line, Path, Rect, Svg } from "@hyper-elements/react";
-import { colors } from "@/shared/theme/tokens";
+import { art, colors } from "@/shared/theme/tokens";
 
 const ink = { stroke: colors.navy, strokeWidth: 2.5 } as const;
 const line = (width: number) => ({ stroke: colors.navy, strokeWidth: width }) as const;
@@ -9,8 +9,8 @@ export function Boat() {
   return (
     <Svg width={240} height={150} viewBox="0 0 240 150" title="A small research boat with a person waving">
       <Line x1={110} y1={10} x2={110} y2={62} style={line(3)} />
-      <Path d="M111 12 L148 21 L111 31 Z" style={{ fill: "#1C6AA0", ...ink }} />
-      <Path d="M68 92 L70 60 L142 61 L140 92 Z" style={{ fill: "#1C6AA0", ...ink }} />
+      <Path d="M111 12 L148 21 L111 31 Z" style={{ fill: art.boatBlue, ...ink }} />
+      <Path d="M68 92 L70 60 L142 61 L140 92 Z" style={{ fill: art.boatBlue, ...ink }} />
       <Rect x={82} y={68} width={16} height={12} rx={2} style={{ fill: colors.aqua, stroke: colors.navy, strokeWidth: 2 }} />
       <Rect x={108} y={68} width={16} height={12} rx={2} style={{ fill: colors.aqua, stroke: colors.navy, strokeWidth: 2 }} />
       <Path d="M30 60 L46 40 L50 92" style={{ fill: "transparent", ...line(3) }} />
