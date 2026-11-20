@@ -1,4 +1,4 @@
-import { colors } from "@/shared/theme/tokens";
+import { colors, sea } from "@/shared/theme/tokens";
 
 /** A band of sea colour, hard-edged, from one depth to the next. */
 export interface Band {
@@ -8,22 +8,22 @@ export interface Band {
 }
 
 export const BANDS: readonly Band[] = [
-  { from: 0, to: 30, color: "#8FD3F4" },
-  { from: 30, to: 150, color: "#5BB8E6" },
-  { from: 150, to: 200, color: "#2E8FC9" },
-  { from: 200, to: 400, color: "#1C6AA0" },
-  { from: 400, to: 650, color: "#144C78" },
-  { from: 650, to: 1000, color: "#0E3557" },
-  { from: 1000, to: 2000, color: "#0A243D" },
-  { from: 2000, to: 3000, color: "#07182A" },
-  { from: 3000, to: 4000, color: "#050F1C" },
-  { from: 4000, to: 6000, color: "#030912" },
+  { from: 0, to: 30, color: sea.shallow },
+  { from: 30, to: 150, color: sea.light },
+  { from: 150, to: 200, color: sea.blue },
+  { from: 200, to: 400, color: sea.twilight },
+  { from: 400, to: 650, color: sea.twilightDeep },
+  { from: 650, to: 1000, color: sea.dusk },
+  { from: 1000, to: 2000, color: colors.navy },
+  { from: 2000, to: 3000, color: colors.deepCard },
+  { from: 3000, to: 4000, color: sea.abyssal1 },
+  { from: 4000, to: 6000, color: sea.abyssal2 },
   { from: 6000, to: 10935, color: colors.abyss },
 ];
 
 /** Text flips from navy to pale aqua once the water gets dark. */
 export const INK_FLIP_DEPTH = 200;
-export const inkAt = (depth: number) => (depth < INK_FLIP_DEPTH ? colors.navy : colors.aqua);
+export const inkAt = (depth: number) => (depth < INK_FLIP_DEPTH ? colors.ink : colors.aqua);
 
 export interface Zone {
   id: string;
@@ -41,8 +41,26 @@ export const ZONES: readonly Zone[] = [
 ];
 
 /** Notes printed where the page's scale changes (see shared/lib/sea.ts). */
-export const SCALE_NOTES: readonly { depth: number; text: string }[] = [
-  { depth: 200, text: "SCALE: 1 px = 1 m from here. (It was 1 px = 0.5 m up top. A lot happens up there.)" },
+export interface ScaleNote {
+  depth: number;
+  text: string;
+  /** Left edge in px within the content width (default: the right-hand margin). */
+  x?: number;
+  /** Text column width in px (default 200). */
+  width?: number;
+  /** px from the scale change (negative: above it), to clear other text. */
+  dy?: number;
+}
+
+export const SCALE_NOTES: readonly ScaleNote[] = [
+  {
+    depth: 200,
+    text: "SCALE: 1 px = 1 m from here. (It was 1 px = 0.5 m up top. A lot happens up there.)",
+    // the open space under the leatherback, left of the Burj Khalifa
+    x: 945,
+    width: 180,
+    dy: 94,
+  },
   { depth: 1000, text: "SCALE CHANGE: 1 px = 2 m. Nothing happens for a while, so we sped up." },
   { depth: 6000, text: "SCALE CHANGE: 1 px = 4 m. Still nothing. Faster." },
   { depth: 8000, text: "SCALE: back to 1 px = 2 m. Things are about to happen." },

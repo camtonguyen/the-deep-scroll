@@ -5,6 +5,10 @@ import { Positioned } from "@/shared/ui/positioned";
 import { DepthRuler } from "./depth-ruler";
 import type { PlacedItem } from "./place-items";
 
+/** Room below the seafloor line for the floor itself, px. */
+const FLOOR_DEPTH = 160;
+const HEIGHT = SEA_HEIGHT + FLOOR_DEPTH;
+
 /** Full-bleed colour bands with hard edges (no gradients), surface to seafloor. */
 function Bands() {
   return (
@@ -16,6 +20,17 @@ function Bands() {
   );
 }
 
+/** Art wider than the content, drawn across the window: `behind` the text or in `front` of it. */
+function Bleed({ items, layer }: { items: PlacedItem[]; layer: "front" | "behind" }) {
+  return items
+    .filter((item) => item.bleed === layer)
+    .map((item) => (
+      <Column key={item.key} style={{ alignItems: "center", overflow: "hidden", padding: { top: Math.round(item.y) } }}>
+        {item.node}
+      </Column>
+    ));
+}
+
 /**
  * Desktop: the page is the sea, to scale. One Layer stacks
  *   1. the colour bands, full window width;
@@ -25,10 +40,11 @@ function Bands() {
 export function DescentDesktop({ items }: { items: PlacedItem[] }) {
   return (
     <Section id="dive" hidden={{ mobile: true }} style={{ backgroundColor: colors.abyss, padding: 0 }}>
-      <Layer style={{ height: SEA_HEIGHT }}>
+      <Layer style={{ height: HEIGHT }}>
         <Bands />
+        <Bleed items={items} layer="behind" />
         <Column style={{ alignItems: "center", overflow: "hidden" }}>
-          <Layer style={{ width: "100%", maxWidth: CONTENT_WIDTH, height: SEA_HEIGHT }}>
+          <Layer style={{ width: "100%", maxWidth: CONTENT_WIDTH, height: HEIGHT }}>
             <DepthRuler />
             {items
               .filter((item) => !item.bleed)
@@ -39,13 +55,7 @@ export function DescentDesktop({ items }: { items: PlacedItem[] }) {
               ))}
           </Layer>
         </Column>
-        {items
-          .filter((item) => item.bleed)
-          .map((item) => (
-            <Column key={item.key} style={{ alignItems: "center", overflow: "hidden", padding: { top: Math.round(item.y) } }}>
-              {item.node}
-            </Column>
-          ))}
+        <Bleed items={items} layer="front" />
       </Layer>
     </Section>
   );

@@ -1,11 +1,12 @@
-import { Heading } from "@hyper-elements/react";
+import { Column, Heading, Text } from "@hyper-elements/react";
 import type { ReactNode } from "react";
 import { ART, type ArtPlacement, BurjKhalifa } from "@/shared/art";
+import { NOTES, SCENERY } from "@/shared/data/scenery";
 import { STOPS } from "@/shared/data/stops";
 import { inkAt, SCALE_NOTES, ZONES } from "@/shared/data/zones";
-import { depthToY } from "@/shared/lib/sea";
+import { depthToY, yToDepth } from "@/shared/lib/sea";
 import { formatDepth } from "@/shared/lib/format";
-import { colors } from "@/shared/theme/tokens";
+import { colors, fonts } from "@/shared/theme/tokens";
 import { Fact } from "@/shared/ui/fact";
 import { MonoLabel } from "@/shared/ui/mono-label";
 
@@ -19,16 +20,20 @@ export interface PlacedItem {
   /** Left edge on the desktop page, px within the content width. */
   left: number;
   node: ReactNode;
+  /** What a phone shows instead, where the stacked layout needs a different look (ink follows the band, not the nudged position). */
+  phoneNode?: ReactNode;
   /** Shown on desktop only (e.g. ruler labels, which phones don't have room for). */
   desktopOnly?: boolean;
   /** Drawn across the whole window rather than inside the content width. */
-  bleed?: boolean;
+  bleed?: "front" | "behind";
 }
 
 export const COLUMNS = {
   left: 180,
   right: 700,
-  scaleNote: 960,
+  /** Right of the Everest drawing (it ends at 980 px) and inside the 1200 px content. */
+  scaleNote: 990,
+  scaleNoteWidth: 200,
   /** The first zone title sits top-right, clear of the surface stops. */
   surfaceZone: 560,
   /** The Burj Khalifa hangs from the surface at the right edge. */
@@ -44,7 +49,7 @@ export function placeItems(): PlacedItem[] {
     items.push({
       key: `zone-${zone.id}`,
       depth: zone.depth,
-      y: y + 16,
+      y: y + (zone.depth === 0 ? 4 : 16),
       left: zone.depth === 0 ? COLUMNS.surfaceZone : COLUMNS.left,
       node: (
         <Heading
@@ -84,13 +89,15 @@ export function placeItems(): PlacedItem[] {
     items.push({
       key: `scale-${note.depth}`,
       depth: note.depth,
-      y: depthToY(note.depth) + 10,
-      left: COLUMNS.scaleNote,
+      y: depthToY(note.depth) + 10 + (note.dy ?? 0),
+      left: note.x ?? COLUMNS.scaleNote,
       desktopOnly: true,
       node: (
-        <MonoLabel color={colors.cyan} size={12}>
-          {note.text}
-        </MonoLabel>
+        <Column style={{ width: note.width ?? COLUMNS.scaleNoteWidth }}>
+          <MonoLabel color={colors.cyan} size={12}>
+            {note.text}
+          </MonoLabel>
+        </Column>
       ),
     });
   }
@@ -106,7 +113,37 @@ export function placeItems(): PlacedItem[] {
       depth: stop.depth,
       y,
       left: stop.x ?? (stop.side === "left" ? COLUMNS.left : COLUMNS.right),
-      node: <Fact {...stop} color={inkAt(stop.depth)} />,
+      node: <Fact {...stop} color={inkAt(yToDepth(y))} />,
+      phoneNode: inkAt(yToDepth(y)) === inkAt(stop.depth) ? undefined : <Fact {...stop} color={inkAt(stop.depth)} />,
+    });
+  }
+
+  for (const { art, depth } of SCENERY) {
+    const { Component, x, dy, desktopOnly, bleed }: ArtPlacement = ART[art];
+    items.push({ key: `scenery-${art}`, depth, y: depthToY(depth) + dy, left: x, desktopOnly, bleed, node: <Component /> });
+  }
+
+  for (const note of NOTES) {
+    items.push({
+      key: `note-${note.id}`,
+      depth: note.depth,
+      y: depthToY(note.depth) + note.dy,
+      left: note.x,
+      desktopOnly: true,
+      node: (
+        <Text
+          style={{
+            fontFamily: fonts.mono,
+            fontSize: note.size ?? 13,
+            fontWeight: 700,
+            color: note.color,
+            width: note.width,
+            textAlign: note.width ? "center" : "left",
+          }}
+        >
+          {note.text}
+        </Text>
+      ),
     });
   }
 

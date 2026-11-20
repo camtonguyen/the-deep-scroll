@@ -1,4 +1,5 @@
 import type { ArtId } from "@/shared/art";
+import { lightLoss } from "@/shared/theme/tokens";
 
 /**
  * Every fact on the way down. A stop is placed at its real depth by the
@@ -16,6 +17,10 @@ export interface Stop {
   side: "left" | "right";
   /** Exact left edge in px, when the design places it off the column. */
   x?: number;
+  /** Smaller title and body, as the design sets the crowded stops. */
+  small?: boolean;
+  /** Text column width in px, where the design narrows it (default 360). */
+  width?: number;
   /** Mono label above the title, e.g. "~2,000 m". */
   label: string;
   title?: string;
@@ -43,10 +48,10 @@ export const STOPS: readonly Stop[] = [
     title: "Red light is already fading.",
     joke: "Your red swimsuit now looks brown.",
     swatches: [
-      { label: "RED ~10 m", truth: "#E0442E", seen: "#5E4A4C" },
-      { label: "ORNG ~25 m", truth: "#F08A24", seen: "#6F6A5A" },
-      { label: "YLW ~45 m", truth: "#EBCB3A", seen: "#7E9A86" },
-      { label: "GRN ~100 m", truth: "#3FA34D", seen: "#3E8C8A" },
+      { label: "RED ~10 m", truth: lightLoss.red.truth, seen: lightLoss.red.seen },
+      { label: "ORNG ~25 m", truth: lightLoss.orange.truth, seen: lightLoss.orange.seen },
+      { label: "YLW ~45 m", truth: lightLoss.yellow.truth, seen: lightLoss.yellow.seen },
+      { label: "GRN ~100 m", truth: lightLoss.green.truth, seen: lightLoss.green.seen },
     ],
   },
   {
@@ -73,7 +78,11 @@ export const STOPS: readonly Stop[] = [
   {
     id: "leatherback",
     depth: 155,
+    nudge: 100, // below the whale's tail fin, in the darker water, so the text is light
+    small: true,
     side: "right",
+    x: 910,
+    width: 210,
     label: "~150 m",
     title: "Leatherback turtle",
     body: "Record dive: about 1,280 m.",
@@ -82,6 +91,7 @@ export const STOPS: readonly Stop[] = [
   {
     id: "giant-squid",
     depth: 300,
+    nudge: 52, // clears the 200 m scale note
     side: "right",
     x: 730, // the art starts at 0 (the design has it at -30, which a Positioned can't do), so its text moves 30 right
     label: "~300–1,000 m",
@@ -94,6 +104,8 @@ export const STOPS: readonly Stop[] = [
     id: "emperor-penguin",
     depth: 564,
     side: "left",
+    width: 300,
+    x: 262,
     label: "564 m",
     title: "Emperor penguin",
     body: "Deepest recorded dive of any bird.",
@@ -104,6 +116,8 @@ export const STOPS: readonly Stop[] = [
     id: "vampire-squid",
     depth: 700,
     side: "right",
+    width: 300,
+    x: 800,
     label: "~600–900 m",
     title: "Vampire squid",
     body: "Not a squid, doesn't drink blood. It eats marine snow: falling bits of dead stuff.",
@@ -172,6 +186,8 @@ export const STOPS: readonly Stop[] = [
     id: "dumbo",
     depth: 4200,
     side: "right",
+    width: 320,
+    x: 840,
     label: "~4,000 m (seen down to 6,957 m)",
     title: "Dumbo octopus",
     body: "Swims by flapping two ear-like fins. The deepest octopus ever filmed was one.",
@@ -185,6 +201,7 @@ export const STOPS: readonly Stop[] = [
     side: "right",
     label: "~4,800 m · THE ABYSSAL PLAIN",
     body: "Flat, muddy, and it covers roughly half of Earth's surface. The trench is still ahead.",
+    art: ["abyssalPlain", "seaPig"],
   },
   { id: "scroll-wheel", depth: 5300, side: "right", label: "Your scroll wheel is fine." },
   { id: "still-going", depth: 7000, side: "left", label: "Still going." },
@@ -216,20 +233,27 @@ export const STOPS: readonly Stop[] = [
   },
   {
     id: "amphipod",
+    small: true,
     depth: 10500,
     nudge: 26,
     side: "right",
+    width: 280,
+    x: 896,
     label: "down to ~10,900 m",
     title: "Amphipod (Hirondellea gigas)",
     body: "A shrimp-ish scavenger living at the very bottom. It can digest sunken wood.",
+    art: "amphipod",
   },
   {
     id: "trieste",
+    small: true,
     depth: 10935,
     nudge: -210,
     side: "left",
+    width: 320,
     label: "23 JANUARY 1960",
     title: "Trieste",
     body: "Jacques Piccard and Don Walsh, first to the bottom. 4 h 47 min down, 20 min at the bottom.",
+    art: ["triesteSub", "flag"],
   },
 ];

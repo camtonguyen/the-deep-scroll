@@ -41,4 +41,4 @@ Use pnpm (version pinned in `package.json` → `packageManager`; run `corepack e
 
 TypeScript function components, kebab-case file names, PascalCase components,
 double quotes, Prettier (`pnpm format`). Keep content in `src/shared/data`,
-not in components. Commit subjects: short and imperative.
+not in components. Every colour (hex or rgb) lives in `src/shared/theme/tokens.ts`; a test fails on a stray one. Commit subjects: short and imperative.

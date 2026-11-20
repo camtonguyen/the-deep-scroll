@@ -1,5 +1,5 @@
 import { Path, Svg } from "@hyper-elements/react";
-import { colors } from "@/shared/theme/tokens";
+import { colors, sea } from "@/shared/theme/tokens";
 
 const PERIOD = 120;
 
@@ -9,7 +9,7 @@ export function WaveLine({ width }: { width: number }) {
   const crest = `M0 20 q30 -14 60 0 ${"t60 0 ".repeat(swells * 2 - 1)}`;
   return (
     <Svg width={width} height={40} viewBox={`0 0 ${width} 40`} title="">
-      <Path d={`${crest}L${swells * PERIOD} 40 L0 40 Z`} style={{ fill: "#8FD3F4" }} />
+      <Path d={`${crest}L${swells * PERIOD} 40 L0 40 Z`} style={{ fill: sea.shallow }} />
       <Path d={crest} style={{ fill: "transparent", stroke: colors.navy, strokeWidth: 2.5 }} />
     </Svg>
   );

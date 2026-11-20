@@ -21,8 +21,8 @@ export const SITE = {
     { text: "DEEP", size: 200, mobileSize: 72 },
     { text: "SCROLL", size: 128, mobileSize: 72 },
   ],
-  /** Widest window, in px, that gets the phone layout (the Page and the title both use it). */
-  phoneWidth: 760,
+  /** Widest window, in px, that gets the stacked layout (the Page and the title both use it). The to-scale sea needs the 1,200 px content width, so anything narrower stacks. */
+  phoneWidth: 1199,
   cta: { text: "Fund the next dive", href: "#tiers" },
   footer: "The Hadal Society is fictional. The depths are real.",
 } as const;

@@ -23,7 +23,7 @@ export function TheBottom() {
           </Text>
         </Column>
 
-        <Grid columns={3} style={{ gap: 20 }}>
+        <Row style={{ gap: 20, alignItems: "stretch" }}>
           {BOTTOM_FACTS.map((fact) => (
             <Column key={fact.value} style={{ border: `2px solid ${colors.aqua}`, borderRadius: 14, padding: 22, gap: 4 }}>
               <MonoLabel color={colors.cyan} size={34}>
@@ -32,7 +32,7 @@ export function TheBottom() {
               <MonoLabel size={14}>{fact.text}</MonoLabel>
             </Column>
           ))}
-        </Grid>
+        </Row>
 
         <Button
           href="#tiers"
@@ -41,15 +41,20 @@ export function TheBottom() {
           {SITE.cta.text}
         </Button>
 
-        <Grid id="tiers" columns={3} style={{ gap: 20 }}>
+        <Row id="tiers" style={{ gap: 20, alignItems: "stretch" }}>
           {TIERS.map((tier) => (
-            <Column key={tier.name} style={tier.featured ? { ...card, border: `3px solid ${colors.glow}` } : card}>
-              <MonoLabel color={tier.featured ? colors.glow : colors.cyan}>{tier.depthLabel}</MonoLabel>
-              <Heading level={3} style={{ fontSize: 28, fontWeight: 700 }}>
-                {tier.name}
-              </Heading>
-              <Text style={{ fontSize: 44, fontWeight: 700, lineHeight: 1 }}>{tier.price}</Text>
-              <Text style={{ fontSize: 17, lineHeight: 1.4 }}>{tier.perk}</Text>
+            <Column
+              key={tier.name}
+              style={{ ...card, justifyContent: "space-between", ...(tier.featured && { border: `3px solid ${colors.glow}` }) }}
+            >
+              <Column style={{ gap: 10 }}>
+                <MonoLabel color={tier.featured ? colors.glow : colors.cyan}>{tier.depthLabel}</MonoLabel>
+                <Heading level={3} style={{ fontSize: 28, fontWeight: 700 }}>
+                  {tier.name}
+                </Heading>
+                <Text style={{ fontSize: 44, fontWeight: 700, lineHeight: 1 }}>{tier.price}</Text>
+                <Text style={{ fontSize: 17, lineHeight: 1.4 }}>{tier.perk}</Text>
+              </Column>
               <Button
                 href="#"
                 style={{
@@ -64,7 +69,7 @@ export function TheBottom() {
               </Button>
             </Column>
           ))}
-        </Grid>
+        </Row>
 
         <Row style={{ gap: 32, justifyContent: "space-between", alignItems: "start" }}>
           <Column style={{ gap: 12 }}>
