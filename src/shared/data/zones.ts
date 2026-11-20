@@ -43,6 +43,7 @@ export const ZONES: readonly Zone[] = [
 /** Notes printed where the page's scale changes (see shared/lib/sea.ts). */
 export interface ScaleNote {
   depth: number;
+  /** `{now}` and `{before}` become the metres per px below and above `depth`, read from the scale. */
   text: string;
   /** Left edge in px within the content width (default: the right-hand margin). */
   x?: number;
@@ -55,13 +56,13 @@ export interface ScaleNote {
 export const SCALE_NOTES: readonly ScaleNote[] = [
   {
     depth: 200,
-    text: "SCALE: 1 px = 1 m from here. (It was 1 px = 0.5 m up top. A lot happens up there.)",
+    text: "SCALE: 1 px = {now} m from here. (It was 1 px = {before} m up top. A lot happens up there.)",
     // the open space under the leatherback, left of the Burj Khalifa
     x: 945,
     width: 180,
     dy: 94,
   },
-  { depth: 1000, text: "SCALE CHANGE: 1 px = 2 m. Nothing happens for a while, so we sped up." },
-  { depth: 6000, text: "SCALE CHANGE: 1 px = 4 m. Still nothing. Faster." },
-  { depth: 8000, text: "SCALE: back to 1 px = 2 m. Things are about to happen." },
+  { depth: 1000, text: "SCALE CHANGE: 1 px = {now} m. Nothing happens for a while, so we sped up." },
+  { depth: 6000, text: "SCALE CHANGE: 1 px = {now} m. Still nothing. Faster." },
+  { depth: 8000, text: "SCALE: back to 1 px = {now} m. Things are about to happen." },
 ];

@@ -2,6 +2,7 @@ import { Line, Svg } from "@hyper-elements/react";
 import { inkAt } from "@/shared/data/zones";
 import { formatDepth } from "@/shared/lib/format";
 import { depthToY, MAX_DEPTH, SEA_HEIGHT, ticks } from "@/shared/lib/sea";
+import { readoutText } from "@/shared/lib/readout";
 import { MonoLabel } from "@/shared/ui/mono-label";
 import { Positioned } from "@/shared/ui/positioned";
 
@@ -11,6 +12,8 @@ const X = 24;
 const TICK_STEP = 100;
 const LABEL_STEP = 500;
 const LABEL_LEFT = 50;
+/** Pressure, temperature and light under every 1,000 m label. */
+const READOUT_STEP = 1000;
 
 /** The depth ruler: the line, its ticks and its labels, all from the sea's scale. Put it inside the sea's `Layer`: the labels are `Positioned`. */
 export function DepthRuler() {
@@ -41,6 +44,15 @@ export function DepthRuler() {
           <Positioned key={depth} top={y - 8} left={LABEL_LEFT}>
             <MonoLabel color={inkAt(depth)} size={12}>
               {formatDepth(depth)}
+            </MonoLabel>
+          </Positioned>
+        ))}
+      {ticks(READOUT_STEP)
+        .filter(({ depth }) => depth > 0 && depth < MAX_DEPTH)
+        .map(({ depth, y }) => (
+          <Positioned key={`readout-${depth}`} top={y + 8} left={LABEL_LEFT}>
+            <MonoLabel color={inkAt(depth)} size={11}>
+              {readoutText(depth)}
             </MonoLabel>
           </Positioned>
         ))}

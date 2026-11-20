@@ -22,6 +22,15 @@ const SCALE: readonly ScaleSegment[] = [
 /** The bottom of the Challenger Deep, in metres. */
 export const MAX_DEPTH = 10935;
 
+/** Metres per px in the segment that starts at (or contains) `depth`; the segment that starts at `depth` wins. */
+export function metresPerPx(depth: number): number {
+  const seg = SCALE.find(([from, to]) => depth >= from && depth < to) ?? SCALE[SCALE.length - 1];
+  return 1 / seg[2];
+}
+
+/** Depths where the scale changes, from SCALE (the first segment starts at 0, not a change). */
+export const SCALE_CHANGES: readonly number[] = SCALE.slice(1).map(([from]) => from);
+
 /** Depth in metres → y in px from the sea surface. */
 export function depthToY(depth: number): number {
   let y = 0;
