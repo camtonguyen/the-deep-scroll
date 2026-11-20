@@ -11,7 +11,7 @@ import { BANDS, type Band } from "@/shared/data/zones";
 /** [fromDepth m, toDepth m, px per metre] */
 type ScaleSegment = readonly [from: number, to: number, pxPerMetre: number];
 
-const SCALE: readonly ScaleSegment[] = [
+export const SCALE: readonly ScaleSegment[] = [
   [0, 200, 2],
   [200, 1000, 1],
   [1000, 6000, 0.5],

@@ -6,10 +6,12 @@ import { colors, PAGE_WIDTH } from "@/shared/theme/tokens";
 /** Where the snow starts (m): it falls through the dark water only. */
 export const SNOW_FROM_DEPTH = 1000;
 const DOTS = 360;
+/** The snow drawing's height in px (the page picks it out by this to let it drift). */
+export const MARINE_SNOW_HEIGHT = Math.round(depthToY(MAX_DEPTH) - depthToY(SNOW_FROM_DEPTH) - 40);
 
 /** Tiny pale dots at seeded positions, so every render is identical. */
 export function MarineSnow() {
-  const height = Math.round(depthToY(MAX_DEPTH) - depthToY(SNOW_FROM_DEPTH) - 40);
+  const height = MARINE_SNOW_HEIGHT;
   const random = seededRandom(7);
   const dots = Array.from({ length: DOTS }, (_, i) => ({
     key: i,
