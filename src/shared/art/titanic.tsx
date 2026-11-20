@@ -14,6 +14,9 @@ export function Titanic() {
       <Circle cx={168} cy={69} r={3.5} style={{ fill: colors.aqua }} />
       <Circle cx={204} cy={68} r={3.5} style={{ fill: colors.aqua }} />
       <Circle cx={240} cy={68} r={3.5} style={{ fill: colors.aqua }} />
+      {[56, 92, 128, 164, 200, 236, 272].map((cx) => (
+        <Circle key={cx} cx={cx} cy={92} r={3} style={{ fill: colors.aqua }} />
+      ))}
       <Path d="M200 34 L188 6 M300 34 L330 14" style={{ stroke: colors.aqua, strokeWidth: 2.5 }} />
       <Path
         d="M40 112 l3 -10 l3 10 M110 112 l2 -8 l3 8 M250 111 l3 -12 l3 12"
