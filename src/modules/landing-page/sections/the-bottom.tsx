@@ -1,4 +1,4 @@
-import { Button, Column, Grid, Heading, Link, Row, Section, Span, Text } from "@hyper-elements/react";
+import { Button, Column, Grid, Heading, Row, Section, Span, Text } from "@hyper-elements/react";
 import { BOTTOM_FACTS, SITE, TIERS } from "@/shared/data/site";
 import { colors } from "@/shared/theme/tokens";
 import { Container } from "@/shared/ui/container";
@@ -63,6 +63,8 @@ export function TheBottom() {
                   border: `2px solid ${colors.aqua}`,
                   borderRadius: 12,
                   fontWeight: 700,
+                  fontSize: 16,
+                  padding: [13, 24],
                 }}
               >
                 {`Give ${tier.price}`}
@@ -79,11 +81,20 @@ export function TheBottom() {
           </Column>
           <Grid columns={2} stackOnMobile={false} style={{ gap: 12 }}>
             {[...SITE.links, SITE.backToSurface].map((link) => (
-              <Column key={link.text} style={{ padding: [10, 0] }}>
-                <Link href={link.href} style={{ color: colors.aqua, fontSize: 16 }}>
-                  {link.text}
-                </Link>
-              </Column>
+              <Button
+                key={link.text}
+                href={link.href}
+                style={{
+                  backgroundColor: "transparent",
+                  color: colors.aqua,
+                  fontSize: 16,
+                  textAlign: "left",
+                  textDecoration: "underline",
+                  padding: [13, 0],
+                }}
+              >
+                {link.text}
+              </Button>
             ))}
           </Grid>
         </Row>

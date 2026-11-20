@@ -17,19 +17,23 @@ html{overscroll-behavior:none}
 #dc.on{opacity:1;transition:opacity .3s}
 #dc small{display:block;font-size:11px;letter-spacing:1px;opacity:.7}
 #dc b{display:block;font-size:20px;line-height:1.2;font-weight:700;color:${colors.white};white-space:nowrap}
-#dc-diver{top:50%;left:calc(max(0px,(100vw - ${CONTENT}px) / 2) + ${RULER_X - 36}px);margin-top:-35px;width:200px}
+#dc-diver{top:50%;top:50dvh;left:calc(max(0px,(100vw - ${CONTENT}px) / 2) + ${RULER_X - 36}px);margin-top:-35px;width:200px}
 #dc-diver svg{display:block;width:100%;height:auto}
 #dc-diver .beam{opacity:0;transition:opacity .4s}
 #dc-diver.lit .beam{opacity:.3}
 #dc-diver .you{position:absolute;left:46px;top:-16px;font:700 12px ${fonts.mono};letter-spacing:1px;color:${colors.navy};background:${colors.aqua};border-radius:6px;padding:1px 6px}
-@media (max-width:${SITE.phoneWidth}px){#dc-diver{left:auto;right:-37px;width:130px;margin-top:-17px}#dc-diver svg{transform:rotate(90deg);transition:transform .3s}#dc-diver.up svg{transform:rotate(-90deg)}#dc-diver .you{left:8px;top:4px}#dc{grid-template-columns:repeat(2,1fr);bottom:8px}}
+@media (max-width:${SITE.phoneWidth}px){#dc-diver{left:auto;right:-37px;width:130px;margin-top:-17px}#dc-diver svg{transform:rotate(90deg);transition:transform .3s}#dc-diver.up svg{transform:rotate(-90deg)}#dc-diver .you{left:8px;top:4px}#dc{grid-template-columns:repeat(4,auto);justify-content:space-between;gap:0 8px;padding:6px 12px;bottom:8px;border-radius:12px}#dc small{font-size:10px;letter-spacing:.5px}#dc b{font-size:clamp(13px,4.2vw,16px)}}
 @media (prefers-reduced-motion:no-preference){
 #top svg[height="40"]{animation:roll 7s linear infinite}
 #top svg[aria-label^="A small research boat"]{transform-origin:50% 90%;animation:bobboat 5s ease-in-out infinite}
+#top svg[width="150"][height="50"]{animation:cloudl 38s ease-in-out infinite alternate}
+#top svg[width="110"][height="40"]{animation:clouds 26s ease-in-out infinite alternate}
 #dive svg[height="${MARINE_SNOW_HEIGHT}"]{animation:drift 22s ease-in-out infinite alternate}
 }
 @keyframes roll{to{translate:-${WAVE_PERIOD}px 0}}
 @keyframes bobboat{0%,100%{translate:0 0;rotate:-1deg}50%{translate:0 5px;rotate:1deg}}
+@keyframes cloudl{to{translate:70px 0}}
+@keyframes clouds{to{translate:-50px 0}}
 @keyframes drift{from{translate:0 0}to{translate:0 36px}}
 `;
 
