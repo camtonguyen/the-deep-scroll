@@ -15,7 +15,12 @@ export function DescentMobile({ items }: { items: PlacedItem[] }) {
         const inBand = forPhone.filter((item) => item.depth >= band.from && item.depth < band.to);
         if (inBand.length === 0) return null;
         return (
-          <Section key={band.from} hidden={{ desktop: true }} style={{ backgroundColor: band.color, padding: [40, 20], gap: 32 }}>
+          <Section
+            key={band.from}
+            id={band.from === 0 ? "dive-mobile" : undefined}
+            hidden={{ desktop: true }}
+            style={{ backgroundColor: band.color, padding: [40, 20], gap: 32 }}
+          >
             {inBand.map((item) => item.node)}
           </Section>
         );

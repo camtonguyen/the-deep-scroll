@@ -24,7 +24,7 @@ function Bands() {
  */
 export function DescentDesktop({ items }: { items: PlacedItem[] }) {
   return (
-    <Section hidden={{ mobile: true }} style={{ backgroundColor: colors.abyss, padding: 0 }}>
+    <Section id="dive" hidden={{ mobile: true }} style={{ backgroundColor: colors.abyss, padding: 0 }}>
       <Layer style={{ height: SEA_HEIGHT }}>
         <Bands />
         <Column style={{ alignItems: "center" }}>

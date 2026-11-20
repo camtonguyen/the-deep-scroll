@@ -47,7 +47,7 @@ export function placeItems(): PlacedItem[] {
           level={2}
           style={{
             fontSize: 72,
-            fontWeight: 800,
+            fontWeight: 700,
             lineHeight: 1,
             textTransform: "uppercase",
             color: inkAt(zone.depth),

@@ -4,12 +4,18 @@ export const SITE = {
   title: "The Deep Scroll · The Hadal Society",
   description: "Scroll from the sea surface to the bottom of the Challenger Deep, 10,935 m down.",
   url: "https://example.org/the-deep-scroll", // TODO: replace with the deployed URL
-  nav: [
+  /** The page has no nav bar: every link lives in the footer. */
+  links: [
     { text: "Expeditions", href: "#" },
     { text: "Science", href: "#" },
-    { text: "Donate", href: "#give" },
+    { text: "Donate", href: "#tiers" },
+    { text: "Fund the next dive", href: "#tiers" },
+    { text: "Dive certificate", href: "#" },
   ],
-  cta: { text: "Fund the next dive", href: "#give" },
+  backToSurface: { text: "↑ Back to the surface (it's a long swim)", href: "#top" },
+  /** Top-right readout on the surface. */
+  readout: "28°C · 0 m",
+  cta: { text: "Fund the next dive", href: "#tiers" },
   footer: "The Hadal Society is fictional. The depths are real.",
 } as const;
 

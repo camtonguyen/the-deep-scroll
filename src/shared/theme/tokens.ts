@@ -13,8 +13,8 @@ export const colors = {
 } as const;
 
 export const fonts = {
-  display: "Bricolage Grotesque, system-ui, sans-serif",
-  mono: "IBM Plex Mono, ui-monospace, monospace",
+  display: "Roboto, system-ui, sans-serif",
+  mono: "Roboto Condensed, Roboto, sans-serif",
 } as const;
 
 /** Width of the readable content, in px (see shared/ui/container.tsx). */
