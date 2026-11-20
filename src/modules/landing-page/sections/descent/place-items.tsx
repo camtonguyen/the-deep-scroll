@@ -1,6 +1,6 @@
 import { Heading } from "@hyper-elements/react";
 import type { ReactNode } from "react";
-import { ART, BurjKhalifa } from "@/shared/art";
+import { ART, type ArtPlacement, BurjKhalifa } from "@/shared/art";
 import { STOPS } from "@/shared/data/stops";
 import { inkAt, SCALE_NOTES, ZONES } from "@/shared/data/zones";
 import { depthToY } from "@/shared/lib/sea";
@@ -21,6 +21,8 @@ export interface PlacedItem {
   node: ReactNode;
   /** Shown on desktop only (e.g. ruler labels, which phones don't have room for). */
   desktopOnly?: boolean;
+  /** Drawn across the whole window rather than inside the content width. */
+  bleed?: boolean;
 }
 
 export const COLUMNS = {
@@ -95,9 +97,9 @@ export function placeItems(): PlacedItem[] {
 
   for (const stop of STOPS) {
     const y = depthToY(stop.depth) + (stop.nudge ?? 0);
-    if (stop.art) {
-      const { Component, x, dy } = ART[stop.art];
-      items.push({ key: `${stop.id}-art`, depth: stop.depth, y: y + dy, left: x, node: <Component /> });
+    for (const id of stop.art === undefined ? [] : [stop.art].flat()) {
+      const { Component, x, dy, desktopOnly, bleed }: ArtPlacement = ART[id];
+      items.push({ key: `${stop.id}-${id}`, depth: stop.depth, y: y + dy, left: x, desktopOnly, bleed, node: <Component /> });
     }
     items.push({
       key: stop.id,

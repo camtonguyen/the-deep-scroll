@@ -27,16 +27,25 @@ export function DescentDesktop({ items }: { items: PlacedItem[] }) {
     <Section id="dive" hidden={{ mobile: true }} style={{ backgroundColor: colors.abyss, padding: 0 }}>
       <Layer style={{ height: SEA_HEIGHT }}>
         <Bands />
-        <Column style={{ alignItems: "center" }}>
+        <Column style={{ alignItems: "center", overflow: "hidden" }}>
           <Layer style={{ width: "100%", maxWidth: CONTENT_WIDTH, height: SEA_HEIGHT }}>
             <DepthRuler />
-            {items.map((item) => (
-              <Positioned key={item.key} top={item.y} left={item.left}>
-                {item.node}
-              </Positioned>
-            ))}
+            {items
+              .filter((item) => !item.bleed)
+              .map((item) => (
+                <Positioned key={item.key} top={item.y} left={item.left}>
+                  {item.node}
+                </Positioned>
+              ))}
           </Layer>
         </Column>
+        {items
+          .filter((item) => item.bleed)
+          .map((item) => (
+            <Column key={item.key} style={{ alignItems: "center", overflow: "hidden", padding: { top: Math.round(item.y) } }}>
+              {item.node}
+            </Column>
+          ))}
       </Layer>
     </Section>
   );
