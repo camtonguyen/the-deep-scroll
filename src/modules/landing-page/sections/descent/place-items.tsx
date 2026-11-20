@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { ART } from "@/shared/art";
 import { STOPS } from "@/shared/data/stops";
 import { inkAt, SCALE_NOTES, ZONES } from "@/shared/data/zones";
-import { depthToY, MAX_DEPTH } from "@/shared/lib/depth-scale";
+import { depthToY } from "@/shared/lib/sea";
 import { formatDepth } from "@/shared/lib/format";
 import { colors } from "@/shared/theme/tokens";
 import { Fact } from "@/shared/ui/fact";
@@ -29,7 +29,6 @@ export const COLUMNS = {
   scaleNote: 960,
   /** The first zone title sits top-right, clear of the surface stops. */
   surfaceZone: 560,
-  rulerLabel: 50,
 } as const;
 
 /** Every item on the way down, built from the data files, sorted by depth. */
@@ -104,21 +103,6 @@ export function placeItems(): PlacedItem[] {
       y,
       left: stop.x ?? (stop.side === "left" ? COLUMNS.left : COLUMNS.right),
       node: <Fact {...stop} color={inkAt(stop.depth)} />,
-    });
-  }
-
-  for (let depth = 500; depth < MAX_DEPTH; depth += 500) {
-    items.push({
-      key: `ruler-${depth}`,
-      depth,
-      y: depthToY(depth) - 8,
-      left: COLUMNS.rulerLabel,
-      desktopOnly: true,
-      node: (
-        <MonoLabel color={inkAt(depth)} size={12}>
-          {formatDepth(depth)}
-        </MonoLabel>
-      ),
     });
   }
 

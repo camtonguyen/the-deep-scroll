@@ -40,7 +40,7 @@ export const ZONES: readonly Zone[] = [
   { id: "hadal", name: "Hadal zone", depth: 6000, note: "Named after Hades, god of the underworld. Only ocean trenches go this deep." },
 ];
 
-/** Notes printed where the page's scale changes (see shared/lib/depth-scale.ts). */
+/** Notes printed where the page's scale changes (see shared/lib/sea.ts). */
 export const SCALE_NOTES: readonly { depth: number; text: string }[] = [
   { depth: 200, text: "SCALE: 1 px = 1 m from here. (It was 1 px = 0.5 m up top. A lot happens up there.)" },
   { depth: 1000, text: "SCALE CHANGE: 1 px = 2 m. Nothing happens for a while, so we sped up." },

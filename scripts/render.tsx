@@ -9,22 +9,14 @@ import { ElementsError, formatDiagnostics, render } from "@hyper-elements/react"
 import { renderImage } from "@hyper-elements/react/image";
 import { renderPdf } from "@hyper-elements/react/pdf";
 import { OUTPUTS } from "../src/outputs";
+import { FONTS } from "../src/shared/theme/fonts";
 
 const OUT = new URL("../out/", import.meta.url);
 const FONTS_DIR = new URL("../assets/fonts/", import.meta.url);
 
 /** PDF and PNG are drawn offline, so they get the font files as bytes (TTF). */
-const FONT_FILES = [
-  { family: "Bricolage Grotesque", weight: 400, file: "BricolageGrotesque-Regular.ttf" },
-  { family: "Bricolage Grotesque", weight: 800, file: "BricolageGrotesque-ExtraBold.ttf" },
-  { family: "IBM Plex Mono", weight: 400, file: "IBMPlexMono-Regular.ttf" },
-  { family: "IBM Plex Mono", weight: 600, file: "IBMPlexMono-SemiBold.ttf" },
-] as const;
-
 function loadFonts() {
-  return Promise.all(
-    FONT_FILES.map(async ({ family, weight, file }) => ({ family, weight, src: await readFile(new URL(file, FONTS_DIR)) })),
-  );
+  return Promise.all(FONTS.map(async ({ family, weight, ttf }) => ({ family, weight, src: await readFile(new URL(ttf, FONTS_DIR)) })));
 }
 
 async function main() {

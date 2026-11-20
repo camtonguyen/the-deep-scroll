@@ -22,7 +22,7 @@ ESLint enforces these boundaries; `pnpm lint` fails on a wrong import.
   `transform`, no text. `Svg` is not allowed in an `Email`.
 - To place something at a depth, use `<Positioned>` inside a `Layer`.
 - The PDF and PNG get fonts as TTF bytes (`assets/fonts/`); the Page and Email
-  load web fonts from `webFonts` in `src/shared/theme/theme.ts`.
+  load web fonts from `FONTS` in `src/shared/theme/fonts.ts`.
 - Never use `Math.random()` in art: use `seededRandom()` so renders are stable.
 - Reference: `node_modules/@hyper-elements/react/REFERENCE.md` and `GUIDE.md`.
 
@@ -34,7 +34,8 @@ Use pnpm (version pinned in `package.json` → `packageManager`; run `corepack e
 
 - `pnpm dev`: the landing page at http://localhost:5173 (`?only=<section id>` renders one section; resize for the phone layout)
 - `pnpm render`: write every output to `out/`
-- `pnpm check`: typecheck, lint, format check and render. Run before committing.
+- `pnpm test`: unit tests (Node test runner via tsx)
+- `pnpm check`: typecheck, lint, tests, format check and render. Run before committing.
 
 ## Style
 

@@ -10,7 +10,7 @@ import tseslint from "typescript-eslint";
  *   shared/   → may import only shared/
  *   modules/x → may import shared/ and its own module, never another module
  *   outputs   → may import shared/ and each module's public index.ts
- *   scripts/  → may import outputs
+ *   scripts/  → may import outputs and shared
  */
 export default tseslint.config(
   { ignores: ["dist", "out", "node_modules"] },
@@ -49,7 +49,7 @@ export default tseslint.config(
               from: { type: "outputs" },
               allow: { to: [{ type: "shared" }, { type: "module", elementPath: "**/index.ts" }] },
             },
-            { from: { type: "scripts" }, allow: { to: { type: "outputs" } } },
+            { from: { type: "scripts" }, allow: { to: [{ type: "outputs" }, { type: "shared" }] } },
           ],
         },
       ],

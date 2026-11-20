@@ -1,7 +1,8 @@
 import { Button, Column, Email, Heading, Section, Text } from "@hyper-elements/react";
 import { SAMPLE_DIVER, SITE } from "@/shared/data/site";
 import { STOPS } from "@/shared/data/stops";
-import { theme, webFonts } from "@/shared/theme/theme";
+import { webFonts } from "@/shared/theme/fonts";
+import { theme } from "@/shared/theme/theme";
 import { colors } from "@/shared/theme/tokens";
 import { MonoLabel } from "@/shared/ui/mono-label";
 

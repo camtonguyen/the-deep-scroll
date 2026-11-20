@@ -7,8 +7,9 @@
     "dev": "vite",
     "render": "tsx scripts/render.tsx",
     "typecheck": "tsc --noEmit",
+    "test": "tsx --test",
     "lint": "eslint .",
-    "check": "pnpm typecheck && pnpm lint && prettier --check . && pnpm render",
+    "check": "pnpm typecheck && pnpm lint && pnpm test && prettier --check . && pnpm render",
     "format": "prettier --write ."
   },
   "dependencies": {

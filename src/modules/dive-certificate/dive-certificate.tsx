@@ -1,7 +1,7 @@
 import { Column, Divider, Document, Heading, Row, Text } from "@hyper-elements/react";
 import { DepthStripe } from "@/shared/art/depth-stripe";
 import { SAMPLE_DIVER, SITE } from "@/shared/data/site";
-import { MAX_DEPTH } from "@/shared/lib/depth-scale";
+import { MAX_DEPTH } from "@/shared/lib/sea";
 import { formatDepth, formatNumber, pressureAtm } from "@/shared/lib/format";
 import { theme } from "@/shared/theme/theme";
 import { colors } from "@/shared/theme/tokens";
