@@ -27,7 +27,7 @@ export default function DiveCertificate({ diver = SAMPLE_DIVER }: DiveCertificat
         <Column style={{ padding: 64, gap: 24 }}>
           <MonoLabel>{SITE.name.toUpperCase()} · CERTIFICATE OF DESCENT</MonoLabel>
           <Text style={{ fontSize: 22 }}>This certifies that</Text>
-          <Heading level={1} style={{ fontSize: 64, fontWeight: 800, lineHeight: 1 }}>
+          <Heading level={1} style={{ fontSize: 64, fontWeight: 700, lineHeight: 1 }}>
             {diver.name}
           </Heading>
           <Text style={{ fontSize: 22, lineHeight: 1.4 }}>

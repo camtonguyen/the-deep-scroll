@@ -92,5 +92,5 @@ These boundaries are enforced by ESLint (`eslint-plugin-boundaries`).
 
 ## Credits
 
-The Hadal Society is fictional. The depths are real. Fonts: Bricolage Grotesque and
-IBM Plex Mono (SIL Open Font License, in `assets/fonts/`). Code: MIT.
+The Hadal Society is fictional. The depths are real. Fonts: Roboto and
+Roboto Condensed (SIL Open Font License, in `assets/fonts/`). Code: MIT.

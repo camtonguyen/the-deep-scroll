@@ -16,7 +16,7 @@ export default function ShareCard() {
           <MonoLabel color={colors.cyan} size={18}>
             10,935 m · CHALLENGER DEEP
           </MonoLabel>
-          <Heading level={1} style={{ fontSize: 76, lineHeight: 0.98, fontWeight: 800 }}>
+          <Heading level={1} style={{ fontSize: 76, lineHeight: 0.98, fontWeight: 700 }}>
             I scrolled 10,935 m to the bottom of the ocean.
           </Heading>
           <Row style={{ justifyContent: "space-between", alignItems: "end" }}>

@@ -1,4 +1,4 @@
-import { Button, Column, Grid, Heading, Link, Section, Span, Text } from "@hyper-elements/react";
+import { Button, Column, Grid, Heading, Link, Row, Section, Span, Text } from "@hyper-elements/react";
 import { BOTTOM_FACTS, SITE, TIERS } from "@/shared/data/site";
 import { colors } from "@/shared/theme/tokens";
 import { Container } from "@/shared/ui/container";
@@ -15,7 +15,7 @@ export function TheBottom() {
           <MonoLabel color={colors.cyan} size={14}>
             10,935 m · CHALLENGER DEEP · MARIANA TRENCH · ≈1,070 atm · ~2.5°C
           </MonoLabel>
-          <Heading level={2} style={{ fontSize: 112, lineHeight: 0.94, fontWeight: 800, letterSpacing: -3.5, mobile: { fontSize: 54 } }}>
+          <Heading level={2} style={{ fontSize: 112, lineHeight: 0.94, fontWeight: 700, letterSpacing: -3.5, mobile: { fontSize: 54 } }}>
             You made it. <Span style={{ color: colors.cyan }}>10,935</Span> metres.
           </Heading>
           <Text style={{ fontSize: 26, lineHeight: 1.35 }}>
@@ -36,19 +36,19 @@ export function TheBottom() {
 
         <Button
           href="#tiers"
-          style={{ backgroundColor: colors.glow, color: colors.abyss, fontSize: 23, fontWeight: 800, borderRadius: 14, padding: [20, 36] }}
+          style={{ backgroundColor: colors.glow, color: colors.abyss, fontSize: 23, fontWeight: 700, borderRadius: 14, padding: [20, 36] }}
         >
           {SITE.cta.text}
         </Button>
 
-        <Grid columns={3} style={{ gap: 20 }}>
+        <Grid id="tiers" columns={3} style={{ gap: 20 }}>
           {TIERS.map((tier) => (
             <Column key={tier.name} style={tier.featured ? { ...card, border: `3px solid ${colors.glow}` } : card}>
               <MonoLabel color={tier.featured ? colors.glow : colors.cyan}>{tier.depthLabel}</MonoLabel>
-              <Heading level={3} style={{ fontSize: 28, fontWeight: 800 }}>
+              <Heading level={3} style={{ fontSize: 28, fontWeight: 700 }}>
                 {tier.name}
               </Heading>
-              <Text style={{ fontSize: 44, fontWeight: 800, lineHeight: 1 }}>{tier.price}</Text>
+              <Text style={{ fontSize: 44, fontWeight: 700, lineHeight: 1 }}>{tier.price}</Text>
               <Text style={{ fontSize: 17, lineHeight: 1.4 }}>{tier.perk}</Text>
               <Button
                 href="#"
@@ -57,7 +57,7 @@ export function TheBottom() {
                   color: tier.featured ? colors.abyss : colors.aqua,
                   border: `2px solid ${colors.aqua}`,
                   borderRadius: 12,
-                  fontWeight: 800,
+                  fontWeight: 700,
                 }}
               >
                 {`Give ${tier.price}`}
@@ -66,13 +66,22 @@ export function TheBottom() {
           ))}
         </Grid>
 
-        <Column style={{ gap: 8 }}>
-          <MonoLabel>{SITE.footer}</MonoLabel>
-          <MonoLabel>Scale: 1 px = 1 m, mostly. The ruler shows where we cheated.</MonoLabel>
-          <Link href="#top" style={{ color: colors.aqua }}>
-            ↑ Back to the surface (it's a long swim)
-          </Link>
-        </Column>
+        <Row style={{ gap: 32, justifyContent: "space-between", alignItems: "start" }}>
+          <Column style={{ gap: 12 }}>
+            <Text style={{ fontSize: 20, fontWeight: 700 }}>{SITE.name}</Text>
+            <MonoLabel>{SITE.footer}</MonoLabel>
+            <MonoLabel>Scale: 1 px = 1 m, mostly. The ruler shows where we cheated.</MonoLabel>
+          </Column>
+          <Grid columns={2} stackOnMobile={false} style={{ gap: 12 }}>
+            {[...SITE.links, SITE.backToSurface].map((link) => (
+              <Column key={link.text} style={{ padding: [10, 0] }}>
+                <Link href={link.href} style={{ color: colors.aqua, fontSize: 16 }}>
+                  {link.text}
+                </Link>
+              </Column>
+            ))}
+          </Grid>
+        </Row>
       </Container>
     </Section>
   );

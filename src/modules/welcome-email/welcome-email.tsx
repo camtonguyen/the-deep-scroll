@@ -22,7 +22,7 @@ export default function WelcomeEmail({ name = SAMPLE_DIVER.name }: { name?: stri
     >
       <Section style={{ backgroundColor: colors.sky, padding: [32, 32], gap: 12 }}>
         <MonoLabel>{SITE.name.toUpperCase()}</MonoLabel>
-        <Heading level={1} style={{ fontSize: 40, fontWeight: 800, lineHeight: 1 }}>
+        <Heading level={1} style={{ fontSize: 40, fontWeight: 700, lineHeight: 1 }}>
           {`Welcome aboard, ${name.split(" ")[0]}.`}
         </Heading>
       </Section>
@@ -31,11 +31,11 @@ export default function WelcomeEmail({ name = SAMPLE_DIVER.name }: { name?: stri
         {favourites.map((stop) => (
           <Column key={stop.id} style={{ backgroundColor: colors.deepCard, borderRadius: 12, padding: 20, gap: 4 }}>
             <MonoLabel color={colors.cyan}>{stop.label}</MonoLabel>
-            <Text style={{ fontWeight: 800, fontSize: 20 }}>{stop.title}</Text>
+            <Text style={{ fontWeight: 700, fontSize: 20 }}>{stop.title}</Text>
             <Text>{stop.body}</Text>
           </Column>
         ))}
-        <Button href={SITE.url} style={{ backgroundColor: colors.glow, color: colors.abyss, fontWeight: 800, borderRadius: 12 }}>
+        <Button href={SITE.url} style={{ backgroundColor: colors.glow, color: colors.abyss, fontWeight: 700, borderRadius: 12 }}>
           Read your first expedition log
         </Button>
         <MonoLabel>{SITE.footer}</MonoLabel>

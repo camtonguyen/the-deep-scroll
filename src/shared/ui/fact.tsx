@@ -16,7 +16,7 @@ export function Fact({ label, title, body, joke, color, width = 360 }: FactProps
     <Column style={{ width, gap: 6, color, mobile: { width: "100%" } }}>
       <MonoLabel color={color}>{label}</MonoLabel>
       {title && (
-        <Heading level={3} style={{ fontSize: 24, fontWeight: 800, lineHeight: 1.1 }}>
+        <Heading level={3} style={{ fontSize: 24, fontWeight: 700, lineHeight: 1.1 }}>
           {title}
         </Heading>
       )}

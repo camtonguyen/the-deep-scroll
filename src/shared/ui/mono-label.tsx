@@ -8,7 +8,7 @@ interface MonoLabelProps {
   size?: number;
 }
 
-/** Depths, pressures, footnotes: the small IBM Plex Mono voice of the page. */
+/** Depths, pressures, footnotes: the small Roboto Condensed voice of the page. */
 export function MonoLabel({ children, color, size = 13 }: MonoLabelProps) {
   return <Text style={{ fontFamily: fonts.mono, fontSize: size, letterSpacing: 0.5, color }}>{children}</Text>;
 }
