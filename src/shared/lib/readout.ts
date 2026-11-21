@@ -1,4 +1,4 @@
-import { pressureAtm } from "./format";
+import { formatNumber, pressureAtm } from "./format";
 
 /** [depth m, °C]: rough averages, read in between by straight lines. */
 export const TEMPERATURES: readonly (readonly [number, number])[] = [
@@ -30,5 +30,5 @@ export function lightAt(depth: number): string {
 
 /** 4000 → "≈397 atm · 2 °C · dark" */
 export function readoutText(depth: number): string {
-  return `≈${Math.round(pressureAtm(depth)).toLocaleString("en-US")} atm · ${Math.round(temperatureC(depth))} °C · ${lightAt(depth)}`;
+  return `≈${formatNumber(pressureAtm(depth))} atm · ${Math.round(temperatureC(depth))} °C · ${lightAt(depth)}`;
 }

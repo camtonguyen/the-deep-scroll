@@ -6,7 +6,6 @@ export const SOUND_STYLE = `
 #snd[hidden]{display:none}
 #snd:not(.on){visibility:hidden;opacity:0;pointer-events:none}
 #snd.on{opacity:1}
-#snd:focus-visible{outline:3px solid ${colors.cyan};outline-offset:2px}
 #snd svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #snd[aria-pressed=true] .off,#snd[aria-pressed=false] .on{display:none}
 `;

@@ -1,7 +1,8 @@
 import { Circle, Path, Svg } from "@hyper-elements/react";
 import { art, colors, sea } from "@/shared/theme/tokens";
+import { outline } from "./styles";
 
-const edge = { fill: art.turtleHead, stroke: colors.navy, strokeWidth: 2.5 } as const;
+const edge = outline(art.turtleHead, colors.navy);
 
 /** Leatherback sea turtle: ridged shell, long front flippers. */
 export function Leatherback() {

@@ -6,6 +6,8 @@ import { colors } from "@/shared/theme/tokens";
  * the focus rings are untouched. Classes: btn (buttons), sh-icon, cd-open, flink (footer links).
  */
 export const HOVER_CSS = `
+/* the one focus ring for the dark sections: the share icons, the sound button and the certificate dialog */
+.sh-icon:focus-visible,#snd:focus-visible,.cd-open:focus-visible,#cd button:focus-visible,#cd input:focus-visible{outline:3px solid ${colors.cyan};outline-offset:2px}
 @media (hover:hover){
 .btn,#tiers>*,.sh-icon,.cd-open,.flink,#cd .go,#cd .no,#cd .x,#top .go,#snd{transition:translate .2s ease,filter .2s ease,box-shadow .2s ease,background-color .2s ease,opacity .3s ease,visibility .3s}
 .btn:hover,.sh-icon:hover,.cd-open:hover,#cd .go:hover,#cd .no:hover,#snd:hover{translate:0 -2px;filter:brightness(1.15);box-shadow:0 6px 18px ${colors.glowHaloInner}}

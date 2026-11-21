@@ -1,7 +1,7 @@
 import { Circle, Path, Svg } from "@hyper-elements/react";
 import { art, colors } from "@/shared/theme/tokens";
+import { open } from "./styles";
 
-const line = { fill: "transparent", stroke: colors.aqua, strokeWidth: 2.5 } as const;
 const BODY =
   "M26 62 C 22 28, 44 16, 61 16 C 78 16, 100 28, 96 62 C 102 80, 108 94, 104 102 Q 94 96 88 104 Q 80 94 74 106 Q 68 94 61 106 Q 54 94 48 106 Q 42 94 34 104 Q 28 96 18 102 C 14 94, 20 80, 26 62 Z";
 
@@ -28,7 +28,7 @@ export function DumboOctopus() {
         d="M46 76 Q 44 90 48 102 M61 78 L61 104 M76 76 Q 78 90 74 102"
         style={{ fill: "transparent", stroke: art.dumboWeb, strokeWidth: 1.8 }}
       />
-      <Path d={BODY} style={line} />
+      <Path d={BODY} style={open} />
       <Circle cx={57} cy={27} r={2} style={{ fill: art.dumboBelly }} />
       <Circle cx={65} cy={25} r={2} style={{ fill: art.dumboBelly }} />
       <Circle cx={73} cy={28} r={2} style={{ fill: art.dumboBelly }} />

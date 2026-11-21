@@ -9,7 +9,6 @@ const STYLE = `
 .sh-icons{display:flex;gap:12px}
 .sh-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;padding:0;box-sizing:border-box;border:2px solid ${colors.aqua};border-radius:10px;background:transparent;color:${colors.aqua};cursor:pointer}
 .sh-icon:hover{background:${colors.deepCard}}
-.sh-icon:focus-visible{outline:3px solid ${colors.cyan};outline-offset:2px}
 .sh-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 `;
 

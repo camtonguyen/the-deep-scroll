@@ -1,12 +1,12 @@
 import { readFile } from "node:fs/promises";
+import { onlyGet } from "./http";
 
 const FILE = new URL("../src/shared/sounds/bubble-underwater.mp3", import.meta.url);
 
 /** GET /api/sound → the underwater loop. Safari only plays audio from a server that answers Range requests, so this does (one range, no multi-range). */
 export async function handleSound(request: Request): Promise<Response> {
-  if (request.method !== "GET" && request.method !== "HEAD") {
-    return new Response("Use GET.", { status: 405, headers: { Allow: "GET, HEAD" } });
-  }
+  const bad = onlyGet(request);
+  if (bad) return bad;
   const bytes = new Uint8Array(await readFile(FILE));
   const headers: Record<string, string> = {
     "Content-Type": "audio/mpeg",

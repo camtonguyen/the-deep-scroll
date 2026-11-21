@@ -1,7 +1,8 @@
 import { Circle, Path, Svg } from "@hyper-elements/react";
 import { art, colors } from "@/shared/theme/tokens";
+import { outline } from "./styles";
 
-const edge = { fill: art.squidBody, stroke: colors.aqua, strokeWidth: 2.5 } as const;
+const edge = outline(art.squidBody);
 
 /** The squid the sperm whale is after: jetting away, arms trailing. */
 export function FleeingSquid() {

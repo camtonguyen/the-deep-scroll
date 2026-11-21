@@ -2,16 +2,15 @@ import { renderImage } from "@hyper-elements/react/image";
 import ShareCard from "@/modules/share-card";
 import { shareDepth, shareName } from "@/shared/lib/visitor";
 import { loadFonts } from "./fonts";
+import { onlyGet, text, tooMany } from "./http";
 import { allow, clientIp } from "./rate-limit";
-
-const text = (body: string, status: number, headers: Record<string, string> = {}) =>
-  new Response(body, { status, headers: { "Content-Type": "text/plain", "Cache-Control": "no-store", ...headers } });
 
 /** GET /api/share-card?name=&depth= → the visitor's share card as a PNG. Same name rules as the certificate; the card never changes for the same query, so it is cached. */
 export async function handleShareCard(request: Request): Promise<Response> {
-  if (request.method !== "GET" && request.method !== "HEAD") return text("Use GET.", 405, { Allow: "GET, HEAD" });
+  const bad = onlyGet(request);
+  if (bad) return bad;
   // Its own bucket: the certificate and the card should not use up each other's allowance.
-  if (!allow(`card:${clientIp(request)}`)) return text("Too many requests. Try again in a minute.", 429, { "Retry-After": "60" });
+  if (!allow(`card:${clientIp(request)}`)) return tooMany(true);
 
   const params = new URL(request.url).searchParams;
   const name = shareName(params.get("name"));
