@@ -1,5 +1,5 @@
 import { Button, Column, Email, Heading, Row, Section, Text } from "@hyper-elements/react";
-import { SAMPLE_DIVER, SITE, type Visitor } from "@/shared/data/site";
+import { MAIL, SAMPLE_DIVER, SITE, type Visitor } from "@/shared/data/site";
 import { STOPS } from "@/shared/data/stops";
 import { formatDepth } from "@/shared/lib/format";
 import { visitorDepth } from "@/shared/lib/visitor";
@@ -7,6 +7,9 @@ import { webFonts } from "@/shared/theme/fonts";
 import { theme } from "@/shared/theme/theme";
 import { colors } from "@/shared/theme/tokens";
 import { MonoLabel } from "@/shared/ui/mono-label";
+
+/** "Ada Marlowe" → "Ada". */
+export const firstName = (name: string) => name.split(" ")[0];
 
 const FAVOURITES = ["anglerfish", "dumbo", "snailfish"];
 
@@ -26,7 +29,7 @@ export default function WelcomeEmail({ name = SAMPLE_DIVER.name, depth = SAMPLE_
       <Section style={{ backgroundColor: colors.sky, padding: [32, 32], gap: 12 }}>
         <MonoLabel>{SITE.name.toUpperCase()}</MonoLabel>
         <Heading level={1} style={{ fontSize: 40, fontWeight: 700, lineHeight: 1 }}>
-          {`Welcome aboard, ${name.split(" ")[0]}.`}
+          {MAIL.subject(firstName(name))}
         </Heading>
       </Section>
       <Section style={{ backgroundColor: colors.abyss, color: colors.aqua, padding: [32, 32], gap: 20 }}>
@@ -43,6 +46,7 @@ export default function WelcomeEmail({ name = SAMPLE_DIVER.name, depth = SAMPLE_
           Back to the page
         </Button>
         <MonoLabel>{SITE.footer}</MonoLabel>
+        <MonoLabel>{MAIL.why}</MonoLabel>
       </Section>
     </Email>
   );

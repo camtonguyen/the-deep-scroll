@@ -53,6 +53,14 @@ Two icons below the footer text: LinkedIn and Download card. If the certificate 
 - `GET /api/share-card?name=&depth=` returns the card as a PNG (cached for a day). `?name=` on the page URL puts that name on the card.
 - **LinkedIn caches the card.** After changing it, refresh the cache with the [Post Inspector](https://www.linkedin.com/post-inspector/).
 
+## Welcome email
+
+Give an email in the certificate popup and the page asks `POST /api/welcome` to send the welcome email (HTML and plain text, checked with `validate()`). Sending goes through one function, `sendMail()` in `server/mail.ts`, which uses [Brevo](https://www.brevo.com)'s REST API (free: 9,000 a month, 300 a day, no card; you verify one sender address, no domain). Set `BREVO_API_KEY` and `MAIL_FROM` (see `.env.example`). Without them nothing is sent: the email is written to `out/welcome-email.html` and "mail not configured" is logged, so a fresh clone still runs.
+
+- A free-mail sender (gmail and the like) can land in spam because of DMARC; a verified address on your own domain is better.
+- Limits: 10 requests a minute per IP, 2 emails a minute per address, counted in memory (see `server/rate-limit.ts` for the upgrade path).
+- The key and the address are never logged.
+
 ## Project structure
 
 ```

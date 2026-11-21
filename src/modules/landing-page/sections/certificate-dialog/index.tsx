@@ -1,4 +1,5 @@
 import { Html } from "@hyper-elements/react";
+import { MAIL } from "@/shared/data/site";
 import { formatDepth } from "@/shared/lib/format";
 import { MAX_DEPTH } from "@/shared/lib/sea";
 import { DATE_MAX, EMAIL_MAX, NAME_MAX } from "@/shared/lib/visitor";
@@ -20,6 +21,7 @@ const STYLE = `
 #cd label{display:block;margin:0 0 4px;font:700 14px ${fonts.mono};letter-spacing:1px}
 #cd input{display:block;width:100%;box-sizing:border-box;min-height:44px;padding:10px 12px;border:2px solid ${colors.aqua};border-radius:10px;background:${colors.abyss};color:${colors.white};font:17px ${fonts.display}}
 #cd input[aria-invalid=true]{border-color:${colors.glow}}
+#cd .hint{margin:4px 0 0;font:13px ${fonts.mono};letter-spacing:.5px}
 #cd .field{margin:0 0 14px}
 #cd .err{min-height:1.2em;margin:4px 0 0;font:14px ${fonts.mono};color:${colors.glow}}
 #cd .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:8px}
@@ -40,7 +42,7 @@ const DIALOG = `<dialog id="cd" aria-labelledby="cd-title"><form id="cd-form" no
 <h2 id="cd-title">Your dive certificate</h2>
 <p>Depth reached: ${formatDepth(MAX_DEPTH)}, the bottom of the Challenger Deep.</p>
 ${field("name", "YOUR NAME", `type="text" autocomplete="name" required maxlength="${NAME_MAX}"`)}
-${field("email", "EMAIL (OPTIONAL, FOR A WELCOME EMAIL)", `type="email" autocomplete="email" inputmode="email" maxlength="${EMAIL_MAX}"`)}
+${field("email", "EMAIL (OPTIONAL, FOR A WELCOME EMAIL)", `type="email" autocomplete="email" inputmode="email" maxlength="${EMAIL_MAX}"`, `<div class="hint">${MAIL.formNote}</div>`)}
 ${field("date", "DATE", `type="text" autocomplete="off" maxlength="${DATE_MAX}"`)}
 <div class="row"><button class="go" id="cd-send" type="submit">Download PDF</button><button class="no" id="cd-close" type="button">Cancel</button></div>
 <div id="cd-status" role="status" aria-live="polite"></div>

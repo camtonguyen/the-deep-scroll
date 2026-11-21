@@ -8,9 +8,9 @@ const WINDOW_MS = 60_000;
 
 const hits = new Map<string, number[]>();
 
-export function allow(client: string, now = Date.now()): boolean {
+export function allow(client: string, now = Date.now(), limit = LIMIT): boolean {
   const recent = (hits.get(client) ?? []).filter((t) => now - t < WINDOW_MS);
-  if (recent.length >= LIMIT) {
+  if (recent.length >= limit) {
     hits.set(client, recent);
     return false;
   }

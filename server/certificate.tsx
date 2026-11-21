@@ -30,7 +30,7 @@ export async function handleCertificate(request: Request): Promise<Response> {
   const result = validateCertificateRequest(input, today());
   if (!result.ok) return json({ errors: result.errors }, 400);
 
-  // The email address is only validated here; the welcome email that uses it is a later step.
+  // The email address is only validated here; the page then asks /api/welcome to send the email.
   const { name, date } = result.value;
   const { pdf } = await renderPdf(<DiveCertificate name={name} depth={MAX_DEPTH} date={date} />, { fonts: await loadFonts() });
   return new Response(new Uint8Array(pdf), {

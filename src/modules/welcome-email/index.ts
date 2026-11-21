@@ -1,1 +1,1 @@
-export { default } from "./welcome-email";
+export { default, firstName } from "./welcome-email";
