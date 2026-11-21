@@ -1,6 +1,7 @@
 import { handleCertificate } from "./certificate";
 import { handleEmailArt } from "./email-art";
 import { handleShareCard } from "./share-card";
+import { handleSound } from "./sound";
 import { handleWelcome } from "./welcome";
 
 /** Every API route: path → handler. The dev server (vite.config.ts) and any serverless host read this one table. */
@@ -8,5 +9,6 @@ export const ROUTES: Record<string, (request: Request) => Promise<Response>> = {
   "/api/certificate": handleCertificate,
   "/api/email-art": handleEmailArt,
   "/api/share-card": handleShareCard,
+  "/api/sound": handleSound,
   "/api/welcome": handleWelcome,
 };
