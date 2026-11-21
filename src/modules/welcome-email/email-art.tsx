@@ -11,7 +11,7 @@ import { Positioned } from "@/shared/ui/positioned";
  */
 export const EMAIL_ART = {
   hero: { width: 600, height: 330, background: colors.sky },
-  logo: { width: 36, height: 36, background: colors.sky },
+  logo: { width: 36, height: 36, background: colors.abyss },
   anglerfish: { width: 140, height: 86, background: colors.deepCard },
   dumbo: { width: 94, height: 86, background: colors.deepCard },
   snailfish: { width: 140, height: 84, background: colors.deepCard },
