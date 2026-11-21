@@ -5,7 +5,7 @@ import { lightLoss } from "@/shared/theme/tokens";
  * Every fact on the way down. A stop is placed at its real depth by the
  * depth scale; change `depth` and the stop moves on every output.
  *
- * Verify every depth and claim against a source before publishing.
+ * Every claim has a source line in docs/sources.md, or is marked approximate (~) in the copy.
  */
 export interface Stop {
   id: string;
@@ -71,7 +71,7 @@ export const STOPS: readonly Stop[] = [
     side: "left",
     label: "~100 m",
     title: "Blue whale",
-    body: "The largest animal known to have ever lived. Usually feeds above 200 m.",
+    body: "The largest animal known to have ever lived. Feeds mostly in the top 300 m.",
     joke: "It doesn't fit. It keeps going →",
     art: "blueWhale",
   },
@@ -146,10 +146,10 @@ export const STOPS: readonly Stop[] = [
     id: "sperm-whale",
     depth: 2000,
     side: "left",
-    label: "~2,000 m",
+    label: "down to ~1,000 m or more",
     title: "Sperm whale",
     body: "Hunts squid in total darkness by echolocation. Its clicks are the loudest sounds made by any animal.",
-    joke: "Holds its breath for over an hour. Show-off.",
+    joke: "Can hold its breath for over an hour. Show-off.",
     art: ["spermWhale", "fleeingSquid"],
   },
   { id: "snow", depth: 2520, side: "right", label: "Nothing here but snow. ·  ·   ·" },
@@ -159,7 +159,7 @@ export const STOPS: readonly Stop[] = [
     side: "left",
     label: "2,992 m",
     title: "Cuvier's beaked whale",
-    body: "The deepest dive ever recorded for a mammal. One dive lasted 3 h 42 min.",
+    body: "The deepest dive ever recorded for a mammal. Its longest recorded dive lasted over two hours.",
     joke: "Breath held: yes.",
     art: "cuviersWhale",
   },
@@ -179,7 +179,7 @@ export const STOPS: readonly Stop[] = [
     side: "left",
     label: "~3,800 m",
     title: "RMS Titanic",
-    body: "The bow still sits upright on the seafloor, about 600 m from the stern.",
+    body: "The bow and the stern lie roughly 600 to 800 m apart.",
     art: "titanic",
   },
   {
@@ -200,7 +200,7 @@ export const STOPS: readonly Stop[] = [
     nudge: 12,
     side: "right",
     label: "~4,800 m · THE ABYSSAL PLAIN",
-    body: "Flat, muddy, and it covers roughly half of Earth's surface. The trench is still ahead.",
+    body: "Flat, muddy, and it covers about 70% of the seafloor. The trench is still ahead.",
     art: ["abyssalPlain", "seaPig"],
   },
   { id: "scroll-wheel", depth: 5300, side: "right", label: "Your scroll wheel is fine." },
@@ -253,7 +253,7 @@ export const STOPS: readonly Stop[] = [
     width: 320,
     label: "23 JANUARY 1960",
     title: "Trieste",
-    body: "Jacques Piccard and Don Walsh, first to the bottom. 4 h 47 min down, 20 min at the bottom.",
+    body: "Jacques Piccard and Don Walsh, first to the bottom. Nearly five hours down, 20 min at the bottom.",
     art: ["triesteSub", "flag"],
   },
 ];

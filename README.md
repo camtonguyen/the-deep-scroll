@@ -61,6 +61,10 @@ Give an email in the certificate popup and the page asks `POST /api/welcome` to 
 - Limits: 10 requests a minute per IP, 2 emails a minute per address, counted in memory (see `server/rate-limit.ts` for the upgrade path).
 - The key and the address are never logged.
 
+## Facts and sources
+
+Every number on the page has a source line in [docs/sources.md](docs/sources.md), or is marked approximate (`~`) in the copy. The temperature and sunlight in the dive computer are rough averages, not measurements.
+
 ## Project structure
 
 ```
