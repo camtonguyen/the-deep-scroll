@@ -43,6 +43,7 @@ export function TheBottom() {
             <Column style={{ flex: "none", backgroundColor: colors.glowHaloInner, borderRadius: 22, padding: 10 }}>
               <Button
                 href="#tiers"
+                attrs={{ class: "btn" }}
                 style={{
                   backgroundColor: colors.glow,
                   color: colors.abyss,
@@ -82,6 +83,7 @@ export function TheBottom() {
                 </Column>
                 <Button
                   href="#"
+                  attrs={{ class: "btn" }}
                   style={{
                     backgroundColor: tier.featured ? colors.glow : colors.deepCard,
                     color: tier.featured ? colors.abyss : colors.aqua,

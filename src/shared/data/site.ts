@@ -57,6 +57,12 @@ export const SHARE = {
   text: "I scrolled to the bottom of the ocean.",
 } as const;
 
+/** The underwater loop that plays while the diver moves: the route that serves it, and the key that remembers "off". */
+export const SOUND = {
+  route: "/api/sound",
+  storageKey: "deep-scroll-sound",
+} as const;
+
 export interface Tier {
   depthLabel: string;
   name: string;
