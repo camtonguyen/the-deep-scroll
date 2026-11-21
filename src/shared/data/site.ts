@@ -28,6 +28,14 @@ export const SITE = {
   copyright: "© 2026 The Hadal Society. All rights reserved.",
 } as const;
 
+/** Sharing: the LinkedIn dialog, the card route, and the words the phone share sheet gets. */
+export const SHARE = {
+  linkedin: "https://www.linkedin.com/sharing/share-offsite/?url=",
+  cardRoute: "/api/share-card",
+  cardSize: { width: 1200, height: 630 },
+  text: "I scrolled to the bottom of the ocean.",
+} as const;
+
 export interface Tier {
   depthLabel: string;
   name: string;

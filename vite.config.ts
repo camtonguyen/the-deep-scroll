@@ -21,7 +21,10 @@ function preview(): Plugin {
           const { render } = await server.ssrLoadModule("@hyper-elements/react");
           const { html } = await render(OUTPUTS[0].element(url.searchParams.get("only") ?? undefined));
           res.setHeader("Content-Type", "text/html");
-          res.end(await server.transformIndexHtml(req.url ?? "/", html));
+          const { withShareMeta } = await server.ssrLoadModule("/server/share-meta.ts");
+          res.end(
+            withShareMeta(await server.transformIndexHtml(req.url ?? "/", html), new URL(req.url ?? "/", `http://${req.headers.host}`)),
+          );
         } catch (error) {
           if (error instanceof Error) server.ssrFixStacktrace(error);
           res.statusCode = 500;

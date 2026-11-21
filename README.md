@@ -45,6 +45,14 @@ Node 20+ and pnpm (pinned via `packageManager`; `corepack enable` picks it up). 
   falling opacity. No images, gradients or shadows.
 - **One theme** (`defineTheme`) for all four roots.
 
+## Sharing to LinkedIn
+
+Two icons below the footer text: LinkedIn and Download card. If the certificate form has a name, the links carry it.
+
+- LinkedIn reads the card from the shared page's Open Graph tags (`og:image` etc.), not from an upload. `Page` only sets `title` and `description`, so `server/share-meta.ts` adds the tags to the rendered page. The `og:image` URL is absolute: set `SITE_URL` (see `.env.example`) to the public address; LinkedIn cannot reach `localhost`.
+- `GET /api/share-card?name=&depth=` returns the card as a PNG (cached for a day). `?name=` on the page URL puts that name on the card.
+- **LinkedIn caches the card.** After changing it, refresh the cache with the [Post Inspector](https://www.linkedin.com/post-inspector/).
+
 ## Project structure
 
 ```
