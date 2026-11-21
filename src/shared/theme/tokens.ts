@@ -40,6 +40,10 @@ export const colors = {
   glow: "#FFE45C",
   /** The yellow buttons' halo: the glow at 14% over the deep, blended flat (no opacity needed). */
   glowHaloInner: "#252313",
+  /** The yellow glow as a soft shadow around the featured tier card on hover. */
+  glowSoft: "rgba(255, 228, 92, 0.38)",
+  /** The same soft glow in neon blue, for the other tier cards. */
+  cyanSoft: "rgba(77, 242, 227, 0.32)",
 } as const;
 
 /** Colours of the drawings in shared/art, named for what they colour. */
