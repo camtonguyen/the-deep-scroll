@@ -3,6 +3,7 @@ import WelcomeEmail, { firstName } from "@/modules/welcome-email";
 import { MAIL } from "@/shared/data/site";
 import { MAX_DEPTH } from "@/shared/lib/sea";
 import { validateCertificateRequest } from "@/shared/lib/visitor";
+import { certificateLink, siteOrigin, today } from "./certificate-link";
 import { sendMail } from "./mail";
 import { json, onlyPost, tooMany } from "./http";
 import { allow, clientIp } from "./rate-limit";
@@ -27,16 +28,23 @@ export async function handleWelcome(request: Request): Promise<Response> {
     return json({ error: "Send the form as JSON." }, 400);
   }
 
-  // Same rules as the certificate form (the date is not used here).
-  const result = validateCertificateRequest(input, "");
+  // Same rules as the certificate: a name is required. The date is always today (a date from the client is ignored), fixed in the signed link.
+  const body = typeof input === "object" && input !== null ? (input as Record<string, unknown>) : {};
+  const result = validateCertificateRequest({ name: body.name, email: body.email }, today());
   if (!result.ok) return json({ errors: result.errors }, 400);
-  const { name, email } = result.value;
+  const { name, email, date } = result.value;
   if (!email) return json({ errors: { email: "Please type an email address." } }, 400);
   if (!allow(`mail:${email.toLowerCase()}`, Date.now(), 2))
     return json({ error: "That address just got an email. Try again in a minute." }, 429, { "Retry-After": "60" });
 
   // The renderer escapes the name; no HTML is built from visitor text here.
-  const design = <WelcomeEmail name={name} depth={MAX_DEPTH} />;
+  let link: string;
+  try {
+    link = await certificateLink(siteOrigin(request), name, date);
+  } catch {
+    return json({ error: "Something went wrong on our side." }, 500);
+  }
+  const design = <WelcomeEmail name={name} depth={MAX_DEPTH} certificateUrl={link} />;
   const checked = validate(design);
   if (!checked.valid) return json({ error: "Something went wrong on our side." }, 500);
   const { html, text: plain } = await render(design);
@@ -45,6 +53,7 @@ export async function handleWelcome(request: Request): Promise<Response> {
     const outcome = await sendMail({ to: email, subject: MAIL.subject(firstName(name)), html, text: plain });
     return json(
       {
+        sent: outcome === "sent",
         message: outcome === "sent" ? "Welcome email sent. Check your inbox." : "Mail is not set up on this server, so no email was sent.",
       },
       200,

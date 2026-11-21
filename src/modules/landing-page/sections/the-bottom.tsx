@@ -1,10 +1,10 @@
-import { Button, Column, Heading, Row, Section, Span, Text } from "@hyper-elements/react";
+import { Column, Heading, Row, Section, Span, Text } from "@hyper-elements/react";
 import { BOTTOM_FACTS, SITE } from "@/shared/data/site";
 import { colors } from "@/shared/theme/tokens";
 import { Container } from "@/shared/ui/container";
 import { MonoLabel } from "@/shared/ui/mono-label";
-import { CertificateDialog } from "./certificate-dialog";
 import { Footer } from "./footer";
+import { PostcardForm } from "./postcard-form";
 import { TierCards } from "./tier-cards";
 
 /** 10,935 m: arrival, why it matters, and how to support the next dive. */
@@ -36,30 +36,9 @@ export function TheBottom() {
             ))}
           </Row>
 
-          <Row style={{ alignItems: "center", gap: 28 }}>
-            {/* the yellow button's glow, as in the welcome email: one flat rounded box, 10 px around it; its left edge lines up with the cards */}
-            <Column style={{ flex: "none", backgroundColor: colors.glowHaloInner, borderRadius: 22, padding: 10 }}>
-              <Button
-                href="#tiers"
-                attrs={{ class: "btn" }}
-                style={{
-                  backgroundColor: colors.glow,
-                  color: colors.abyss,
-                  fontSize: 23,
-                  fontWeight: 700,
-                  borderRadius: 14,
-                  padding: [18, 36],
-                }}
-              >
-                {SITE.cta.text}
-              </Button>
-            </Column>
-            <Column style={{ flex: "none" }}>
-              <CertificateDialog />
-            </Column>
-          </Row>
-
           <TierCards />
+
+          <PostcardForm />
 
           <Footer />
         </Container>
