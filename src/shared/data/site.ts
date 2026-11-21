@@ -64,9 +64,9 @@ export const TIERS: readonly Tier[] = [
 ];
 
 export const BOTTOM_FACTS: readonly { value: string; text: string }[] = [
-  { value: "~75%", text: "of the seafloor still isn't mapped in high resolution." },
+  { value: "~73%", text: "of the seafloor still isn't mapped to modern standards (Seabed 2030, 2025)." },
   { value: "1960", text: "first visit (Trieste). 2012: first solo dive, by James Cameron." },
-  { value: "4 h 47 min", text: "how long Trieste took to sink this far. You did it in one scroll." },
+  { value: "~5 hours", text: "how long Trieste took to sink this far. You did it in one scroll." },
 ];
 
 /** What the certificate, email and share card are made for: one visitor's dive. */

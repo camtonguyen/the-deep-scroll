@@ -29,7 +29,10 @@ html{overscroll-behavior:none}
 #top svg[width="150"][height="50"]{animation:cloudl 38s ease-in-out infinite alternate}
 #top svg[width="110"][height="40"]{animation:clouds 26s ease-in-out infinite alternate}
 #dive svg[height="${MARINE_SNOW_HEIGHT}"]{animation:drift 22s ease-in-out infinite alternate}
+[style*="background-color:${colors.glowHalo.toLowerCase()}"]{animation:glow 3.2s ease-in-out infinite}
+[style*="background-color:${colors.glowHaloInner.toLowerCase()}"]{animation:glow 3.2s ease-in-out .25s infinite}
 }
+@keyframes glow{0%,100%{opacity:.45;scale:.97}50%{opacity:1;scale:1.03}}
 @keyframes roll{to{translate:-${WAVE_PERIOD}px 0}}
 @keyframes bobboat{0%,100%{translate:0 0;rotate:-1deg}50%{translate:0 5px;rotate:1deg}}
 @keyframes cloudl{to{translate:70px 0}}
