@@ -1,4 +1,4 @@
-import { Button, Column, Grid, Heading, Layer, Row, Section, Span, Text } from "@hyper-elements/react";
+import { Button, Column, Grid, Heading, Row, Section, Span, Text } from "@hyper-elements/react";
 import { Logo } from "@/shared/art";
 import { BOTTOM_FACTS, SITE, TIERS } from "@/shared/data/site";
 import { colors, fonts } from "@/shared/theme/tokens";
@@ -39,28 +39,22 @@ export function TheBottom() {
           </Row>
 
           <Row style={{ alignItems: "center", gap: 28 }}>
-            {/* the yellow button's glow: two flat, rounded layers behind it (no real shadows) */}
-            <Layer style={{ flex: "none" }}>
-              <Column style={{ backgroundColor: colors.glowHalo, borderRadius: 30 }} />
-              <Column style={{ padding: 10 }}>
-                <Column style={{ backgroundColor: colors.glowHaloInner, borderRadius: 22 }} />
-              </Column>
-              <Column style={{ padding: 24 }}>
-                <Button
-                  href="#tiers"
-                  style={{
-                    backgroundColor: colors.glow,
-                    color: colors.abyss,
-                    fontSize: 23,
-                    fontWeight: 700,
-                    borderRadius: 14,
-                    padding: [18, 36],
-                  }}
-                >
-                  {SITE.cta.text}
-                </Button>
-              </Column>
-            </Layer>
+            {/* the yellow button's glow, as in the welcome email: one flat rounded box, 10 px around it; its left edge lines up with the cards */}
+            <Column style={{ flex: "none", backgroundColor: colors.glowHaloInner, borderRadius: 22, padding: 10 }}>
+              <Button
+                href="#tiers"
+                style={{
+                  backgroundColor: colors.glow,
+                  color: colors.abyss,
+                  fontSize: 23,
+                  fontWeight: 700,
+                  borderRadius: 14,
+                  padding: [18, 36],
+                }}
+              >
+                {SITE.cta.text}
+              </Button>
+            </Column>
             <Column style={{ flex: "none" }}>
               <CertificateDialog />
             </Column>
@@ -70,10 +64,16 @@ export function TheBottom() {
             {TIERS.map((tier) => (
               <Column
                 key={tier.name}
-                style={{ ...card, justifyContent: "space-between", ...(tier.featured && { border: `3px solid ${colors.glow}` }) }}
+                style={{
+                  ...card,
+                  justifyContent: "space-between",
+                  ...(tier.featured && { border: `3px solid ${colors.glow}`, padding: 23 }),
+                }}
               >
                 <Column style={{ gap: 10 }}>
-                  <MonoLabel color={tier.featured ? colors.glow : colors.cyan}>{tier.depthLabel}</MonoLabel>
+                  <MonoLabel color={tier.featured ? colors.glow : colors.cyan} size={12}>
+                    {tier.depthLabel}
+                  </MonoLabel>
                   <Heading level={3} style={{ fontSize: 28, fontWeight: 700 }}>
                     {tier.name}
                   </Heading>
@@ -85,11 +85,14 @@ export function TheBottom() {
                   style={{
                     backgroundColor: tier.featured ? colors.glow : colors.deepCard,
                     color: tier.featured ? colors.abyss : colors.aqua,
-                    border: `2px solid ${colors.aqua}`,
+                    // design: 48 px of content; the outlined ones add their 2 px border, the yellow one has none
+                    border: tier.featured ? undefined : `2px solid ${colors.aqua}`,
                     borderRadius: 12,
                     fontWeight: 700,
                     fontSize: 16,
-                    padding: [13, 24],
+                    lineHeight: "20px",
+                    width: "100%",
+                    padding: [14, 24],
                   }}
                 >
                   {`Give ${tier.price}`}
