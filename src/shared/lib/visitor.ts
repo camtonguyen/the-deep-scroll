@@ -60,3 +60,15 @@ export function certificateNumber(name: string, depth: number, date: string): st
   for (const ch of `${name}|${date}`) hash = Math.imul(hash ^ ch.codePointAt(0)!, 16777619) >>> 0;
   return `HS-${visitorDepth(depth)}-${String(hash % 100000).padStart(5, "0")}`;
 }
+
+/** The `name` a share link carries: cleaned, "" when absent, null when too long to be a name. */
+export function shareName(value: string | null): string | null {
+  const name = cleanText(value);
+  return name.length > NAME_MAX ? null : name;
+}
+
+/** The `depth` a share link carries: whole metres, the bottom when absent or not a number. */
+export function shareDepth(value: string | null): number {
+  const metres = value ? Number(value) : NaN;
+  return Number.isFinite(metres) ? visitorDepth(metres) : MAX_DEPTH;
+}

@@ -9,7 +9,9 @@ import { ElementsError, formatDiagnostics, render } from "@hyper-elements/react"
 import { renderImage } from "@hyper-elements/react/image";
 import { renderPdf } from "@hyper-elements/react/pdf";
 import { loadFonts } from "../server/fonts";
+import { withShareMeta } from "../server/share-meta";
 import { OUTPUTS } from "../src/outputs";
+import { SITE } from "../src/shared/data/site";
 
 const OUT = new URL("../out/", import.meta.url);
 
@@ -20,7 +22,7 @@ async function main() {
   for (const output of OUTPUTS) {
     const element = output.element();
     const { html, text, diagnostics } = await render(element);
-    await writeFile(new URL(`${output.id}.html`, OUT), html);
+    await writeFile(new URL(`${output.id}.html`, OUT), output.root === "Page" ? withShareMeta(html, new URL(SITE.url)) : html);
     if (output.root === "Email") await writeFile(new URL(`${output.id}.txt`, OUT), text);
 
     if (output.root === "Document") {
