@@ -3,6 +3,7 @@ import { SOUND } from "@/shared/data/site";
 import { STOPS } from "@/shared/data/stops";
 import { depthToY, MAX_DEPTH, SCALE, SEA_HEIGHT } from "@/shared/lib/sea";
 import { METRES_PER_ATM } from "@/shared/lib/format";
+import { atmAt, lightAt, scaleToDepth, tempAt } from "@/shared/lib/portable";
 import { LIGHT, TEMPERATURES } from "@/shared/lib/readout";
 
 /** Everything the script needs, from the shared scale and tables: nothing is retyped in the script. */
@@ -49,12 +50,13 @@ export const DIVE_DATA = {
   sound: { src: SOUND.route, key: SOUND.storageKey },
 };
 
-/** The maths, as plain JS (it runs in the browser). `D` is DIVE_DATA. Tested against shared/lib. */
+/** The maths, as plain JS (it runs in the browser). `D` is DIVE_DATA. The shared rules are pasted in from shared/lib/portable; the rest is only here. */
 export const MATHS = `
-function yToDepth(y){var top=0,S=D.scale;for(var i=0;i<S.length;i++){var b=top+(S[i][1]-S[i][0])*S[i][2];if(y<=b)return S[i][0]+(y-top)/S[i][2];top=b}return D.max}
-function temp(d){var T=D.temps;for(var i=1;i<T.length;i++)if(T[i][0]>=d)return T[i-1][1]+(T[i][1]-T[i-1][1])*(d-T[i-1][0])/(T[i][0]-T[i-1][0]);return T[T.length-1][1]}
-function light(d){var L=D.light,r=L[0][1];for(var i=0;i<L.length;i++)if(d>=L[i][0])r=L[i][1];return r}
-function atm(d){return 1+d/D.metresPerAtm}
+${scaleToDepth}${tempAt}${lightAt}${atmAt}
+function yToDepth(y){return scaleToDepth(y,D.scale,D.max)}
+function temp(d){return tempAt(d,D.temps)}
+function light(d){return lightAt(d,D.light)}
+function atm(d){return atmAt(d,D.metresPerAtm)}
 function loud(v){var f=D.feel;return v<f.silentBelow?0:Math.min(1,f.floor+(1-f.floor)*v/f.fullSpeed)}
 function slow(y){var S=D.stopYs,m=1e9;for(var i=0;i<S.length;i++)m=Math.min(m,Math.abs(y-S[i]));return m>=D.slowZone?1:D.slowMin+(1-D.slowMin)*m/D.slowZone}
 function tint(d){return D.tintMax*Math.min(1,d/D.tintDepth)}

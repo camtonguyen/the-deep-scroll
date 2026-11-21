@@ -1,4 +1,5 @@
 import { BANDS, type Band } from "@/shared/data/zones";
+import { scaleToDepth } from "./portable";
 
 /**
  * The sea, to scale. One scale turns a real depth (metres) into a vertical
@@ -43,13 +44,7 @@ export function depthToY(depth: number): number {
 
 /** y in px from the sea surface → the real depth in metres (the inverse of depthToY). */
 export function yToDepth(y: number): number {
-  let top = 0;
-  for (const [from, to, k] of SCALE) {
-    const bottom = top + (to - from) * k;
-    if (y <= bottom) return from + (y - top) / k;
-    top = bottom;
-  }
-  return MAX_DEPTH;
+  return scaleToDepth(y, SCALE, MAX_DEPTH);
 }
 
 /** Total height of the sea, surface to seafloor, in px. */

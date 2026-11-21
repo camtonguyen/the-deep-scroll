@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { handleWelcome } from "./welcome";
+import type { Mail } from "./mail";
+import { createWelcomeHandler, handleWelcome } from "./welcome";
 
 const post = (body: unknown, ip: string) =>
   handleWelcome(
@@ -71,3 +72,36 @@ test("in production the link needs CERTIFICATE_SECRET and SITE_URL, or nothing i
     assert.equal((await post({ name: "Ada", email: "p3@example.org" }, "10.1.0.9")).status, 200);
   });
 });
+
+test("a mailer passed in gets the email: no files, no provider", () =>
+  withEnv(noMail, async () => {
+    const sent: Mail[] = [];
+    const handler = createWelcomeHandler(async (mail) => (sent.push(mail), "sent"));
+    const res = await handler(
+      new Request("http://localhost/api/welcome", {
+        method: "POST",
+        headers: { "x-forwarded-for": "10.1.0.20" },
+        body: JSON.stringify({ name: "Ada Marlowe", email: "mailer@example.org" }),
+      }),
+    );
+    const answer = await res.json();
+    assert.equal(answer.sent, true, JSON.stringify(answer));
+    assert.equal(sent.length, 1);
+    assert.equal(sent[0].to, "mailer@example.org");
+    assert.match(sent[0].html, /\/api\/certificate\?name=Ada\+Marlowe/);
+  }));
+
+test("a mailer that fails is a 502, not a crash", () =>
+  withEnv(noMail, async () => {
+    const handler = createWelcomeHandler(async () => {
+      throw new Error("provider down");
+    });
+    const res = await handler(
+      new Request("http://localhost/api/welcome", {
+        method: "POST",
+        headers: { "x-forwarded-for": "10.1.0.21" },
+        body: JSON.stringify({ name: "Ada", email: "ada2@example.org" }),
+      }),
+    );
+    assert.equal(res.status, 502);
+  }));

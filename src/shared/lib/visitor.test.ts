@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { certificateNumber, cleanText, fitFontSize, MESSAGES, validateCertificateRequest, visitorDepth } from "./visitor";
+import { certificateNumber, fitFontSize, visitorDepth } from "./visitor";
+import { cleanText, MESSAGES, validateCertificateRequest } from "./visitor-form";
 
 test("a depth is clamped to the sea and rounded", () => {
   assert.deepEqual([-5, 150.6, 99999].map(visitorDepth), [0, 151, 10935]);

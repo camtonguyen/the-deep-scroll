@@ -1,26 +1,18 @@
-import { CONTROL_CHARS, EMAIL_MAX, EMAIL_PATTERN, MESSAGES, NAME_MAX } from "@/shared/lib/visitor";
+import { checkVisitor } from "@/shared/lib/portable";
+import { VISITOR_RULES } from "@/shared/lib/visitor-form";
 import { POSTCARD } from "@/shared/data/site";
 
-/** The form's rules, from the same constants the server uses: nothing is retyped in the script. */
-const FORM_DATA = {
-  nameMax: NAME_MAX,
-  emailMax: EMAIL_MAX,
-  control: CONTROL_CHARS.source,
-  email: EMAIL_PATTERN.source,
-  messages: MESSAGES,
-  text: POSTCARD,
-  route: "/api/welcome",
-};
+/** The form's rules, from the same object and the same function the server runs: nothing is retyped in the script. */
+const FORM_DATA = { rules: VISITOR_RULES, text: POSTCARD, route: "/api/welcome" };
 
 /** Check the two fields, POST them to /api/welcome, show the answer. Errors show next to the field. */
 export function postcardScript(): string {
   return `(function(){
 var D=${JSON.stringify(FORM_DATA)};
+${checkVisitor}
 var $=function(id){return document.getElementById(id)};
 var form=$('pc-form');if(!form)return;
 var f={name:$('pc-name'),email:$('pc-email')},status=$('pc-status'),send=$('pc-send'),busy=false;
-var control=new RegExp(D.control,'g'),email=new RegExp(D.email);
-var clean=function(s){return String(s).replace(control,' ').replace(/\\s+/g,' ').trim()};
 function say(t,bad){status.textContent=t;status.className=bad?'bad':''}
 function show(errors){
   ['name','email'].forEach(function(k){
@@ -28,17 +20,12 @@ function show(errors){
   });
   var first=errors&&['name','email'].filter(function(k){return errors[k]})[0];if(first)f[first].focus({preventScroll:true})
 }
-function check(){
-  var v={name:clean(f.name.value),email:clean(f.email.value)},e={};
-  if(!v.name)e.name=D.messages.nameRequired;else if(v.name.length>D.nameMax)e.name=D.messages.nameLong;
-  if(!v.email)e.email=D.messages.emailBad;else if(v.email.length>D.emailMax)e.email=D.messages.emailLong;else if(!email.test(v.email))e.email=D.messages.emailBad;
-  return{v:v,e:e,ok:!Object.keys(e).length}
-}
+function check(){var r=checkVisitor({name:f.name.value,email:f.email.value},'',D.rules,true);return r.ok?{v:r.value,e:{},ok:true}:{v:null,e:r.errors,ok:false}}
 form.addEventListener('submit',function(ev){
   ev.preventDefault();if(busy)return;say('');
   var c=check();show(c.e);if(!c.ok)return;
   busy=true;send.disabled=true;say(D.text.sending);
-  fetch(D.route,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(c.v)})
+  fetch(D.route,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:c.v.name,email:c.v.email})})
     .then(function(r){return r.json().catch(function(){return{}}).then(function(j){
       if(r.ok&&j.sent===false)say(j.message||D.text.failed,true);
       else if(r.ok){say(D.text.success);form.reset()}

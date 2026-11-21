@@ -1,6 +1,6 @@
 import { Html } from "@hyper-elements/react";
 import { POSTCARD, SITE } from "@/shared/data/site";
-import { EMAIL_MAX, NAME_MAX } from "@/shared/lib/visitor";
+import { EMAIL_MAX, NAME_MAX } from "@/shared/lib/visitor-form";
 import { colors, fonts } from "@/shared/theme/tokens";
 import { postcardScript } from "./script";
 
