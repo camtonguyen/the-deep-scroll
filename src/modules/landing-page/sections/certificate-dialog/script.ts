@@ -1,7 +1,7 @@
 import { CONTROL_CHARS, DATE_MAX, EMAIL_MAX, EMAIL_PATTERN, MESSAGES, NAME_MAX } from "@/shared/lib/visitor";
 
 /** The form's rules, from the same constants the server uses: nothing is retyped in the script. */
-export const FORM_DATA = {
+const FORM_DATA = {
   nameMax: NAME_MAX,
   emailMax: EMAIL_MAX,
   dateMax: DATE_MAX,

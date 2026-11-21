@@ -24,7 +24,7 @@ export const LIGHT: readonly (readonly [number, string])[] = [
   [1000, "dark"],
 ];
 
-export function lightAt(depth: number): string {
+function lightAt(depth: number): string {
   return LIGHT.filter(([from]) => depth >= from).at(-1)![1];
 }
 
