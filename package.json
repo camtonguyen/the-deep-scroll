@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "check": "pnpm typecheck && pnpm lint && pnpm test && prettier --check . && pnpm render",
     "format": "prettier --write .",
-    "build:api": "esbuild functions/*.ts --bundle --platform=node --format=esm --packages=external --alias:@=./src --outdir=api"
+    "build:api": "esbuild functions/*.ts --bundle --platform=node --format=esm --packages=external --alias:@=./src --outdir=build"
   },
   "dependencies": {
     "@hyper-elements/react": "^0.5.0",

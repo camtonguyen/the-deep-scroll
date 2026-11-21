@@ -1,16 +1,18 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "pnpm install --frozen-lockfile",
-  "buildCommand": "pnpm build:api",
+  "buildCommand": "mkdir -p public && touch public/.keep && pnpm build:api",
   "rewrites": [
     {
       "source": "/",
       "destination": "/api/page"
     }
   ],
+  "outputDirectory": "public",
+  "framework": null,
   "functions": {
-    "api/*.js": {
-      "includeFiles": "assets/fonts/**"
+    "api/*.ts": {
+      "includeFiles": "{assets/fonts/**,node_modules/.pnpm/{pdfkit@*/node_modules/pdfkit,harfbuzzjs@*/node_modules/harfbuzzjs}/**}"
     }
   }
 }

@@ -16,5 +16,5 @@
     "types": ["node", "vite/client"],
     "paths": { "@/*": ["./src/*"] }
   },
-  "include": ["src", "server", "functions", "scripts", "vite.config.ts"]
+  "include": ["src", "server", "functions", "api", "scripts", "vite.config.ts"]
 }

@@ -6,4 +6,5 @@ out
 .claude
 .vercel
 .env*
-api
+build
+public
