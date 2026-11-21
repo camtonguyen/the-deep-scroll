@@ -1,4 +1,4 @@
-import { Button, Column, Email, Heading, Image, LineBreak, Link, Row, Section, Span, Text } from "@hyper-elements/react";
+import { Button, Column, Email, Grid, Heading, Image, LineBreak, Link, Row, Section, Span, Text } from "@hyper-elements/react";
 import { MAIL, SAMPLE_DIVER, SITE, type Visitor } from "@/shared/data/site";
 import { formatNumber } from "@/shared/lib/format";
 import { visitorDepth } from "@/shared/lib/visitor";
@@ -12,8 +12,8 @@ import { EMAIL_ART, type EmailArtId } from "./email-art";
 export const firstName = (name: string) => name.split(" ")[0];
 
 /** An Email can't hold Svg, so each picture is a PNG from /api/email-art, shown at half its size (sharp on phones). */
-const art = (id: EmailArtId) => ({
-  src: `${SITE.url}/api/email-art?id=${id}`,
+const art = (origin: string, id: EmailArtId) => ({
+  src: `${origin}/api/email-art?id=${id}`,
   style: { width: EMAIL_ART[id].width, maxWidth: "100%" as const },
 });
 
@@ -21,17 +21,19 @@ const art = (id: EmailArtId) => ({
 export default function WelcomeEmail({
   depth = SAMPLE_DIVER.depth,
   certificateUrl = SITE.url,
+  origin = SITE.url,
 }: Partial<Visitor> & {
+  /** Where the pictures are fetched from: the server passes its real address (SITE.url is a placeholder until deployed). */ origin?: string;
   /** The signed link that downloads the visitor's certificate (the server makes it; a preview or `pnpm render` just links to the page). */ certificateUrl?: string;
 }) {
   const metres = visitorDepth(depth);
 
   return (
     <Email theme={theme} width={600} previewText={MAIL.preheader} fonts={[...webFonts]} style={{ backgroundColor: colors.abyss }}>
-      <Section style={{ backgroundColor: colors.sky, color: colors.navy, padding: [12, 32, 0], gap: 0 }}>
+      <Section style={{ backgroundColor: colors.abyss, color: colors.aqua, padding: [12, 32, 0], gap: 0 }}>
         <MonoLabel>{MAIL.preheader}</MonoLabel>
         <Row style={{ padding: [18, 0, 26], gap: 10, alignItems: "center" }} stackOnMobile={false}>
-          <Image src={art("logo").src} alt="" style={{ width: 28, flex: "none" }} />
+          <Image src={art(origin, "logo").src} alt="" style={{ width: 28, height: 28, flex: "none" }} />
           <Text style={{ fontSize: 18, fontWeight: 700 }}>{SITE.name}</Text>
         </Row>
         <Column style={{ padding: [8, 0, 0], gap: 14 }}>
@@ -41,22 +43,22 @@ export default function WelcomeEmail({
           <Text style={{ fontSize: 18, lineHeight: 1.45 }}>{MAIL.intro(`${formatNumber(metres)} metres`)}</Text>
         </Column>
       </Section>
-      <Section style={{ backgroundColor: colors.sky, padding: 0 }}>
-        <Image {...art("hero")} alt="A boat with a line dropping through the ocean zones to the bottom" />
+      <Section style={{ backgroundColor: colors.abyss, padding: 0 }}>
+        <Image {...art(origin, "hero")} alt="A boat with a line dropping through the ocean zones to the bottom" />
       </Section>
       <Section style={{ backgroundColor: colors.abyss, color: colors.aqua, padding: [36, 32, 48], gap: 0 }}>
         <Text style={{ fontSize: 18, lineHeight: 1.55 }}>{MAIL.lede}</Text>
         <Column style={{ padding: [36, 0, 0], gap: 12 }}>
           <MonoLabel color={colors.cyan}>{MAIL.neighboursLabel}</MonoLabel>
-          <Row style={{ gap: 12, alignItems: "stretch" }}>
+          <Grid columns={3} style={{ gap: 12 }}>
             {MAIL.neighbours.map((fish) => (
               <Column key={fish.id} style={{ backgroundColor: colors.deepCard, borderRadius: 14, padding: 16, gap: 8 }}>
-                <Image {...art(fish.id)} alt={fish.name} />
+                <Image {...art(origin, fish.id)} alt={fish.name} />
                 <Text style={{ fontSize: 18, fontWeight: 700 }}>{fish.name}</Text>
                 <MonoLabel>{fish.depth}</MonoLabel>
               </Column>
             ))}
-          </Row>
+          </Grid>
         </Column>
         {/* the yellow button's glow: one flat, rounded box around it (no real shadows) */}
         <Column style={{ padding: [40, 0, 0], alignItems: "center" }}>

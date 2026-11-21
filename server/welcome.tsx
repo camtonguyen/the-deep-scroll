@@ -39,12 +39,14 @@ export async function handleWelcome(request: Request): Promise<Response> {
 
   // The renderer escapes the name; no HTML is built from visitor text here.
   let link: string;
+  let origin: string;
   try {
-    link = await certificateLink(siteOrigin(request), name, date);
+    origin = siteOrigin(request);
+    link = await certificateLink(origin, name, date);
   } catch {
     return json({ error: "Something went wrong on our side." }, 500);
   }
-  const design = <WelcomeEmail name={name} depth={MAX_DEPTH} certificateUrl={link} />;
+  const design = <WelcomeEmail name={name} depth={MAX_DEPTH} certificateUrl={link} origin={origin} />;
   const checked = validate(design);
   if (!checked.valid) return json({ error: "Something went wrong on our side." }, 500);
   const { html, text: plain } = await render(design);
