@@ -2,35 +2,32 @@ import { renderPdf } from "@hyper-elements/react/pdf";
 import DiveCertificate from "@/modules/dive-certificate";
 import { MAX_DEPTH } from "@/shared/lib/sea";
 import { validateCertificateRequest } from "@/shared/lib/visitor";
+import { today, verifyCertificate } from "./certificate-link";
 import { loadFonts } from "./fonts";
-import { json, onlyPost, tooMany } from "./http";
+import { json, onlyGet, tooMany } from "./http";
 import { allow, clientIp } from "./rate-limit";
 
-/** Plenty for three short fields; anything bigger is not the form. */
-const MAX_BODY = 2000;
-
-const today = () => new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-
-/** POST /api/certificate  { name, email?, date? } → the visitor's certificate as a PDF download. */
+/**
+ * GET /api/certificate?name=…&date=…&sig=… → the visitor's certificate as a PDF download.
+ * Only links the welcome email carries work: the signature covers the name and the date (see certificate-link.ts).
+ */
 export async function handleCertificate(request: Request): Promise<Response> {
-  const bad = onlyPost(request);
+  const bad = onlyGet(request);
   if (bad) return bad;
-  if (!allow(clientIp(request))) return tooMany();
+  if (!allow(`certificate:${clientIp(request)}`)) return tooMany(true);
 
-  const text = await request.text();
-  if (text.length > MAX_BODY) return json({ error: "That request is too big." }, 413);
-  let input: unknown;
-  try {
-    input = JSON.parse(text);
-  } catch {
-    return json({ error: "Send the form as JSON." }, 400);
-  }
-
-  const result = validateCertificateRequest(input, today());
+  const params = new URL(request.url).searchParams;
+  const result = validateCertificateRequest({ name: params.get("name"), date: params.get("date") }, today());
   if (!result.ok) return json({ errors: result.errors }, 400);
-
-  // The email address is only validated here; the page then asks /api/welcome to send the email.
   const { name, date } = result.value;
+  let valid: boolean;
+  try {
+    valid = await verifyCertificate(name, date, params.get("sig") ?? "");
+  } catch {
+    return json({ error: "Something went wrong on our side." }, 500);
+  }
+  if (!valid) return json({ error: "This certificate link is not valid." }, 403);
+
   const { pdf } = await renderPdf(<DiveCertificate name={name} depth={MAX_DEPTH} date={date} />, { fonts: await loadFonts() });
   return new Response(new Uint8Array(pdf), {
     headers: {

@@ -10,7 +10,7 @@ export const SITE = {
     { text: "Science", href: "#" },
     { text: "Donate", href: "#tiers" },
     { text: "Fund the next dive", href: "#tiers" },
-    { text: "Dive certificate", href: "#certificate" },
+    { text: "Get postcards", href: "#pc-form" },
   ],
   backToSurface: { text: "↑ Back to the surface (it's a long swim)", href: "#top" },
   /** Top-right readout on the surface. */
@@ -23,7 +23,6 @@ export const SITE = {
   ],
   /** Widest window, in px, that gets the stacked layout (the Page and the title both use it). The to-scale sea needs the 1,200 px content width, so anything narrower stacks. */
   phoneWidth: 1199,
-  cta: { text: "Fund the next dive", href: "#tiers" },
   footer: "The Hadal Society is fictional. The depths are real.",
   copyright: "© 2026 The Hadal Society. All rights reserved.",
 } as const;
@@ -41,12 +40,24 @@ export const MAIL = {
     { id: "dumbo", name: "Dumbo octopus", depth: "~4,000 m" },
     { id: "snailfish", name: "Snailfish", depth: "8,336 m" },
   ],
-  cta: "Read your first expedition log",
+  cta: "Download your dive certificate",
   signoff: "See you at the bottom,",
   why: "You're getting this because you asked for postcards.",
   unsubscribe: "Unsubscribe",
   unsubscribeNote: "(resurface).",
-  formNote: "Used only to send this one email.",
+} as const;
+
+/** The postcard form at the bottom of the page. */
+export const POSTCARD = {
+  heading: "Get a postcard from every expedition.",
+  namePlaceholder: "Your name",
+  emailPlaceholder: "you@surface.com",
+  button: "Send me postcards",
+  note: "We'll email you a welcome postcard, with your dive certificate in it. Your address is used only for these emails.",
+  sending: "Sending…",
+  success: "Check your inbox. Your welcome postcard and dive certificate are on their way.",
+  failed: "Something went wrong. Try again.",
+  offline: "Could not reach the server. Check your connection and try again.",
 } as const;
 
 /** Sharing: the LinkedIn dialog, the card route, and the words the phone share sheet gets. */

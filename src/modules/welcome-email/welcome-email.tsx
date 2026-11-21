@@ -18,7 +18,12 @@ const art = (id: EmailArtId) => ({
 });
 
 /** Welcome email for one visitor (600 px), laid out as in the design. */
-export default function WelcomeEmail({ depth = SAMPLE_DIVER.depth }: Partial<Visitor>) {
+export default function WelcomeEmail({
+  depth = SAMPLE_DIVER.depth,
+  certificateUrl = SITE.url,
+}: Partial<Visitor> & {
+  /** The signed link that downloads the visitor's certificate (the server makes it; a preview or `pnpm render` just links to the page). */ certificateUrl?: string;
+}) {
   const metres = visitorDepth(depth);
 
   return (
@@ -54,10 +59,10 @@ export default function WelcomeEmail({ depth = SAMPLE_DIVER.depth }: Partial<Vis
           </Row>
         </Column>
         {/* the yellow button's glow: one flat, rounded box around it (no real shadows) */}
-        <Column style={{ padding: [40, 0, 0] }}>
+        <Column style={{ padding: [40, 0, 0], alignItems: "center" }}>
           <Column style={{ backgroundColor: colors.glowHaloInner, borderRadius: 22, padding: 10, width: 346, alignItems: "stretch" }}>
             <Button
-              href={SITE.url}
+              href={certificateUrl}
               style={{
                 backgroundColor: colors.glow,
                 color: colors.abyss,

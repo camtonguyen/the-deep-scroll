@@ -1,11 +1,11 @@
 import { SHARE } from "@/shared/data/site";
 import { NAME_MAX } from "@/shared/lib/visitor";
 
-/** Share links carry `?name=` (read from the certificate form, if filled) so the card shows the visitor. The links are set when the visitor reaches for them. */
+/** Share links carry `?name=` (read from the postcard form, if filled) so the card shows the visitor. The links are set when the visitor reaches for them. */
 export function shareScript(): string {
   return `(function(){
 var S=${JSON.stringify({ ...SHARE, nameMax: NAME_MAX })};
-var name=function(){var n=document.getElementById('cd-name');return n?n.value.replace(/\\s+/g,' ').trim().slice(0,S.nameMax):''};
+var name=function(){var n=document.getElementById('pc-name');return n?n.value.replace(/\\s+/g,' ').trim().slice(0,S.nameMax):''};
 var q=function(){var n=name();return n?'?name='+encodeURIComponent(n):''};
 var link=function(){return location.origin+location.pathname+q()};
 function set(el){

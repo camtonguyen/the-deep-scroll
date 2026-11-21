@@ -25,7 +25,7 @@ export function Footer() {
           <Button
             key={link.text}
             href={link.href}
-            attrs={{ class: "flink" }} /* underline on hover: see certificate-dialog styles */
+            attrs={{ class: "flink" }} /* underline on hover: see shared/ui/hover.ts */
             style={{
               backgroundColor: "transparent",
               color: colors.aqua,
