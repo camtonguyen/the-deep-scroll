@@ -1,3 +1,5 @@
+import { LAYERS } from "@/shared/theme/layers";
+
 /**
  * Each creature moves once when the pointer rests on it, the way the animal moves, then settles back.
  * The whole drawing's shapes move (not the svg box), so the box under the pointer stays put and the hover holds.
@@ -84,7 +86,7 @@ svg[role="img"]{overflow:visible}
 :is(#dive,#dive-mobile) :is(svg,p,h2,h3,span,a,button){pointer-events:auto}
 :is(#dive,#dive-mobile) svg[aria-label=""]{pointer-events:none}
 /* the turtle sits under a text column on desktop: lift it above so it can be hovered */
-#dive svg[aria-label^="A leatherback sea turtle"]{position:relative;z-index:5}
+#dive svg[aria-label^="A leatherback sea turtle"]{position:relative;z-index:${LAYERS.lifted}}
 svg[role="img"]>*{transform-box:view-box;transform-origin:50% 50%}
 @keyframes hv-move{0%,100%{translate:0 0;rotate:0deg;scale:1}28%{translate:var(--dx,0) var(--dy,0);rotate:var(--r,0deg)}}
 @keyframes hv-curl{0%,100%{scale:1}35%,65%{scale:.9 .8}}

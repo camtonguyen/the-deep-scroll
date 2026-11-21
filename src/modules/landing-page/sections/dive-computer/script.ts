@@ -23,6 +23,29 @@ export const DIVE_DATA = {
   tintDepth: 1000,
   tintMax: 0.2,
   snowHeight: MARINE_SNOW_HEIGHT,
+  /** How the dive feels. Times in ms, speeds in px/s, tilt in degrees. */
+  feel: {
+    /** Scrolling counts as moving for this long after the last scroll event. */
+    moveMs: 120,
+    /** The measured speed follows the real one with this time constant. */
+    speedTau: 120,
+    /** The sound fades in and out with this time constant (about 200 ms to settle). */
+    fadeTau: 70,
+    /** The mouse wheel glides to its target with this time constant. */
+    glideTau: 110,
+    /** The diver's tilt follows speed with this time constant, up to tiltMax at tiltSpeed. */
+    tiltTau: 220,
+    tiltMax: 10,
+    tiltSpeed: 1500,
+    /** Below this speed the sound is off; it is `floor` quiet at once and full at `fullSpeed`. */
+    silentBelow: 5,
+    floor: 0.35,
+    fullSpeed: 1200,
+    /** Marine snow drifts against the scroll: `snowBase` of the scroll, more with depth up to `snowBase + snowGain` at `snowDepth`. */
+    snowBase: 0.12,
+    snowGain: 0.2,
+    snowDepth: 4000,
+  },
   sound: { src: SOUND.route, key: SOUND.storageKey },
 };
 
@@ -32,7 +55,7 @@ function yToDepth(y){var top=0,S=D.scale;for(var i=0;i<S.length;i++){var b=top+(
 function temp(d){var T=D.temps;for(var i=1;i<T.length;i++)if(T[i][0]>=d)return T[i-1][1]+(T[i][1]-T[i-1][1])*(d-T[i-1][0])/(T[i][0]-T[i-1][0]);return T[T.length-1][1]}
 function light(d){var L=D.light,r=L[0][1];for(var i=0;i<L.length;i++)if(d>=L[i][0])r=L[i][1];return r}
 function atm(d){return 1+d/D.metresPerAtm}
-function loud(v){return v<5?0:Math.min(1,.35+.65*v/1200)}
+function loud(v){var f=D.feel;return v<f.silentBelow?0:Math.min(1,f.floor+(1-f.floor)*v/f.fullSpeed)}
 function slow(y){var S=D.stopYs,m=1e9;for(var i=0;i<S.length;i++)m=Math.min(m,Math.abs(y-S[i]));return m>=D.slowZone?1:D.slowMin+(1-D.slowMin)*m/D.slowZone}
 function tint(d){return D.tintMax*Math.min(1,d/D.tintDepth)}
 function approach(c,t,dt,tau){return c+(t-c)*(1-Math.exp(-dt/tau))}
@@ -75,7 +98,7 @@ function toggle(){
 function unlock(){if(blocked){blocked=false;kick()}}
 function mix(now,dt,want){
   var goal=want?loud(v):0;
-  vol=approach(vol,goal,dt,70);
+  vol=approach(vol,goal,dt,D.feel.fadeTau);
   if(!goal&&vol<.01){vol=0;if(audio&&!audio.paused)audio.pause();return}
   if(!audio){audio=new Audio(D.sound.src);audio.loop=true;audio.preload='auto'}
   audio.volume=Math.min(1,vol);
@@ -93,23 +116,23 @@ function frame(now){
   if(m.on!==shown){shown=m.on;panel.classList.toggle('on',shown);diver.classList.toggle('on',shown);if(btn)btn.classList.toggle('on',shown)}
   var dy=scrollY-lastY;lastY=scrollY;
   if(dy){lastMove=now;if(m.y!==py){var u=m.y<py;py=m.y;if(u!==up){up=u;diver.classList.toggle('up',up)}}}
-  var moving=now-lastMove<120;
-  v=approach(v,moving&&dt?Math.abs(dy)/dt*1000:0,dt,120);
+  var moving=now-lastMove<D.feel.moveMs;
+  v=approach(v,moving&&dt?Math.abs(dy)/dt*1000:0,dt,D.feel.speedTau);
   var l=d>=D.lampDepth;if(l!==lit){lit=l;diver.classList.toggle('lit',lit)}
   var tn=Math.round(tint(d)*200);if(tn!==tintNow){tintNow=tn;veil.style.opacity=tn/200}
   if(aim!==null&&Math.abs(scrollY-wrote)>3)aim=null;
   if(aim!==null){
-    var s=approach(scrollY,aim,dt,110);
+    var s=approach(scrollY,aim,dt,D.feel.glideTau);
     if(Math.abs(aim-s)<1){s=aim;aim=null}
     wrote=s;scrollTo({top:s,behavior:'instant'})
   }
   if(!calm){
-    tilt=approach(tilt,moving&&dy?Math.max(-1,Math.min(1,dy/dt*1000/1500))*10:0,dt,220);
+    tilt=approach(tilt,moving&&dy?Math.max(-1,Math.min(1,dy/dt*1000/D.feel.tiltSpeed))*D.feel.tiltMax:0,dt,D.feel.tiltTau);
     diver.style.rotate=tilt.toFixed(1)+'deg';
     diver.classList.toggle('mv',moving&&shown);
     if(snow){
       if(snowC===null)snowC=snow.getBoundingClientRect().top-(sea.getBoundingClientRect().top)+snow.offsetHeight/2-(parseFloat(snow.dataset.off)||0);
-      var off=m.on?-(m.y-snowC)*(.12+.2*Math.min(1,d/4000)):0;
+      var off=m.on?-(m.y-snowC)*(D.feel.snowBase+D.feel.snowGain*Math.min(1,d/D.feel.snowDepth)):0;
       snow.dataset.off=off;snow.style.transform='translateY('+off.toFixed(0)+'px)'
     }
   }

@@ -2,28 +2,28 @@ import { Html } from "@hyper-elements/react";
 import { MARINE_SNOW_HEIGHT, WAVE_PERIOD } from "@/shared/art";
 import { CREATURE_HOVER } from "@/shared/art/hover";
 import { SITE } from "@/shared/data/site";
-import { art, colors, fonts, sea } from "@/shared/theme/tokens";
+import { LAYERS } from "@/shared/theme/layers";
+import { art, colors, CONTENT_WIDTH, fonts, sea } from "@/shared/theme/tokens";
 import { HOVER_CSS } from "@/shared/ui/hover";
 import { SOUND_BUTTON, SOUND_STYLE } from "../sound-toggle";
 import { diveScript } from "./script";
 
 const RULER_X = 24;
-const CONTENT = 1200;
 
 /** Hyper Elements renders static HTML, so the live parts are one Html block: CSS for the motion, a short script for the counter and the diver. */
 const STYLE = `
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 html{overscroll-behavior:none}
 a:focus-visible:not(.sh-icon){outline:3px solid ${colors.ink};outline-offset:3px;box-shadow:0 0 0 3px ${colors.white}}
-#dc-diver{position:fixed;z-index:50;pointer-events:none;opacity:0}
+#dc-diver{position:fixed;z-index:${LAYERS.hud};pointer-events:none;opacity:0}
 #dc-diver.on{opacity:1;transition:opacity .3s}
-#dc{position:fixed;z-index:50;pointer-events:none;opacity:0;left:0;right:0;margin:0 auto;bottom:16px;width:min(92vw,560px);display:grid;grid-template-columns:repeat(4,auto);justify-content:space-between;gap:4px 12px;padding:12px 18px;box-sizing:border-box;border-radius:14px;background:${sea.abyssal0};border:2px solid ${colors.aqua};color:${colors.aqua};font-family:${fonts.mono}}
+#dc{position:fixed;z-index:${LAYERS.hud};pointer-events:none;opacity:0;left:0;right:0;margin:0 auto;bottom:16px;width:min(92vw,560px);display:grid;grid-template-columns:repeat(4,auto);justify-content:space-between;gap:4px 12px;padding:12px 18px;box-sizing:border-box;border-radius:14px;background:${sea.abyssal0};border:2px solid ${colors.aqua};color:${colors.aqua};font-family:${fonts.mono}}
 #dc.on{opacity:1;transition:opacity .3s}
 #dc small{display:block;font-size:12px;letter-spacing:1px;opacity:.7}
 #dc b{display:block;font-size:20px;line-height:1.2;font-weight:700;color:${colors.white};white-space:nowrap}
-#dc-diver{top:50%;top:50dvh;left:calc(max(0px,(100vw - ${CONTENT}px) / 2) + ${RULER_X - 36}px);margin-top:-35px;width:200px}
+#dc-diver{top:50%;top:50dvh;left:calc(max(0px,(100vw - ${CONTENT_WIDTH}px) / 2) + ${RULER_X - 36}px);margin-top:-35px;width:200px}
 #dc-diver svg{display:block;width:100%;height:auto}
-#dc-tint{position:fixed;inset:0;z-index:40;pointer-events:none;background:${sea.abyssal0};opacity:0}
+#dc-tint{position:fixed;inset:0;z-index:${LAYERS.veil};pointer-events:none;background:${sea.abyssal0};opacity:0}
 #dc-diver .bb{position:absolute;left:104px;top:18px;width:7px;height:7px;box-sizing:border-box;border:1.5px solid ${colors.aqua};border-radius:50%;opacity:0}
 #dc-diver .bb:nth-of-type(2){left:109px;width:5px;height:5px}#dc-diver .bb:nth-of-type(3){left:100px;width:9px;height:9px}
 #dc-diver .beam{opacity:0;transition:opacity .4s}
