@@ -6,7 +6,7 @@ import { postcardScript } from "./script";
 
 // Desktop: name, email and button on one row. Phones (the same width the page stacks at): one item per line.
 const STYLE = `
-#pc-form{display:flex;flex-direction:column;gap:14px;font-family:${fonts.display};color:${colors.aqua}}
+#pc-form{display:flex;flex-direction:column;gap:14px;padding:48px 0 0;border-top:1px solid ${colors.rule};font-family:${fonts.display};color:${colors.aqua}}
 #pc-form h3{margin:0;font-size:22px;line-height:1.2;font-weight:700;color:${colors.aqua}}
 #pc-form .row{display:flex;gap:16px;align-items:center}
 #pc-form .f{flex:3;min-width:0;position:relative}
