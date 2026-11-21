@@ -10,7 +10,7 @@ export const SITE = {
     { text: "Science", href: "#" },
     { text: "Donate", href: "#tiers" },
     { text: "Fund the next dive", href: "#tiers" },
-    { text: "Dive certificate", href: "#" },
+    { text: "Dive certificate", href: "#certificate" },
   ],
   backToSurface: { text: "↑ Back to the surface (it's a long swim)", href: "#top" },
   /** Top-right readout on the surface. */
@@ -25,6 +25,7 @@ export const SITE = {
   phoneWidth: 1199,
   cta: { text: "Fund the next dive", href: "#tiers" },
   footer: "The Hadal Society is fictional. The depths are real.",
+  copyright: "© 2026 The Hadal Society. All rights reserved.",
 } as const;
 
 export interface Tier {

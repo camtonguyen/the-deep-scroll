@@ -14,6 +14,7 @@ import { FleeingSquid } from "./fleeing-squid";
 import { Flag } from "./flag";
 import { GiantSquid } from "./giant-squid";
 import { Leatherback } from "./leatherback";
+import { Logo } from "./logo";
 import { MarineSnow, MARINE_SNOW_HEIGHT } from "./marine-snow";
 import { MountEverest } from "./mount-everest";
 import { Seafloor } from "./seafloor";
@@ -72,4 +73,4 @@ export const ART = {
 export type ArtId = keyof typeof ART;
 
 /** Scenery with its own placement (the surface and the Burj Khalifa). */
-export { Boat, BurjKhalifa, CloudLarge, CloudSmall, MARINE_SNOW_HEIGHT, WAVE_PERIOD, WaveLine };
+export { Boat, BurjKhalifa, CloudLarge, CloudSmall, Logo, MARINE_SNOW_HEIGHT, WAVE_PERIOD, WaveLine };

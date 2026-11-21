@@ -31,9 +31,14 @@ export const colors = {
   abyss: sea.hadal,
   deepCard: sea.abyssal0,
   hull: "#FBFAF4",
+  /** The certificate's paper. */
+  paper: "#EEF8FC",
   cyan: "#4DF2E3",
   /** Anglerfish yellow: the one "glow" accent, used only in the dark. */
   glow: "#FFE45C",
+  /** The yellow button's halo: the glow at 7% and 14% over the deep, blended flat (no opacity needed). */
+  glowHalo: "#13140D",
+  glowHaloInner: "#252313",
 } as const;
 
 /** Colours of the drawings in shared/art, named for what they colour. */
