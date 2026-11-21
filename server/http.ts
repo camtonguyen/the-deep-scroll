@@ -1,9 +1,12 @@
 /** Small response helpers every API route shares. */
 
-export const json = (body: unknown, status: number, headers: Record<string, string> = {}) =>
+/** Extra response headers. */
+export type HeaderMap = Record<string, string>;
+
+export const json = (body: unknown, status: number, headers: HeaderMap = {}) =>
   new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store", ...headers } });
 
-export const text = (body: string, status: number, headers: Record<string, string> = {}) =>
+export const text = (body: string, status: number, headers: HeaderMap = {}) =>
   new Response(body, { status, headers: { "Content-Type": "text/plain", "Cache-Control": "no-store", ...headers } });
 
 /** A 405 unless this is a GET (or HEAD). Use as: `const bad = onlyGet(request); if (bad) return bad;` */

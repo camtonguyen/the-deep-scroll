@@ -1,5 +1,5 @@
 import { readFile } from "node:fs/promises";
-import { onlyGet } from "./http";
+import { type HeaderMap, onlyGet } from "./http";
 
 const FILE = new URL("../src/shared/sounds/bubble-underwater.mp3", import.meta.url);
 
@@ -8,7 +8,7 @@ export async function handleSound(request: Request): Promise<Response> {
   const bad = onlyGet(request);
   if (bad) return bad;
   const bytes = new Uint8Array(await readFile(FILE));
-  const headers: Record<string, string> = {
+  const headers: HeaderMap = {
     "Content-Type": "audio/mpeg",
     "Accept-Ranges": "bytes",
     "Cache-Control": "public, max-age=86400",
