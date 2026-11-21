@@ -9,6 +9,7 @@ export const FORM_DATA = {
   email: EMAIL_PATTERN.source,
   messages: MESSAGES,
   route: "/api/certificate",
+  welcomeRoute: "/api/welcome",
 };
 
 /** Open the dialog (from the button or any `#certificate` link), check the form, POST it, save the PDF. Errors show next to the field. */
@@ -34,6 +35,16 @@ function check(){
   if(v.date.length>D.dateMax)e.date=D.messages.dateLong;
   return{v:v,e:e,ok:!Object.keys(e).length}
 }
+function done(){setTimeout(function(){dlg.close()},2500)}
+function welcome(v){
+  say('Your certificate is downloading. Sending your welcome email…');
+  return fetch(D.welcomeRoute,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:v.name,email:v.email})})
+    .then(function(r){return r.json().catch(function(){return{}}).then(function(j){
+      if(r.ok){say('Your certificate is downloading. '+(j.message||'Welcome email on its way.'));done()}
+      else if(j.errors&&j.errors.email){show(j.errors);say('Your certificate downloaded, but we could not send the email.',true)}
+      else say('Your certificate downloaded. '+(j.error||'The welcome email could not be sent.'),true)
+    })},function(){say('Your certificate downloaded. The welcome email could not be sent.',true)})
+}
 function say(t,bad){status.textContent=t;status.className=bad?'bad':''}
 function open(ev){ev&&ev.preventDefault();at=[scrollX,scrollY];opener=document.activeElement;if(!f.date.value)f.date.value=today();say('');show(null);dlg.showModal();f.name.focus({preventScroll:true});scrollTo({left:at[0],top:at[1],behavior:'instant'})}
 function save(blob){var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='dive-certificate.pdf';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},4000)}
@@ -48,7 +59,7 @@ form.addEventListener('submit',function(ev){
   busy=true;send.disabled=true;say('Making your certificate…');
   fetch(D.route,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(c.v)})
     .then(function(r){
-      if(r.ok)return r.blob().then(function(b){save(b);say('Your certificate is downloading. Well done.');setTimeout(function(){dlg.close()},1600)});
+      if(r.ok)return r.blob().then(function(b){save(b);say('Your certificate is downloading. Well done.');return c.v.email?welcome(c.v):done()});
       return r.json().then(function(j){if(j.errors){show(j.errors);say('')}else say(j.error||'Something went wrong. Try again.',true)},function(){say('Something went wrong. Try again.',true)})
     })
     .catch(function(){say('Could not reach the server. Check your connection and try again.',true)})

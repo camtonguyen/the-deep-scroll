@@ -28,6 +28,13 @@ export const SITE = {
   copyright: "© 2026 The Hadal Society. All rights reserved.",
 } as const;
 
+/** The welcome email: its subject and the line that says why it was sent. */
+export const MAIL = {
+  subject: (firstName: string) => `Welcome aboard, ${firstName}.`,
+  why: "You are getting this one email because you asked for a dive certificate. We used your address only to send it and did not keep it.",
+  formNote: "Used only to send this one email.",
+} as const;
+
 /** Sharing: the LinkedIn dialog, the card route, and the words the phone share sheet gets. */
 export const SHARE = {
   linkedin: "https://www.linkedin.com/sharing/share-offsite/?url=",
