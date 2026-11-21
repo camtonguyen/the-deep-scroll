@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "",
+  "rewrites": [{ "source": "/", "destination": "/api/page" }],
+  "functions": {
+    "api/*.ts": { "includeFiles": "assets/fonts/**" }
+  }
+}
