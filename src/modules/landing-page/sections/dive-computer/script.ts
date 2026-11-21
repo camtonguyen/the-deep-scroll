@@ -52,7 +52,7 @@ export const DIVE_DATA = {
 
 /** The maths, as plain JS (it runs in the browser). `D` is DIVE_DATA. The shared rules are pasted in from shared/lib/portable; the rest is only here. */
 export const MATHS = `
-${scaleToDepth}${tempAt}${lightAt}${atmAt}
+var scaleToDepth=${scaleToDepth},tempAt=${tempAt},lightAt=${lightAt},atmAt=${atmAt};
 function yToDepth(y){return scaleToDepth(y,D.scale,D.max)}
 function temp(d){return tempAt(d,D.temps)}
 function light(d){return lightAt(d,D.light)}

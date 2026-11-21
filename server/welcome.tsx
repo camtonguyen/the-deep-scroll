@@ -24,8 +24,8 @@ export async function welcomeMail({ name, email, date }: VisitorFields, origin: 
 /**
  * POST /api/welcome  { name, email } → sends the welcome email (or saves it to out/ without mail credentials).
  * Limits, counted in this process's memory (see rate-limit.ts for the upgrade path): 10 a minute per IP, 2 a minute per address.
+ * `mailer` is the seam: Brevo or the out/ file in the app, a capture in tests.
  */
-/** `mailer` is the seam: Brevo or the out/ file in the app, a capture in tests. */
 export const createWelcomeHandler = (mailer: Mailer) =>
   route({ method: "POST", bucket: "welcome" }, async ({ request, body }) => {
     // Same rules as the certificate, and the email is required. The date is always today (a date from the client is ignored), fixed in the signed link.

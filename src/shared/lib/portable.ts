@@ -2,7 +2,7 @@
  * Rules that run in two places: called here on the server, and pasted as source text into the page's script.
  * So each function must stand alone: no imports, no names from outside, no inner named functions or `const f = () =>`
  * (the page has none of this module's scope, and tsx adds a `__name` helper to those). Data comes in as arguments.
- * portable.test.ts runs their source the way the page does.
+ * The page binds each source to its name (`var f = <source>`), so a minifier renaming them is safe. portable.test.ts runs the source the way the page does.
  */
 
 /** Pairs of [from, to, px per metre] → depth in metres at `y` px from the surface. */
@@ -18,9 +18,9 @@ export function scaleToDepth(y: number, scale: readonly (readonly number[])[], m
 
 /** [depth, °C] rows, read in between by straight lines; the first row above the top, the last below the bottom. */
 export function tempAt(depth: number, table: readonly (readonly number[])[]): number {
+  if (!(depth > table[0][0])) return table[0][1];
   for (let i = 1; i < table.length; i++) {
     if (table[i][0] >= depth) {
-      if (depth <= table[0][0]) return table[0][1];
       return table[i - 1][1] + ((table[i][1] - table[i - 1][1]) * (depth - table[i - 1][0])) / (table[i][0] - table[i - 1][0]);
     }
   }

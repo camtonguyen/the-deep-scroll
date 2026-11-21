@@ -5,6 +5,6 @@ import { postcardScript } from "./script";
 test("the form script is valid JavaScript and carries the shared check, with no helper from this module's scope", () => {
   const source = postcardScript();
   assert.doesNotThrow(() => new Function(source));
-  assert.match(source, /function checkVisitor/);
+  assert.match(source, /var checkVisitor=function checkVisitor|var checkVisitor=function/);
   assert.doesNotMatch(source, /__name|__vi_/);
 });

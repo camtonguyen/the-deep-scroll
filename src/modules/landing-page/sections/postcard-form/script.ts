@@ -9,7 +9,7 @@ const FORM_DATA = { rules: VISITOR_RULES, text: POSTCARD, route: "/api/welcome" 
 export function postcardScript(): string {
   return `(function(){
 var D=${JSON.stringify(FORM_DATA)};
-${checkVisitor}
+var checkVisitor=${checkVisitor};
 var $=function(id){return document.getElementById(id)};
 var form=$('pc-form');if(!form)return;
 var f={name:$('pc-name'),email:$('pc-email')},status=$('pc-status'),send=$('pc-send'),busy=false;
