@@ -10,6 +10,8 @@ an email, a PDF and a PNG with Hyper Elements (`@hyper-elements/react`).
   another module.
 - `src/shared/`: data, lib, theme, art, ui. It never imports a module.
 - `src/outputs.tsx`: the registry the dev server and `scripts/render.tsx` share.
+- `server/`: the API routes (`routes.ts`: welcome email, certificate, share card, sound). It may import `@/shared/**` and each module's `index.ts`. `api/` and `functions/` are the Vercel entry points; `pnpm build:api` bundles them.
+- `docs/preview.gif` is the README's demo; `.claude/ref/` holds the contest rules (README must explain the Hyper Elements use, show a screenshot/GIF, and give run steps).
 
 ESLint enforces these boundaries; `pnpm lint` fails on a wrong import.
 
