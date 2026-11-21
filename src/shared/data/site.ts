@@ -31,7 +31,21 @@ export const SITE = {
 /** The welcome email: its subject and the line that says why it was sent. */
 export const MAIL = {
   subject: (firstName: string) => `Welcome aboard, ${firstName}.`,
-  why: "You are getting this one email because you asked for a dive certificate. We used your address only to send it and did not keep it.",
+  preheader: "Your postcards start with the next expedition.",
+  headline: "Welcome aboard, diver.",
+  intro: (metres: string) => `You scrolled ${metres}. Most people stop at 40.`,
+  lede: "Every few months a ship goes out, a robot goes down, and you get a postcard from wherever it lands. First stop: a trench we haven't mapped yet. There are plenty.",
+  neighboursLabel: "THREE NEIGHBOURS YOU MET ON THE WAY DOWN",
+  neighbours: [
+    { id: "anglerfish", name: "Anglerfish", depth: "~1,000–2,000 m" },
+    { id: "dumbo", name: "Dumbo octopus", depth: "~4,000 m" },
+    { id: "snailfish", name: "Snailfish", depth: "8,336 m" },
+  ],
+  cta: "Read your first expedition log",
+  signoff: "See you at the bottom,",
+  why: "You're getting this because you asked for postcards.",
+  unsubscribe: "Unsubscribe",
+  unsubscribeNote: "(resurface).",
   formNote: "Used only to send this one email.",
 } as const;
 
