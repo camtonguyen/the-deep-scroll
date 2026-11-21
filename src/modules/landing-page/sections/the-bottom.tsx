@@ -1,13 +1,11 @@
-import { Button, Column, Grid, Heading, Row, Section, Span, Text } from "@hyper-elements/react";
-import { Logo } from "@/shared/art";
-import { BOTTOM_FACTS, SITE, TIERS } from "@/shared/data/site";
-import { colors, fonts } from "@/shared/theme/tokens";
+import { Button, Column, Heading, Row, Section, Span, Text } from "@hyper-elements/react";
+import { BOTTOM_FACTS, SITE } from "@/shared/data/site";
+import { colors } from "@/shared/theme/tokens";
 import { Container } from "@/shared/ui/container";
 import { MonoLabel } from "@/shared/ui/mono-label";
 import { CertificateDialog } from "./certificate-dialog";
-import { ShareLinks } from "./share-links";
-
-const card = { backgroundColor: colors.deepCard, borderRadius: 16, padding: 26, gap: 10 } as const;
+import { Footer } from "./footer";
+import { TierCards } from "./tier-cards";
 
 /** 10,935 m: arrival, why it matters, and how to support the next dive. */
 export function TheBottom() {
@@ -61,80 +59,9 @@ export function TheBottom() {
             </Column>
           </Row>
 
-          <Row id="tiers" style={{ gap: 20, alignItems: "stretch" }}>
-            {TIERS.map((tier) => (
-              <Column
-                key={tier.name}
-                style={{
-                  ...card,
-                  justifyContent: "space-between",
-                  ...(tier.featured && { border: `3px solid ${colors.glow}`, padding: 23 }),
-                }}
-              >
-                <Column style={{ gap: 10 }}>
-                  <MonoLabel color={tier.featured ? colors.glow : colors.cyan} size={12}>
-                    {tier.depthLabel}
-                  </MonoLabel>
-                  <Heading level={3} style={{ fontSize: 28, fontWeight: 700 }}>
-                    {tier.name}
-                  </Heading>
-                  <Text style={{ fontSize: 44, fontWeight: 700, lineHeight: 1 }}>{tier.price}</Text>
-                  <Text style={{ fontSize: 17, lineHeight: 1.4 }}>{tier.perk}</Text>
-                </Column>
-                <Button
-                  href="#"
-                  attrs={{ class: "btn" }}
-                  style={{
-                    backgroundColor: tier.featured ? colors.glow : colors.deepCard,
-                    color: tier.featured ? colors.abyss : colors.aqua,
-                    // design: 48 px of content; the outlined ones add their 2 px border, the yellow one has none
-                    border: tier.featured ? undefined : `2px solid ${colors.aqua}`,
-                    borderRadius: 12,
-                    fontWeight: 700,
-                    fontSize: 16,
-                    lineHeight: "20px",
-                    width: "100%",
-                    padding: [14, 24],
-                  }}
-                >
-                  {`Give ${tier.price}`}
-                </Button>
-              </Column>
-            ))}
-          </Row>
+          <TierCards />
 
-          <Row style={{ gap: 32, justifyContent: "space-between", alignItems: "start" }}>
-            <Column style={{ gap: 12 }}>
-              <Row style={{ alignItems: "center", gap: 10 }} stackOnMobile={false}>
-                <Logo size={30} ring={colors.aqua} />
-                <Text style={{ fontFamily: fonts.mono, fontSize: 20, fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase" }}>
-                  {SITE.name}
-                </Text>
-              </Row>
-              <MonoLabel>{SITE.footer}</MonoLabel>
-              <MonoLabel>Scale: 1 px = 1 m, mostly. The ruler shows where we cheated.</MonoLabel>
-              <ShareLinks />
-            </Column>
-            <Grid columns={2} stackOnMobile={false} style={{ gap: 12 }}>
-              {[...SITE.links, SITE.backToSurface].map((link) => (
-                <Button
-                  key={link.text}
-                  href={link.href}
-                  attrs={{ class: "flink" }} /* underline on hover: see certificate-dialog styles */
-                  style={{
-                    backgroundColor: "transparent",
-                    color: colors.aqua,
-                    fontSize: 16,
-                    textAlign: "left",
-                    textDecoration: "none",
-                    padding: [13, 0],
-                  }}
-                >
-                  {link.text}
-                </Button>
-              ))}
-            </Grid>
-          </Row>
+          <Footer />
         </Container>
       </Section>
       <Section style={{ backgroundColor: colors.abyss, color: colors.aqua, padding: [28, 24], alignItems: "center", textAlign: "center" }}>

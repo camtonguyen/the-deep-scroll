@@ -4,21 +4,19 @@ import { MAIL } from "@/shared/data/site";
 import { MAX_DEPTH } from "@/shared/lib/sea";
 import { validateCertificateRequest } from "@/shared/lib/visitor";
 import { sendMail } from "./mail";
+import { json, onlyPost, tooMany } from "./http";
 import { allow, clientIp } from "./rate-limit";
 
 const MAX_BODY = 2000;
-
-const json = (body: unknown, status: number, headers: Record<string, string> = {}) =>
-  new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store", ...headers } });
 
 /**
  * POST /api/welcome  { name, email } → sends the welcome email (or saves it to out/ without mail credentials).
  * Limits, counted in this process's memory (see rate-limit.ts for the upgrade path): 10 a minute per IP, 2 a minute per address.
  */
 export async function handleWelcome(request: Request): Promise<Response> {
-  if (request.method !== "POST") return json({ error: "Use POST." }, 405, { Allow: "POST" });
-  if (!allow(`welcome:${clientIp(request)}`))
-    return json({ error: "Too many requests. Try again in a minute." }, 429, { "Retry-After": "60" });
+  const bad = onlyPost(request);
+  if (bad) return bad;
+  if (!allow(`welcome:${clientIp(request)}`)) return tooMany();
 
   const text = await request.text();
   if (text.length > MAX_BODY) return json({ error: "That request is too big." }, 413);

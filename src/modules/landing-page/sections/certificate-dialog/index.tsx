@@ -11,7 +11,6 @@ const STYLE = `
 .flink{text-decoration:none}
 @media (hover:hover){.flink:hover{text-decoration:underline}}
 .cd-open{display:inline-flex;align-items:center;min-height:64px;padding:0 30px;box-sizing:border-box;border:2px solid ${colors.aqua};border-radius:14px;background:transparent;color:${colors.aqua};font:700 20px/1.2 ${fonts.display};cursor:pointer}
-.cd-open:focus-visible,#cd button:focus-visible,#cd input:focus-visible{outline:3px solid ${colors.cyan};outline-offset:2px}
 #cd{position:fixed;inset:0;margin:auto;height:fit-content;width:min(92vw,440px);max-height:92dvh;overflow:auto;padding:24px;box-sizing:border-box;border:2px solid ${colors.aqua};border-radius:16px;background:${colors.deepCard};color:${colors.aqua};font-family:${fonts.display}}
 #cd::backdrop{background:${colors.abyss};opacity:.75}
 #cd .x{position:absolute;top:10px;right:10px;display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:0;border-radius:10px;background:transparent;color:${colors.aqua};cursor:pointer}

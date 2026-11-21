@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { yToDepth } from "@/shared/lib/sea";
 import { readoutText, temperatureC } from "@/shared/lib/readout";
-import { pressureAtm } from "@/shared/lib/format";
+import { formatNumber, pressureAtm } from "@/shared/lib/format";
 import { DIVE_DATA, diveScript, MATHS } from "./script";
 
 // The script runs in the browser, so check its copy of the maths against the shared code.
@@ -51,4 +51,9 @@ test("easing moves toward the target, never past it, and faster for a longer ste
   assert.ok(maths.approach(0, 100, 64, 100) > a);
   assert.ok(Math.abs(maths.approach(0, 100, 5000, 100) - 100) < 1e-6);
   assert.equal(maths.approach(50, 50, 16, 100), 50);
+});
+
+test("the script formats numbers like shared/lib/format", () => {
+  const fmt = new Function(diveScript().match(/var fmt=[^;]*;/)![0] + "return fmt")();
+  for (const n of [0, 999.5, 1000, 3447.4, 10935]) assert.equal(fmt(n), formatNumber(n));
 });
