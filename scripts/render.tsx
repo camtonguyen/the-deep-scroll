@@ -6,9 +6,7 @@
  */
 import { mkdir, writeFile } from "node:fs/promises";
 import { ElementsError, formatDiagnostics, render } from "@hyper-elements/react";
-import { renderImage } from "@hyper-elements/react/image";
-import { renderPdf } from "@hyper-elements/react/pdf";
-import { loadFonts } from "../server/fonts";
+import { renderFile } from "../server/render-file";
 import { withShareMeta } from "../server/share-meta";
 import { OUTPUTS } from "../src/outputs";
 import { SITE } from "../src/shared/data/site";
@@ -17,7 +15,6 @@ const OUT = new URL("../out/", import.meta.url);
 
 async function main() {
   await mkdir(OUT, { recursive: true });
-  const fonts = await loadFonts();
 
   for (const output of OUTPUTS) {
     const element = output.element();
@@ -25,13 +22,9 @@ async function main() {
     await writeFile(new URL(`${output.id}.html`, OUT), output.root === "Page" ? withShareMeta(html, new URL(SITE.url)) : html);
     if (output.root === "Email") await writeFile(new URL(`${output.id}.txt`, OUT), text);
 
-    if (output.root === "Document") {
-      const { pdf } = await renderPdf(element, { fonts });
-      await writeFile(new URL(`${output.id}.pdf`, OUT), pdf);
-    }
-    if (output.root === "Canvas") {
-      const { image } = await renderImage(element, { fonts });
-      await writeFile(new URL(`${output.id}.png`, OUT), image);
+    if (output.root === "Document" || output.root === "Canvas") {
+      const { bytes, ext } = await renderFile(element, output.root);
+      await writeFile(new URL(`${output.id}.${ext}`, OUT), bytes);
     }
 
     console.log(`✓ ${output.id}`);

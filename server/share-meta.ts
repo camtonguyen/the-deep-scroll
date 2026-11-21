@@ -1,6 +1,6 @@
 import { SHARE, SITE } from "../src/shared/data/site";
 import { FAVICON_LINK } from "./favicon";
-import { shareName } from "../src/shared/lib/visitor";
+import { shareName } from "../src/shared/lib/share-link";
 
 const escape = (value: string) => value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 

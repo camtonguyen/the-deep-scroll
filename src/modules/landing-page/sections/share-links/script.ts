@@ -1,5 +1,5 @@
 import { SHARE } from "@/shared/data/site";
-import { NAME_MAX } from "@/shared/lib/visitor";
+import { NAME_MAX } from "@/shared/lib/visitor-form";
 
 /** Share links carry `?name=` (read from the postcard form, if filled) so the card shows the visitor. The links are set when the visitor reaches for them. */
 export function shareScript(): string {
