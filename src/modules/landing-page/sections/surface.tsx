@@ -37,7 +37,7 @@ export function Surface() {
               <Boat />
             </Positioned>
             <Positioned top={BOAT_TOP + 109} left={150}>
-              <Text style={{ fontFamily: fonts.mono, fontSize: 11, fontWeight: 700, color: colors.navy }}>R/V HADAL</Text>
+              <Text style={{ fontFamily: fonts.mono, fontSize: 12, fontWeight: 700, color: colors.navy }}>R/V HADAL</Text>
             </Positioned>
           </Layer>
         </Column>

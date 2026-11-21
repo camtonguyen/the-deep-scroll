@@ -13,7 +13,7 @@ export function Swatches({ swatches }: { swatches: readonly Swatch[] }) {
         <Column key={swatch.label} style={{ flex: "none", gap: 0 }}>
           <Column style={{ ...chip, backgroundColor: swatch.truth }} />
           <Column style={{ ...chip, backgroundColor: swatch.seen }} />
-          <MonoLabel size={11}>{swatch.label}</MonoLabel>
+          <MonoLabel size={12}>{swatch.label}</MonoLabel>
         </Column>
       ))}
     </Row>

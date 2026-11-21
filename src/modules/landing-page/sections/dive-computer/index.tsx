@@ -11,18 +11,19 @@ const CONTENT = 1200;
 const STYLE = `
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 html{overscroll-behavior:none}
+a:focus-visible:not(.sh-icon){outline:3px solid ${colors.ink};outline-offset:3px;box-shadow:0 0 0 3px ${colors.white}}
 #dc-diver{position:fixed;z-index:50;pointer-events:none;opacity:0}
 #dc-diver.on{opacity:1;transition:opacity .3s}
 #dc{position:fixed;z-index:50;pointer-events:none;opacity:0;left:50%;bottom:16px;translate:-50% 0;width:min(92vw,560px);display:grid;grid-template-columns:repeat(4,1fr);gap:4px 12px;padding:12px 18px;box-sizing:border-box;border-radius:14px;background:${sea.abyssal0};border:2px solid ${colors.aqua};color:${colors.aqua};font-family:${fonts.mono}}
 #dc.on{opacity:1;transition:opacity .3s}
-#dc small{display:block;font-size:11px;letter-spacing:1px;opacity:.7}
+#dc small{display:block;font-size:12px;letter-spacing:1px;opacity:.7}
 #dc b{display:block;font-size:20px;line-height:1.2;font-weight:700;color:${colors.white};white-space:nowrap}
 #dc-diver{top:50%;top:50dvh;left:calc(max(0px,(100vw - ${CONTENT}px) / 2) + ${RULER_X - 36}px);margin-top:-35px;width:200px}
 #dc-diver svg{display:block;width:100%;height:auto}
 #dc-diver .beam{opacity:0;transition:opacity .4s}
 #dc-diver.lit .beam{opacity:.3}
 #dc-diver .you{position:absolute;left:46px;top:-16px;font:700 12px ${fonts.mono};letter-spacing:1px;color:${colors.navy};background:${colors.aqua};border-radius:6px;padding:1px 6px}
-@media (max-width:${SITE.phoneWidth}px){#dc-diver{left:auto;right:-37px;width:130px;margin-top:-17px}#dc-diver svg{transform:rotate(90deg);transition:transform .3s}#dc-diver.up svg{transform:rotate(-90deg)}#dc-diver .you{left:8px;top:4px}#dc{grid-template-columns:repeat(4,auto);justify-content:space-between;gap:0 8px;padding:6px 12px;bottom:8px;border-radius:12px}#dc small{font-size:10px;letter-spacing:.5px}#dc b{font-size:clamp(13px,4.2vw,16px)}}
+@media (max-width:${SITE.phoneWidth}px){#dc-diver{left:auto;right:-37px;width:130px;margin-top:-17px}#dc-diver svg{transform:rotate(90deg);transition:transform .3s}#dc-diver.up svg{transform:rotate(-90deg)}#dc-diver .you{left:8px;top:4px}#dc{grid-template-columns:repeat(4,auto);justify-content:space-between;gap:0 8px;padding:6px 12px;bottom:8px;border-radius:12px}#dc small{font-size:11px;letter-spacing:.5px}#dc b{font-size:clamp(13px,4.2vw,16px)}}
 @media (prefers-reduced-motion:no-preference){
 #top svg[height="40"]{animation:roll 7s linear infinite}
 #top svg[aria-label^="A small research boat"]{transform-origin:50% 90%;animation:bobboat 5s ease-in-out infinite}
@@ -60,6 +61,6 @@ const PANEL = [
 
 /** The sticky diver and the live dive computer. Without script (or before the sea), they stay hidden and the page keeps its printed ruler. */
 export function DiveComputer() {
-  const html = `<style>${STYLE}</style><div id="dc-diver" aria-hidden="true"><span class="you">YOU</span>${DIVER}</div><div id="dc" role="status" aria-label="Dive computer">${PANEL}</div><script>${diveScript()}</script>`;
+  const html = `<style>${STYLE}</style><div id="dc-diver" aria-hidden="true"><span class="you">YOU</span>${DIVER}</div><div id="dc" role="group" aria-label="Dive computer">${PANEL}</div><script>${diveScript()}</script>`;
   return <Html html={html} text="" />;
 }

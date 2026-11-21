@@ -51,7 +51,7 @@ export function DepthRuler() {
         .filter(({ depth }) => depth > 0 && depth < MAX_DEPTH)
         .map(({ depth, y }) => (
           <Positioned key={`readout-${depth}`} top={y + 8} left={LABEL_LEFT}>
-            <MonoLabel color={inkAt(depth)} size={11}>
+            <MonoLabel color={inkAt(depth)} size={12}>
               {readoutText(depth)}
             </MonoLabel>
           </Positioned>
