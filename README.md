@@ -1,17 +1,20 @@
 # The Deep Scroll
 
-**How deep does the ocean go? Scroll down to find out.**
+**How deep does the ocean go? Scroll to find out.**
 
-A landing page for a fictional ocean nonprofit, The Hadal Society, where
-scrolling _is_ the descent: from the sea surface to the bottom of the
-Challenger Deep, 10,935 m down. Animals, wrecks and landmarks appear at their
-real depths beside a depth ruler, and the sea darkens band by band.
+A landing page for a made-up ocean nonprofit, The Hadal Society.
 
-The same React components also render a welcome **email**, a **PDF** dive
-certificate and a **PNG** share card, all with
+Scrolling is the dive. You start at the surface and end at the bottom of the
+Challenger Deep, 10,935 m down. Animals, wrecks and landmarks show up at their
+real depths. The sea gets darker as you go.
+
+The same React components also make a welcome **email**, a **PDF** dive
+certificate and a **PNG** share card. All with
 [Hyper Elements](https://github.com/hyper-elements/hyper-elements).
 
-![The Deep Scroll](docs/preview.gif)
+<p align="center">
+  <img src="docs/preview.gif" alt="The Deep Scroll" width="100%">
+</p>
 
 ## Run it
 
@@ -22,10 +25,12 @@ pnpm dev         # the landing page at http://localhost:5173 (?only=surface for 
 pnpm render      # writes every output to out/
 ```
 
-Node 20+. No API keys or network needed: fonts are in `assets/fonts/`, and
-without mail credentials the welcome email is written to `out/` instead of sent.
+Node 20+. No API keys. No network. Fonts ship in `assets/fonts/`. Without mail
+credentials, the welcome email is written to `out/` instead of sent.
 
 ## How Hyper Elements is used
+
+One codebase. Four outputs.
 
 | Output           | Root         | Rendered with                  | File                      |
 | ---------------- | ------------ | ------------------------------ | ------------------------- |
@@ -34,14 +39,14 @@ without mail credentials the welcome email is written to `out/` instead of sent.
 | Dive certificate | `<Document>` | `renderPdf()` from `/pdf`      | `dive-certificate.pdf`    |
 | Share card       | `<Canvas>`   | `renderImage()` from `/image`  | `share-card.png`          |
 
-- **One depth scale drives everything.** `depthToY()` turns metres into pixels.
-  Every stop, ruler tick and band is placed from the data files, so changing a
-  depth moves it on the page, the certificate and the share card.
-- **Absolute positioning without CSS.** A `Layer` stacks its children in one
-  cell, and `<Positioned>` places a box at a depth inside it.
-- **Drawn, not downloaded.** All art is `Svg` shapes (`Path`, `Circle`, `Rect`…),
-  so it is identical in HTML, PDF and PNG. No images, gradients or shadows.
-- **One theme** (`defineTheme`) for all four roots.
+- **One depth scale.** `depthToY()` turns metres into pixels. Change a depth
+  in the data and it moves on the page, the certificate and the share card.
+- **Positioning without CSS.** A `Layer` stacks its children. `<Positioned>`
+  puts a box at a depth.
+- **Drawn, not downloaded.** Every animal is `Svg` shapes (`Path`, `Circle`,
+  `Rect`). No images, no gradients, no shadows. It looks the same in HTML, PDF
+  and PNG.
+- **One theme.** `defineTheme` serves all four roots.
 
 ## Project structure
 
@@ -54,7 +59,7 @@ server/           API routes (welcome email, certificate, share card), run by Vi
 scripts/          render.tsx
 ```
 
-Modules never import each other, and `shared/` never imports a module. ESLint
+Modules never import each other. `shared/` never imports a module. ESLint
 enforces both (`pnpm lint`).
 
 ## Change things
@@ -68,7 +73,7 @@ enforces both (`pnpm lint`).
 
 `pnpm check` runs typecheck, lint, tests, format check and render.
 
-## Optional: sending the welcome email
+## Optional: send the welcome email
 
 Set `BREVO_API_KEY`, `MAIL_FROM`, `SITE_URL` and `CERTIFICATE_SECRET` (see
 `.env.example`). Mail goes through `sendMail()` in `server/mail.ts`.
@@ -76,5 +81,5 @@ Set `BREVO_API_KEY`, `MAIL_FROM`, `SITE_URL` and `CERTIFICATE_SECRET` (see
 ## Facts and credits
 
 Every number has a source in [docs/sources.md](docs/sources.md) or is marked
-approximate (`~`). The Hadal Society is fictional; the depths are real. Fonts:
+approximate (`~`). The Hadal Society is fictional. The depths are real. Fonts:
 Roboto and Roboto Condensed (SIL OFL). Code: MIT.
