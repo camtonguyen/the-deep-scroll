@@ -7,9 +7,12 @@ export const SOUND_STYLE = `
 #snd[hidden]{display:none}
 #snd:not(.on){visibility:hidden;opacity:0;pointer-events:none}
 #snd.on{opacity:1}
+#snd.hint{outline:2px solid currentColor;outline-offset:4px;animation:snd-pulse 1.4s ease-out infinite}
+@keyframes snd-pulse{from{box-shadow:0 0 0 0 currentColor}to{box-shadow:0 0 0 14px transparent}}
+@media (prefers-reduced-motion:reduce){#snd.hint{animation:none}}
 #snd svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #snd[aria-pressed=true] .off,#snd[aria-pressed=false] .on{display:none}
 `;
 
 /** Hidden until the script runs, so a page without script shows no dead button. */
-export const SOUND_BUTTON = `<button id="snd" type="button" hidden aria-pressed="true" aria-label="Dive sound" title="Dive sound"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><g class="on"><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></g><path class="off" d="M17 9l5 6M22 9l-5 6"/></svg></button>`;
+export const SOUND_BUTTON = `<button id="snd" type="button" hidden aria-pressed="true" aria-label="Dive sound" title="Tap for dive sound"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><g class="on"><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></g><path class="off" d="M17 9l5 6M22 9l-5 6"/></svg></button>`;
