@@ -13,7 +13,7 @@ certificate and a **PNG** share card. All with
 [Hyper Elements](https://github.com/hyper-elements/hyper-elements).
 
 <p align="center">
-  <img src="docs/preview.gif" alt="The Deep Scroll" width="100%">
+  <img src="docs/preview-v2.gif" alt="The Deep Scroll" width="100%">
 </p>
 
 ## Run it
