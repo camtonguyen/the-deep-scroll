@@ -7,9 +7,8 @@ export const SOUND_STYLE = `
 #snd[hidden]{display:none}
 #snd:not(.on){visibility:hidden;opacity:0;pointer-events:none}
 #snd.on{opacity:1}
-#snd.hint{outline:2px solid currentColor;outline-offset:4px;animation:snd-pulse 1.4s ease-out infinite}
-@keyframes snd-pulse{from{box-shadow:0 0 0 0 currentColor}to{box-shadow:0 0 0 14px transparent}}
-@media (prefers-reduced-motion:reduce){#snd.hint{animation:none}}
+#snd.hint{box-shadow:0 0 12px currentColor;animation:snd-glow 1.4s ease-in-out infinite alternate}
+@keyframes snd-glow{from{box-shadow:0 0 4px currentColor}to{box-shadow:0 0 18px 2px currentColor}}
 #snd svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #snd[aria-pressed=true] .off,#snd[aria-pressed=false] .on{display:none}
 `;
