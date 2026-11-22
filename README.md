@@ -16,6 +16,15 @@ certificate and a **PNG** share card. All with
   <img src="docs/preview-v2.gif" alt="The Deep Scroll" width="100%">
 </p>
 
+## Lighthouse
+
+Four 90+ scores on phone and desktop, measured on the dev server.
+
+<p align="center">
+  <img src="docs/lighthouse-mobile.png" alt="Lighthouse on mobile: 93 performance, 100 accessibility, 100 best practices, 100 SEO" width="49%">
+  <img src="docs/lighthouse-desktop.png" alt="Lighthouse on desktop: 100 in all four categories" width="49%">
+</p>
+
 ## Run it
 
 ```bash

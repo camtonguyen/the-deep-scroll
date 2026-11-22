@@ -83,7 +83,8 @@ var fmt=function(n){return Math.round(n).toLocaleString('en-US')};
 var calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
 var raf=0,shown=false,lit=false,up=false,py=0,last={},tintNow=-1;
 var wrote=0,prev=0,lastY=scrollY,lastMove=0,v=0,tilt=0,aim=null,snowC=null;
-var audio=null,vol=0,muted=false,blocked=false,starting=false,onSea=false;
+var audio=new Audio(D.sound.src),vol=0,hot=false,muted=false,blocked=false,starting=false,primed=false,onSea=false;
+audio.loop=true;audio.volume=0;audio.preload='auto';audio.load();
 try{muted=localStorage.getItem(D.sound.key)==='off'}catch(e){}
 function put(k,val){if(last[k]!==val){last[k]=val;out[k].textContent=val}}
 function measure(){
@@ -97,12 +98,17 @@ function toggle(){
   muted=!muted;paintBtn();try{localStorage.setItem(D.sound.key,muted?'off':'on')}catch(e){}
   kick()
 }
-function unlock(){if(blocked){blocked=false;kick()}}
+/* Browsers allow audio only after a click, tap or key: scrolling never counts. The first one plays the (silent, volume 0) loop once inside the gesture and pauses it, so later play() calls from scroll work, iOS included. */
+function unlock(){
+  if(primed)return;primed=true;
+  var p=audio.play();
+  if(p&&p.then)p.then(function(){if(!hot)audio.pause();blocked=false;kick()},function(){primed=false});
+}
 function mix(now,dt,want){
   var goal=want?loud(v):0;
   vol=approach(vol,goal,dt,D.feel.fadeTau);
-  if(!goal&&vol<.01){vol=0;if(audio&&!audio.paused)audio.pause();return}
-  if(!audio){audio=new Audio(D.sound.src);audio.loop=true;audio.preload='auto'}
+  hot=goal>0;
+  if(!goal&&vol<.01){vol=0;if(!audio.paused)audio.pause();return}
   audio.volume=Math.min(1,vol);
   if(goal&&audio.paused&&!starting&&!blocked){
     starting=true;
@@ -139,6 +145,7 @@ function frame(now){
     }
   }
   mix(now,dt,m.on&&moving&&!muted&&!document.hidden);
+  if(btn)btn.classList.toggle('hint',blocked&&!muted);
   if(moving||v>1||vol>0||aim!==null||Math.abs(tilt)>.05){raf=requestAnimationFrame(frame)}else prev=0
 }
 function kick(){if(!raf)raf=requestAnimationFrame(frame)}
@@ -156,7 +163,7 @@ if(!calm&&matchMedia('(pointer:fine)').matches){
 }
 ['pointerdown','keydown','touchend'].forEach(function(n){addEventListener(n,unlock,{passive:true})});
 if(btn)btn.addEventListener('click',toggle);
-document.addEventListener('visibilitychange',function(){if(document.hidden&&audio){audio.pause();vol=0}else kick()});
+document.addEventListener('visibilitychange',function(){if(document.hidden){audio.pause();vol=0}else kick()});
 addEventListener('scroll',kick,{passive:true});addEventListener('resize',function(){snowC=null;kick()});
 paintBtn();kick();
 })();`;
